@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nakawa Dental Clinic — VoiceCore live demo</title>
+<meta name="description" content="A live demonstration of VoiceCore answering for a real-world business, 24/7, across web chat, WhatsApp and phone.">
+<meta name="theme-color" content="#08122a">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Jost:wght@300;400;500;600&display=swap">
+<style>
+:root{
+  --ink:#12202e;--ink-soft:#4a5a6b;--muted:#7b8a99;
+  --paper:#ffffff;--wash:#f4f7f9;--line:#e2e9ee;
+  --teal:#0f6f7a;--teal-dark:#0a545d;--teal-wash:#e6f2f3;
+  --navy:#08122a;--gold:#c9a227;--gold-3:#ecd48b;
+  --display:'Jost','Segoe UI',system-ui,sans-serif;
+  --body:'Inter','Segoe UI',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;}
+*{margin:0;}
+body{font-family:var(--body);color:var(--ink);background:var(--paper);line-height:1.65;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+ul{list-style:none;padding:0;}
+img,svg{display:block;max-width:100%;}
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:5px;}
+h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.12;letter-spacing:-.02em;text-wrap:balance;}
+.wrap{max-width:1080px;margin-inline:auto;padding-inline:clamp(1.1rem,4vw,2rem);}
+
+/* BDS demo bar — the only navy on the page, so the client's brand stays theirs */
+.bds-bar{background:var(--navy);color:#cfd9ea;font-size:.83rem;}
+.bds-bar .wrap{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;padding-block:.6rem;}
+.bds-bar b{color:var(--gold-3);font-family:var(--display);font-weight:500;letter-spacing:.02em;}
+.bds-bar .sp{margin-left:auto;display:flex;gap:.5rem;flex-wrap:wrap;}
+.bds-bar a{border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:.28rem .8rem;font-size:.8rem;transition:all .2s;}
+.bds-bar a:hover{border-color:var(--gold);color:var(--gold-3);}
+.bds-bar a.solid{background:linear-gradient(140deg,#dcbb4e,#a8811a);color:var(--navy);border-color:transparent;font-weight:600;}
+
+/* Client site */
+.nav{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);z-index:40;}
+.nav .wrap{display:flex;align-items:center;gap:1.25rem;min-height:68px;}
+.logo{display:flex;align-items:center;gap:.6rem;font-family:var(--display);font-weight:600;font-size:1.08rem;letter-spacing:-.01em;}
+.logo i{width:32px;height:32px;border-radius:8px;background:var(--teal);color:#fff;display:grid;place-items:center;font-style:normal;font-size:.95rem;}
+.nav ul{display:none;gap:1.5rem;margin-left:auto;font-size:.93rem;color:var(--ink-soft);}
+@media (min-width:820px){.nav ul{display:flex;}}
+.nav .call{margin-left:auto;font-family:var(--display);font-weight:600;color:var(--teal);font-size:.95rem;}
+@media (min-width:820px){.nav .call{margin-left:1.5rem;}}
+
+.hero{background:linear-gradient(160deg,var(--teal-wash),#fff 62%);border-bottom:1px solid var(--line);}
+.hero .wrap{padding-block:clamp(3rem,7vw,5rem);display:grid;gap:2.5rem;}
+@media (min-width:900px){.hero .wrap{grid-template-columns:1.15fr .85fr;align-items:center;}}
+.eyebrow{font-family:var(--display);font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:var(--teal);font-weight:600;margin-bottom:.9rem;}
+.hero h1{font-size:clamp(2.1rem,5vw,3.3rem);margin-bottom:1rem;max-width:16ch;}
+.hero p{font-size:1.08rem;color:var(--ink-soft);max-width:46ch;margin-bottom:1.6rem;}
+.cta-row{display:flex;gap:.75rem;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:.5rem;border-radius:999px;padding:.8rem 1.5rem;font-family:var(--display);font-weight:600;font-size:.95rem;cursor:pointer;border:1px solid transparent;transition:transform .2s,background .2s;}
+.btn:hover{transform:translateY(-2px);}
+.btn.primary{background:var(--teal);color:#fff;}
+.btn.primary:hover{background:var(--teal-dark);}
+.btn.ghost{border-color:var(--line);color:var(--ink);background:#fff;}
+.btn.ghost:hover{border-color:var(--teal);color:var(--teal);}
+
+.hours-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1.5rem;box-shadow:0 20px 50px -30px rgba(18,32,46,.4);}
+.hours-card h3{font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;font-weight:600;}
+.hours-card li{display:flex;justify-content:space-between;gap:1rem;padding:.5rem 0;border-bottom:1px solid var(--line);font-size:.93rem;}
+.hours-card li:last-child{border-bottom:0;}
+.hours-card li span:last-child{color:var(--ink-soft);font-variant-numeric:tabular-nums;}
+.hours-card .closed{color:var(--muted);}
+.hours-card .now{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--line);display:flex;align-items:center;gap:.5rem;font-size:.88rem;}
+.hours-card .now i{width:8px;height:8px;border-radius:50%;background:#37b579;}
+.hours-card .now i.off{background:var(--gold);}
+
+section.band{padding-block:clamp(3rem,6vw,4.5rem);}
+section.band.wash{background:var(--wash);border-block:1px solid var(--line);}
+.head{max-width:56ch;margin-bottom:2.25rem;}
+.head h2{font-size:clamp(1.7rem,3.6vw,2.4rem);margin-bottom:.75rem;}
+.head p{color:var(--ink-soft);}
+.grid{display:grid;gap:1.15rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));}
+.svc{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.4rem;display:grid;gap:.45rem;align-content:start;}
+.svc b{font-family:var(--display);font-size:1.12rem;font-weight:500;}
+.svc .price{color:var(--teal);font-weight:600;font-size:.95rem;}
+.svc span{font-size:.88rem;color:var(--muted);}
+.team{display:grid;gap:1.15rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));}
+.person{text-align:center;display:grid;gap:.35rem;justify-items:center;}
+.person i{width:76px;height:76px;border-radius:50%;background:var(--teal-wash);color:var(--teal);display:grid;place-items:center;font-family:var(--display);font-size:1.6rem;font-style:normal;font-weight:500;}
+.person b{font-family:var(--display);font-weight:500;font-size:1.05rem;}
+.person span{font-size:.85rem;color:var(--muted);}
+
+.foot{background:var(--ink);color:#a7b6c4;padding-block:2.5rem 2rem;font-size:.9rem;}
+.foot .wrap{display:grid;gap:1.25rem;}
+.foot b{color:#fff;font-family:var(--display);font-weight:500;}
+.foot .bot{border-top:1px solid rgba(255,255,255,.12);padding-top:1.2rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-size:.83rem;}
+
+/* Try-this prompt strip */
+.try{background:#fffdf6;border:1px solid #f0e3bc;border-radius:14px;padding:1.35rem 1.5rem;display:grid;gap:.85rem;}
+.try h3{font-size:1.05rem;}
+.try p{font-size:.92rem;color:var(--ink-soft);}
+.try-list{display:flex;flex-wrap:wrap;gap:.5rem;}
+.try-list button{background:#fff;border:1px solid #e6d6a8;color:#8a6d16;border-radius:999px;padding:.42rem .9rem;font-size:.86rem;cursor:pointer;transition:all .2s;}
+.try-list button:hover{background:#c9a227;color:#fff;border-color:#c9a227;}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+</style>
+</head>
+<body>
+
+<div class="bds-bar">
+  <div class="wrap">
+    <span><b>VoiceCore</b> live demo — this is a client's site, answered by an AI receptionist</span>
+    <span class="sp">
+      <a href="index.html" class="solid">Open the owner dashboard</a>
+      <a href="../../products/voicecore.html">Read the brief</a>
+    </span>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="logo" href="#"><i>N</i><span id="bizLogo">Nakawa Dental Clinic</span></a>
+    <ul>
+      <li>Services</li><li>Our team</li><li>Visiting us</li>
+    </ul>
+    <a class="call" href="#" id="navPhone">+256 700 123 456</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Kampala · Since 2011</p>
+      <h1>Dentistry that treats you like a neighbour.</h1>
+      <p>Gentle, unhurried care from a team that remembers your name — and a reception desk that answers, even at 11pm on a Sunday.</p>
+      <div class="cta-row">
+        <button class="btn primary" type="button" id="bookNow">Book an appointment</button>
+        <a class="btn ghost" href="#services">See our services</a>
+      </div>
+    </div>
+    <div class="hours-card">
+      <h3>Opening hours</h3>
+      <ul id="hoursList"></ul>
+      <div class="now"><i id="nowDot"></i><span id="nowText">Open now</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="band" id="services">
+  <div class="wrap">
+    <div class="head">
+      <h2>Our services</h2>
+      <p>Straightforward pricing, published up front. Ask the receptionist about any of them — she quotes from this same list, never a guess.</p>
+    </div>
+    <div class="grid" id="svcGrid"></div>
+  </div>
+</section>
+
+<section class="band wash">
+  <div class="wrap">
+    <div class="head">
+      <h2>Try the receptionist</h2>
+      <p>She is answering in the corner of this page right now. Tap a line below and she will handle it — booking, pricing, hours, or a complaint that needs a human.</p>
+    </div>
+    <div class="try">
+      <h3>Say one of these</h3>
+      <p>Or type your own, or tap the microphone and speak. She replies in English, Luganda or Kiswahili, following whichever you use.</p>
+      <div class="try-list" id="tryList"></div>
+      <p style="font-size:.85rem;color:var(--muted);">Everything she captures appears in the owner's dashboard immediately — bookings, leads, complaints, and the transcript a human needs on hand-off.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <div class="head"><h2>Our team</h2></div>
+    <div class="team">
+      <div class="person"><i>SN</i><b>Dr. Sarah Nabirye</b><span>Principal dentist</span></div>
+      <div class="person"><i>MO</i><b>Dr. Moses Opio</b><span>Oral surgeon</span></div>
+      <div class="person"><i>AK</i><b>Agnes Kirabo</b><span>Dental hygienist</span></div>
+      <div class="person" id="personaCard"><i>M</i><b>Maria</b><span>Reception · VoiceCore</span></div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div>
+      <b id="footBiz">Nakawa Dental Clinic</b>
+      <p id="footLoc">Plot 14, Jinja Road, Kampala</p>
+      <p id="footPhone">+256 700 123 456</p>
+    </div>
+    <div class="bot">
+      <span>&copy; <span id="yr">2026</span> Nakawa Dental Clinic. A demonstration site.</span>
+      <span>Reception by VoiceCore — Blessed Digital Solutions</span>
+    </div>
+  </div>
+</footer>
+
+<script src="engine.js"></script>
+<script src="widget.js" data-autostart="false"></script>
+<script>
+(function () {
+  'use strict';
+  var VC = window.VoiceCore;
+  var $ = function (s) { return document.querySelector(s); };
+  var cfg = VC.config;
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+    });
+  }
+
+  /* The demo site reads the same config the dashboard edits, so a client
+     sees their own name here the moment the profile is saved. */
+  $('#bizLogo').textContent = cfg.business;
+  $('#footBiz').textContent = cfg.business;
+  $('#footLoc').textContent = cfg.location;
+  $('#footPhone').textContent = cfg.handoffNumber;
+  $('#navPhone').textContent = cfg.handoffNumber;
+  $('#navPhone').href = 'tel:' + cfg.handoffNumber.replace(/\s/g, '');
+  $('#yr').textContent = new Date().getFullYear();
+  document.querySelector('.logo i').textContent = cfg.business.charAt(0);
+  $('#personaCard').innerHTML = '<i>' + esc(cfg.persona.charAt(0)) + '</i><b>' + esc(cfg.persona) +
+    '</b><span>Reception · VoiceCore</span>';
+
+  var DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var KEYS = ['sun','mon','tue','wed','thu','fri','sat'];
+  $('#hoursList').innerHTML = KEYS.map(function (k, i) {
+    var h = cfg.hours[k];
+    return '<li><span>' + DAYS[i] + '</span><span' + (h ? '' : ' class="closed"') + '>' +
+      (h ? pad(h[0]) + ':00 – ' + pad(h[1]) + ':00' : 'Closed') + '</span></li>';
+  }).join('');
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+  var now = new Date();
+  var open = VC.hours.isOpenAt(now, { h: now.getHours(), m: now.getMinutes() });
+  $('#nowDot').className = open ? '' : 'off';
+  $('#nowText').textContent = open
+    ? 'Open now — and ' + cfg.persona + ' answers after hours too'
+    : 'Closed now — but ' + cfg.persona + ' is still answering';
+
+  $('#svcGrid').innerHTML = cfg.services.map(function (s) {
+    return '<div class="svc"><b>' + esc(s.name) + '</b>' +
+      '<span class="price">' + esc(s.price || 'On request') + '</span>' +
+      '<span>About ' + esc(s.minutes) + ' minutes</span></div>';
+  }).join('');
+
+  /* Mount the widget */
+  var widget = new VC.Widget();
+
+  $('#bookNow').addEventListener('click', function () {
+    widget.open();
+    setTimeout(function () { widget.send('I would like to book an appointment'); }, 320);
+  });
+
+  var PROMPTS = [
+    'I want to book a cleaning tomorrow at 2pm',
+    'How much is a filling?',
+    'Are you open on Sunday?',
+    'Where are you located?',
+    'Habari, nataka kuweka miadi',
+    'Oli otya, njagala okulagaana',
+    'I waited two hours yesterday, this is unacceptable',
+    'Let me speak to a real person'
+  ];
+  $('#tryList').innerHTML = PROMPTS.map(function (p) {
+    return '<button type="button">' + esc(p) + '</button>';
+  }).join('');
+  Array.prototype.forEach.call($('#tryList').children, function (b) {
+    b.addEventListener('click', function () {
+      widget.open();
+      setTimeout(function () { widget.send(b.textContent); }, 300);
+    });
+  });
+})();
+</script>
+</body>
+</html>

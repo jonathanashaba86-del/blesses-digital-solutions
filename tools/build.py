@@ -391,6 +391,17 @@ def build_home():
       <p class="lede" data-reveal>Concept and design briefs for four new revenue lines — each one sold against a business outcome, never as a software licence.</p>
     </div>
     <div class="grid grid-2">{cards}</div>
+    <div class="live-strip" data-reveal>
+      <div>
+        <p class="eyebrow">Line 01 is built</p>
+        <h3>VoiceCore is working software, not a slide.</h3>
+        <p>An AI receptionist that answers on web chat, WhatsApp and phone in English, Luganda and Swahili, books against real opening hours, and files every conversation in the owner's dashboard. Try it on a live client site.</p>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn--gold" href="{root}app/voicecore/demo.html">Try the receptionist {ARROW}</a>
+        <a class="btn btn--outline" href="{root}app/voicecore/index.html">Owner dashboard</a>
+      </div>
+    </div>
     <div class="btn-row btn-row--center" style="margin-top:2.5rem;" data-reveal>
       <a class="btn btn--outline" href="{root}products/">Open the full specification {ARROW}</a>
     </div>
@@ -652,6 +663,16 @@ def build_product(p, prev_p, next_p):
     </div>""" for r in p["rollout"])
     price_lines = "".join(f"<li>{esc(line)}</li>" for line in p["priceModel"])
 
+    live_cta = ""
+    if p.get("live"):
+        live_cta = f"""<div class="live-cta">
+          <p class="live-cta__badge">{esc(p['live']['status'])}</p>
+          <div class="btn-row">
+            <a class="btn btn--gold btn--sm" href="{p['live']['demo']}">Try it live {ARROW}</a>
+            <a class="btn btn--ghost btn--sm" href="{p['live']['dashboard']}">Owner dashboard</a>
+          </div>
+        </div>"""
+
     roles_block = ""
     if p.get("roles"):
         roles = "".join(f"""<article class="card" data-reveal>
@@ -694,6 +715,7 @@ def build_product(p, prev_p, next_p):
       </div>
       <div>
         <blockquote class="spec-hero__quote">“{esc(p['quote'])}”</blockquote>
+        {live_cta}
       </div>
     </div>
     <div class="metric-strip" style="margin-top:clamp(2rem,4vw,3rem);">{metrics}</div>

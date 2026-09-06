@@ -571,3 +571,32 @@ table.matrix td{color:var(--text-soft);}
   .section{padding-block:1.25rem;}
   a[href^="http"]::after{content:" (" attr(href) ")";font-size:9pt;color:#555;}
 }
+
+/* ---------- 18. Live product callouts ---------- */
+.live-cta{margin-top:1.5rem;display:grid;gap:.85rem;justify-items:start;}
+.live-cta__badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:var(--font-display);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold-300);border:1px solid rgba(201,162,39,.45);background:rgba(201,162,39,.12);
+  border-radius:999px;padding:.35rem .9rem;font-weight:600;
+}
+.live-cta__badge::before{
+  content:"";width:7px;height:7px;border-radius:50%;background:var(--gold-400);
+  box-shadow:0 0 0 3px rgba(201,162,39,.28);
+}
+.live-strip{
+  margin-top:clamp(2rem,4vw,3rem);
+  display:grid;gap:1.5rem;align-items:center;
+  background:linear-gradient(150deg,var(--navy-800),var(--navy-950));
+  border:1px solid rgba(201,162,39,.3);border-radius:var(--radius-lg);
+  padding:clamp(1.6rem,3.4vw,2.5rem);color:#c9d5ea;position:relative;overflow:hidden;
+}
+@media (min-width:900px){.live-strip{grid-template-columns:minmax(0,1.6fr) auto;}}
+.live-strip::after{
+  content:"";position:absolute;right:-90px;top:-110px;width:320px;height:320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,162,39,.22),transparent 65%);pointer-events:none;
+}
+.live-strip > *{position:relative;}
+.live-strip h3{color:#fff;margin:.4rem 0 .7rem;}
+.live-strip p:last-of-type{color:#a7b4cb;max-width:60ch;}
+.live-strip .eyebrow{color:var(--gold-400);}

@@ -34,6 +34,67 @@ the *Premium Product Specifications* brief.
 **Build order:** VoiceCore first — it rides infrastructure BDS already runs, and every
 existing website client is a warm pitch. Sell it to five clients before opening the next line.
 
+## VoiceCore — the working app
+
+Line 01 is no longer a brief. `app/voicecore/` is a running AI receptionist that
+needs no backend, no API keys and no build step.
+
+| File | What it is |
+| --- | --- |
+| `app/voicecore/demo.html` | A client's site with the receptionist live on it — the page you pitch from |
+| `app/voicecore/index.html` | The owner's dashboard: conversation feed, bookings, leads, Voice of the Customer brief, white-label setup |
+| `app/voicecore/widget.js` | The embeddable widget — chat, browser voice, channel switching |
+| `app/voicecore/engine.js` | Intent detection, slot filling, opening-hours logic, storage, reporting |
+
+**What works today**
+
+- 24/7 answering on web chat, with WhatsApp and phone channels sharing one memory
+- Booking against the client's real opening hours, including rescheduling off a closed day
+- English, Luganda and Kiswahili — the receptionist follows whichever the customer uses
+- Browser speech in and out (Chrome/Edge for voice input; typing works everywhere)
+- Automatic tagging as booking, lead, complaint or question — tags escalate, never downgrade
+- Complaints flagged urgent; hand-off to a human carrying the full transcript
+- A monthly Voice of the Customer brief generated from real conversations, print-ready
+- White-labelling per client from the dashboard: business name, persona, hours, services, prices
+
+**Try it**
+
+```bash
+python3 -m http.server 8000
+# then open http://localhost:8000/app/voicecore/demo.html
+# and http://localhost:8000/app/voicecore/index.html
+```
+
+Click **Load sample day** on the dashboard to populate a realistic day of calls
+before a client demo.
+
+**Put it on a client's site** — two tags before `</body>`:
+
+```html
+<script src="/app/voicecore/engine.js"></script>
+<script src="/app/voicecore/widget.js"
+        data-business="Nakawa Dental Clinic"
+        data-persona="Maria"
+        data-phone="+256 700 123 456"></script>
+```
+
+**Deliberate limits, so nobody is misled in a sales meeting**
+
+- Answers are deterministic, not generative: the receptionist quotes prices, hours
+  and services from the configured profile and never invents one. Open questions it
+  cannot place are handed to a human rather than guessed at.
+- Storage is `localStorage`, so the feed is per-browser. A shared team inbox needs a
+  server — that is the first upgrade.
+- "Phone" and "WhatsApp" are channel modes in the widget, proving the shared-memory
+  behaviour. Real phone lines connect through the Africa's Talking integration the
+  Bulk-SMS Dashboard already runs.
+- The Luganda and Kiswahili strings in `engine.js` should be read by a native speaker
+  before a client sees them.
+
+**The upgrade path** — the intent layer is the auditable floor, not a ceiling. Point
+`Brain.reply()`'s `unknown` branch at the Claude API and open questions get answered
+too, while booking, pricing and hours stay deterministic and defensible.
+
 ## Structure
 
 ```
@@ -49,6 +110,7 @@ existing website client is a warm pitch. Sell it to five clients before opening 
 │   ├── css/bds.css         # navy & gold design system (tokens, components, print)
 │   ├── js/bds.js           # nav, scroll reveal, enquiry form — progressive enhancement
 │   └── img/logo.svg        # brand mark, also used as favicon
+├── app/voicecore/          # the working AI receptionist (engine, widget, dashboard, demo)
 ├── tools/build.py          # renders every HTML page from the JSON content
 └── netlify.toml            # headers, caching, vanity redirects (/voicecore etc.)
 ```

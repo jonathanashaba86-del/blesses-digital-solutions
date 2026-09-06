@@ -89,7 +89,12 @@
           "label": "Languages at launch"
         }
       ],
-      "summary": "Answers every call, WhatsApp message and web chat around the clock, books the job, logs the lead, and hands a human the full history the moment they step in."
+      "summary": "Answers every call, WhatsApp message and web chat around the clock, books the job, logs the lead, and hands a human the full history the moment they step in.",
+      "live": {
+        "status": "Working build — ships today",
+        "demo": "../app/voicecore/demo.html",
+        "dashboard": "../app/voicecore/index.html"
+      }
     },
     {
       "slug": "scorecore",

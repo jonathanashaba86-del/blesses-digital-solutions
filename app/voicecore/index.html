@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VoiceCore Dashboard — Blessed Digital Solutions</title>
+<meta name="description" content="The owner's live conversation feed, bookings, leads and monthly Voice of the Customer brief.">
+<meta name="theme-color" content="#08122a">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Jost:wght@300;400;500;600&display=swap">
+<style>
+:root{
+  --navy-950:#050b1a;--navy-900:#08122a;--navy-800:#0b1b3a;--navy-700:#122a55;
+  --gold-600:#a8811a;--gold-500:#c9a227;--gold-400:#dcbb4e;--gold-300:#ecd48b;
+  --ivory:#f2f5fb;--slate:#93a2bb;--slate-dim:#71809c;
+  --line:rgba(255,255,255,.12);--line-soft:rgba(255,255,255,.07);
+  --ok:#37b579;--warn:#dcbb4e;--alert:#e0654f;
+  --display:'Jost','Segoe UI',system-ui,sans-serif;
+  --body:'Inter','Segoe UI',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;}
+*{margin:0;}
+body{background:var(--navy-950);color:var(--ivory);font-family:var(--body);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+ul{list-style:none;padding:0;}
+button,input,select,textarea{font:inherit;color:inherit;}
+:focus-visible{outline:2px solid var(--gold-400);outline-offset:2px;border-radius:5px;}
+h1,h2,h3,h4{font-family:var(--display);font-weight:500;line-height:1.15;letter-spacing:-.02em;}
+.wrap{max-width:1240px;margin-inline:auto;padding-inline:clamp(1rem,3vw,2rem);}
+
+/* Header */
+.top{border-bottom:1px solid var(--line);background:linear-gradient(140deg,var(--navy-800),var(--navy-950));position:sticky;top:0;z-index:50;}
+.top .wrap{display:flex;align-items:center;gap:1rem;min-height:66px;flex-wrap:wrap;}
+.brand{display:flex;align-items:center;gap:.7rem;}
+.brand i{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-style:normal;
+  background:linear-gradient(150deg,var(--gold-400),var(--gold-600));color:var(--navy-950);font-family:var(--display);font-weight:600;}
+.brand b{font-family:var(--display);font-weight:500;font-size:1rem;display:block;line-height:1.2;}
+.brand span{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-400);}
+.status{margin-left:auto;display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--slate);}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px rgba(55,181,121,.22);}
+.dot.off{background:var(--gold-500);box-shadow:0 0 0 3px rgba(201,162,39,.22);}
+.top a.btn{margin-left:.5rem;}
+
+.btn{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--line);background:rgba(255,255,255,.05);
+  border-radius:999px;padding:.5rem 1.05rem;font-family:var(--display);font-weight:500;font-size:.86rem;cursor:pointer;transition:all .2s;}
+.btn:hover{border-color:var(--gold-500);color:var(--gold-300);}
+.btn.gold{background:linear-gradient(140deg,var(--gold-400),var(--gold-600));color:var(--navy-950);border-color:transparent;font-weight:600;}
+.btn.gold:hover{color:var(--navy-950);filter:brightness(1.06);}
+.btn.sm{padding:.35rem .8rem;font-size:.78rem;}
+
+/* Tabs */
+.tabs{display:flex;gap:.25rem;border-bottom:1px solid var(--line);margin-top:0;overflow-x:auto;}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;cursor:pointer;padding:.85rem 1rem;
+  color:var(--slate);font-family:var(--display);font-size:.9rem;white-space:nowrap;}
+.tabs button[aria-selected="true"]{color:var(--gold-300);border-bottom-color:var(--gold-500);}
+.panel{display:none;padding-block:1.75rem 3.5rem;}
+.panel[data-active="1"]{display:block;}
+
+/* KPI */
+.kpis{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,175px),1fr));margin-bottom:1.75rem;}
+.kpi{background:var(--navy-900);padding:1.1rem 1.25rem;display:grid;gap:.2rem;}
+.kpi b{font-family:var(--display);font-size:1.85rem;font-weight:500;color:var(--gold-300);line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
+.kpi span{font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:var(--slate-dim);}
+
+/* Layout */
+.cols{display:grid;gap:1.5rem;}
+@media (min-width:1000px){.cols{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);align-items:start;}}
+.card{background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+.card h3{font-size:1.05rem;}
+.card-head{padding:.95rem 1.15rem;border-bottom:1px solid var(--line-soft);display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;}
+.card-head .label{font-family:var(--display);font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--slate-dim);}
+.card-body{padding:1.15rem;}
+.card-body.flush{padding:0;}
+
+/* Conversation feed */
+.feed{max-height:640px;overflow-y:auto;}
+.conv{border-bottom:1px solid var(--line-soft);padding:1rem 1.15rem;display:grid;gap:.55rem;cursor:pointer;transition:background .18s;}
+.conv:last-child{border-bottom:0;}
+.conv:hover{background:rgba(255,255,255,.04);}
+.conv-top{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;}
+.conv-who{font-family:var(--display);font-size:1rem;font-weight:500;}
+.conv-meta{margin-left:auto;font-size:.74rem;color:var(--slate-dim);letter-spacing:.06em;}
+.tag{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding:.22rem .6rem;border-radius:999px;border:1px solid;font-weight:600;}
+.tag.booking{color:var(--ok);border-color:rgba(55,181,121,.45);background:rgba(55,181,121,.12);}
+.tag.lead{color:var(--gold-300);border-color:rgba(201,162,39,.45);background:rgba(201,162,39,.12);}
+.tag.complaint{color:var(--alert);border-color:rgba(224,101,79,.5);background:rgba(224,101,79,.13);}
+.tag.question{color:var(--slate);border-color:var(--line);background:rgba(255,255,255,.05);}
+.chan-pill{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-dim);border:1px solid var(--line);border-radius:999px;padding:.2rem .55rem;}
+.conv-last{font-size:.9rem;color:var(--slate);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.conv-thread{display:none;grid-gap:.5rem;padding-top:.35rem;border-top:1px dashed var(--line-soft);margin-top:.35rem;}
+.conv[data-open="1"] .conv-thread{display:grid;}
+.turn{font-size:.87rem;line-height:1.55;padding:.45rem .7rem;border-radius:9px;max-width:88%;}
+.turn.agent{background:rgba(255,255,255,.05);border:1px solid var(--line-soft);justify-self:start;}
+.turn.customer{background:rgba(201,162,39,.14);border:1px solid rgba(201,162,39,.3);justify-self:end;}
+.turn small{display:block;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-dim);margin-bottom:.15rem;}
+
+/* Booking list */
+.row{display:grid;gap:.15rem;padding:.85rem 1.15rem;border-bottom:1px solid var(--line-soft);}
+.row:last-child{border-bottom:0;}
+.row b{font-family:var(--display);font-weight:500;font-size:.98rem;}
+.row span{font-size:.82rem;color:var(--slate);}
+.row .when{font-size:.78rem;color:var(--gold-300);letter-spacing:.06em;font-variant-numeric:tabular-nums;}
+.empty{padding:2.25rem 1.15rem;text-align:center;color:var(--slate-dim);font-size:.9rem;}
+
+/* Brief */
+.brief-doc{background:#fff;color:#101828;border-radius:14px;padding:clamp(1.5rem,4vw,2.75rem);}
+.brief-doc h2{color:#0b1b3a;font-size:clamp(1.5rem,3vw,2rem);}
+.brief-head{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:flex-end;border-bottom:2px solid #0b1b3a;padding-bottom:1rem;margin-bottom:1.5rem;}
+.brief-eyebrow{font-family:var(--display);font-size:.7rem;letter-spacing:.26em;text-transform:uppercase;color:#a8811a;font-weight:600;}
+.brief-grid{display:grid;gap:1px;background:#e4e0d6;border:1px solid #e4e0d6;border-radius:10px;overflow:hidden;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));margin-bottom:1.5rem;}
+.brief-grid div{background:#fff;padding:.9rem 1rem;}
+.brief-grid b{display:block;font-family:var(--display);font-size:1.6rem;color:#0b1b3a;line-height:1.1;font-variant-numeric:tabular-nums;}
+.brief-grid span{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:#6a7387;}
+.brief-doc h4{color:#0b1b3a;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;margin:1.5rem 0 .6rem;}
+.brief-doc p,.brief-doc li{color:#3d475c;font-size:.95rem;line-height:1.7;}
+.brief-doc li{padding:.4rem 0;border-bottom:1px solid #eee;display:flex;justify-content:space-between;gap:1rem;}
+.brief-doc li:last-child{border-bottom:0;}
+.brief-doc li b{color:#0b1b3a;font-variant-numeric:tabular-nums;}
+.brief-foot{margin-top:2rem;padding-top:1rem;border-top:1px solid #e4e0d6;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#6a7387;}
+
+/* Settings */
+.form-grid{display:grid;gap:1.1rem;}
+@media (min-width:700px){.form-grid.two{grid-template-columns:1fr 1fr;}}
+.field{display:grid;gap:.35rem;}
+.field label{font-family:var(--display);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--slate);font-weight:500;}
+.field input,.field textarea{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:10px;padding:.65rem .85rem;font-size:.93rem;width:100%;}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--gold-500);}
+.hint{font-size:.78rem;color:var(--slate-dim);}
+.svc-row{display:grid;grid-template-columns:1fr 80px 130px 34px;gap:.5rem;align-items:center;}
+.svc-row input{padding:.5rem .7rem;font-size:.88rem;}
+.svc-del{background:none;border:1px solid var(--line);border-radius:8px;color:var(--slate);cursor:pointer;height:34px;}
+.svc-del:hover{border-color:var(--alert);color:var(--alert);}
+code.embed{display:block;background:var(--navy-950);border:1px solid var(--line);border-radius:10px;padding:1rem;
+  font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:.8rem;color:var(--gold-300);overflow-x:auto;white-space:pre;line-height:1.7;}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120%);background:var(--gold-500);color:var(--navy-950);
+  padding:.7rem 1.3rem;border-radius:999px;font-weight:600;font-family:var(--display);font-size:.9rem;transition:transform .3s cubic-bezier(.2,.7,.25,1);z-index:100;}
+.toast[data-show="1"]{transform:translateX(-50%) translateY(0);}
+@media print{
+  .top,.tabs,.btn,.kpis{display:none!important;}
+  body{background:#fff;}
+  .panel{display:none!important;}
+  .panel[data-active="1"]{display:block!important;}
+  .brief-doc{border:0;padding:0;}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../../index.html">
+      <i>B</i>
+      <span><b id="bizName">VoiceCore</b><span>Reception dashboard</span></span>
+    </a>
+    <div class="status"><i class="dot" id="statusDot"></i><span id="statusText">Answering now</span></div>
+    <a class="btn sm" href="demo.html">Open the client demo</a>
+    <button class="btn sm gold" type="button" id="seedBtn">Load sample day</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-tab="live">Live feed</button>
+    <button role="tab" aria-selected="false" data-tab="bookings">Bookings &amp; leads</button>
+    <button role="tab" aria-selected="false" data-tab="brief">Voice of the Customer</button>
+    <button role="tab" aria-selected="false" data-tab="setup">Setup &amp; embed</button>
+  </div>
+
+  <!-- LIVE -->
+  <section class="panel" data-panel="live" data-active="1" role="tabpanel">
+    <div class="kpis" id="kpis"></div>
+    <div class="cols">
+      <div class="card">
+        <div class="card-head">
+          <h3>Conversation feed</h3>
+          <span class="label" id="feedCount"></span>
+          <button class="btn sm" type="button" id="clearBtn" style="margin-left:auto;">Clear all data</button>
+        </div>
+        <div class="card-body flush feed" id="feed"></div>
+      </div>
+      <div style="display:grid;gap:1.5rem;">
+        <div class="card">
+          <div class="card-head"><h3>Needs the owner</h3></div>
+          <div class="card-body flush" id="urgent"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Next bookings</h3></div>
+          <div class="card-body flush" id="nextBookings"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKINGS -->
+  <section class="panel" data-panel="bookings" role="tabpanel">
+    <div class="cols">
+      <div class="card">
+        <div class="card-head"><h3>All bookings</h3><span class="label" id="bookCount"></span></div>
+        <div class="card-body flush" id="allBookings"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>Captured leads</h3><span class="label" id="leadCount"></span></div>
+        <div class="card-body flush" id="allLeads"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRIEF -->
+  <section class="panel" data-panel="brief" role="tabpanel">
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.25rem;">
+      <button class="btn gold" type="button" onclick="window.print()">Print / save as PDF</button>
+      <span class="hint" style="align-self:center;">Generated from the real conversations below — the monthly one-pager the spec promises.</span>
+    </div>
+    <div class="brief-doc" id="briefDoc"></div>
+  </section>
+
+  <!-- SETUP -->
+  <section class="panel" data-panel="setup" role="tabpanel">
+    <div class="cols">
+      <div class="card">
+        <div class="card-head"><h3>Business profile</h3><span class="label">White-label per client</span></div>
+        <div class="card-body">
+          <div class="form-grid two">
+            <div class="field"><label for="fBiz">Business name</label><input id="fBiz" type="text"></div>
+            <div class="field"><label for="fPersona">Receptionist name</label><input id="fPersona" type="text"></div>
+            <div class="field"><label for="fPhone">Hand-off number</label><input id="fPhone" type="text"></div>
+            <div class="field"><label for="fLoc">Location</label><input id="fLoc" type="text"></div>
+          </div>
+          <div class="field" style="margin-top:1.1rem;">
+            <label for="fPromise">After-hours promise</label>
+            <input id="fPromise" type="text">
+          </div>
+          <h4 style="font-family:var(--display);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--slate);margin:1.6rem 0 .7rem;">Services &amp; prices</h4>
+          <div id="svcList" style="display:grid;gap:.5rem;"></div>
+          <button class="btn sm" type="button" id="addSvc" style="margin-top:.7rem;">+ Add service</button>
+          <div style="display:flex;gap:.7rem;margin-top:1.5rem;flex-wrap:wrap;">
+            <button class="btn gold" type="button" id="saveCfg">Save profile</button>
+            <button class="btn" type="button" id="resetCfg">Reset to sample</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>Put it on a client's site</h3></div>
+        <div class="card-body">
+          <p class="hint" style="margin-bottom:.9rem;">Two script tags. No build step, no backend, no keys. Paste before <code>&lt;/body&gt;</code>.</p>
+          <code class="embed" id="embedCode"></code>
+          <button class="btn sm" type="button" id="copyEmbed" style="margin-top:.9rem;">Copy embed code</button>
+          <h4 style="font-family:var(--display);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--slate);margin:1.75rem 0 .6rem;">What ships today</h4>
+          <ul style="display:grid;gap:.55rem;font-size:.9rem;color:var(--slate);">
+            <li>✦ Web chat + browser voice, 24/7, in English, Luganda and Swahili</li>
+            <li>✦ Booking against real opening hours, with closed-day rescheduling</li>
+            <li>✦ Auto-tagging: booking, lead, complaint, question</li>
+            <li>✦ One memory across web, WhatsApp and phone channels</li>
+            <li>✦ Human hand-off carrying the full transcript</li>
+            <li>✦ Monthly Voice of the Customer brief, print-ready</li>
+          </ul>
+          <h4 style="font-family:var(--display);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--slate);margin:1.5rem 0 .6rem;">Next, when you are ready</h4>
+          <ul style="display:grid;gap:.55rem;font-size:.9rem;color:var(--slate-dim);">
+            <li>· Real phone lines via the Africa's Talking integration you already run</li>
+            <li>· Claude API behind the unknown-intent fallback, for open questions</li>
+            <li>· Shared server storage so the team sees one feed, not one per browser</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="engine.js"></script>
+<script>
+(function () {
+  'use strict';
+  var VC = window.VoiceCore;
+  var $ = function (s) { return document.querySelector(s); };
+  var $$ = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+    });
+  }
+  function ago(ts) {
+    var s = Math.floor((Date.now() - ts) / 1000);
+    if (s < 60) return 'just now';
+    if (s < 3600) return Math.floor(s / 60) + ' min ago';
+    if (s < 86400) return Math.floor(s / 3600) + ' h ago';
+    return Math.floor(s / 86400) + ' d ago';
+  }
+  function toast(msg) {
+    var t = $('#toast');
+    t.textContent = msg;
+    t.setAttribute('data-show', '1');
+    clearTimeout(t._t);
+    t._t = setTimeout(function () { t.setAttribute('data-show', '0'); }, 2600);
+  }
+
+  /* ---- Tabs ---- */
+  $$('.tabs button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      $$('.tabs button').forEach(function (x) { x.setAttribute('aria-selected', 'false'); });
+      b.setAttribute('aria-selected', 'true');
+      $$('.panel').forEach(function (p) {
+        p.setAttribute('data-active', p.dataset.panel === b.dataset.tab ? '1' : '0');
+      });
+      render();
+    });
+  });
+
+  /* ---- Header status ---- */
+  function renderStatus() {
+    var now = new Date();
+    var open = VC.hours.isOpenAt(now, { h: now.getHours(), m: now.getMinutes() });
+    $('#bizName').textContent = VC.config.business;
+    $('#statusDot').className = 'dot' + (open ? '' : ' off');
+    $('#statusText').textContent = open
+      ? VC.config.persona + ' is answering now'
+      : 'After hours — ' + VC.config.persona + ' still answering';
+  }
+
+  /* ---- Live feed ---- */
+  function renderFeed() {
+    var data = VC.store.all();
+    var convs = data.conversations.slice().sort(function (a, b) { return b.updated - a.updated; });
+    var voc = VC.voiceOfCustomer();
+
+    $('#kpis').innerHTML = [
+      ['Conversations', voc.conversations],
+      ['Bookings made', voc.bookings],
+      ['Leads captured', voc.leads],
+      ['After hours', voc.afterHoursShare + '%'],
+      ['Handed to a human', voc.handoffs]
+    ].map(function (k) {
+      return '<div class="kpi"><b>' + esc(k[1]) + '</b><span>' + esc(k[0]) + '</span></div>';
+    }).join('');
+
+    $('#feedCount').textContent = convs.length + ' total';
+
+    if (!convs.length) {
+      $('#feed').innerHTML = '<div class="empty">No conversations yet.<br>Open the client demo and talk to ' +
+        esc(VC.config.persona) + ', or load a sample day.</div>';
+    } else {
+      $('#feed').innerHTML = convs.map(function (c) {
+        var lastCustomer = c.messages.filter(function (m) { return m.role === 'customer'; }).pop();
+        var last = lastCustomer || c.messages[c.messages.length - 1];
+        var name = c.name || c.contact || (c.channel === 'phone' ? 'Caller' : 'Visitor');
+        var thread = c.messages.map(function (m) {
+          return '<div class="turn ' + m.role + '"><small>' +
+            (m.role === 'agent' ? esc(VC.config.persona) : 'Customer') + '</small>' + esc(m.text) + '</div>';
+        }).join('');
+        return '<article class="conv" data-open="0">' +
+          '<div class="conv-top">' +
+            '<span class="conv-who">' + esc(name) + '</span>' +
+            '<span class="tag ' + esc(c.tag) + '">' + esc(c.tag) + '</span>' +
+            (c.urgent ? '<span class="tag complaint">urgent</span>' : '') +
+            (c.handedOff ? '<span class="chan-pill">handed off</span>' : '') +
+            c.channels.map(function (ch) { return '<span class="chan-pill">' + esc(ch) + '</span>'; }).join('') +
+            '<span class="conv-meta">' + esc(ago(c.updated)) + '</span>' +
+          '</div>' +
+          '<p class="conv-last">' + esc(last ? last.text : '') + '</p>' +
+          '<div class="conv-thread">' + thread + '</div>' +
+        '</article>';
+      }).join('');
+      $$('.conv').forEach(function (n) {
+        n.addEventListener('click', function () {
+          n.setAttribute('data-open', n.getAttribute('data-open') === '1' ? '0' : '1');
+        });
+      });
+    }
+
+    var urgent = convs.filter(function (c) { return c.urgent || c.handedOff; });
+    $('#urgent').innerHTML = urgent.length ? urgent.map(function (c) {
+      var last = c.messages.filter(function (m) { return m.role === 'customer'; }).pop();
+      return '<div class="row"><b>' + esc(c.name || c.contact || 'Caller') + '</b>' +
+        '<span>' + esc(last ? last.text : '') + '</span>' +
+        '<span class="when">' + esc(ago(c.updated)) + '</span></div>';
+    }).join('') : '<div class="empty">Nothing waiting on you.</div>';
+
+    var upcoming = data.bookings.slice().sort(function (a, b) { return a.when - b.when; }).slice(0, 6);
+    $('#nextBookings').innerHTML = upcoming.length ? upcoming.map(bookingRow).join('')
+      : '<div class="empty">No bookings yet.</div>';
+  }
+
+  function bookingRow(b) {
+    var d = new Date(b.when);
+    return '<div class="row"><b>' + esc(b.name || 'Unnamed') + '</b>' +
+      '<span>' + esc(b.service) + (b.price ? ' · ' + esc(b.price) : '') + '</span>' +
+      '<span class="when">' + esc(VC.format.date(d) + ' at ' + VC.format.time({ h: d.getHours(), m: d.getMinutes() })) +
+      ' · ' + esc(b.phone || 'no number') + '</span></div>';
+  }
+
+  function renderBookings() {
+    var data = VC.store.all();
+    var bs = data.bookings.slice().sort(function (a, b) { return a.when - b.when; });
+    $('#bookCount').textContent = bs.length + ' total';
+    $('#allBookings').innerHTML = bs.length ? bs.map(bookingRow).join('')
+      : '<div class="empty">No bookings yet.</div>';
+    $('#leadCount').textContent = data.leads.length + ' total';
+    $('#allLeads').innerHTML = data.leads.length ? data.leads.map(function (l) {
+      return '<div class="row"><b>' + esc(l.name || l.phone || 'Unknown') + '</b>' +
+        '<span>' + esc(l.note) + '</span>' +
+        '<span class="when">' + esc(l.channel) + ' · ' + esc(ago(l.created)) + '</span></div>';
+    }).join('') : '<div class="empty">No leads captured yet.</div>';
+  }
+
+  /* ---- Voice of the Customer ---- */
+  var THEME_LABEL = {
+    booking: 'Wanting to book', price: 'Asking about price', hours: 'Asking about opening hours',
+    location: 'Asking where you are', services: 'Asking what you offer', complaint: 'Complaints',
+    human: 'Asking for a human', thanks: 'Thanks', bye: 'Sign-offs'
+  };
+
+  function renderBrief() {
+    var v = VC.voiceOfCustomer();
+    var now = new Date();
+    var month = ['January','February','March','April','May','June','July','August','September','October','November','December'][now.getMonth()];
+
+    var themes = v.themes.length ? v.themes.map(function (t) {
+      return '<li><span>' + esc(THEME_LABEL[t.theme] || t.theme) + '</span><b>' + t.count + '</b></li>';
+    }).join('') : '<li><span>No conversations yet</span><b>0</b></li>';
+
+    var complaints = v.urgent.length ? v.urgent.map(function (c) {
+      var m = c.messages.filter(function (x) { return x.role === 'customer'; })[0];
+      return '<li><span>' + esc(m ? m.text : '') + '</span><b>' + esc(c.name || 'anon') + '</b></li>';
+    }).join('') : '<li><span>No complaints this period — worth saying out loud.</span><b>0</b></li>';
+
+    var missedLine = v.missedOpportunities > 0
+      ? v.missedOpportunities + ' conversation' + (v.missedOpportunities === 1 ? '' : 's') +
+        ' showed buying intent but did not end in a booking. Those are the calls worth returning first.'
+      : 'Every conversation with buying intent ended in a booking or a hand-off. Nothing was dropped.';
+
+    var afterHoursLine = v.afterHours > 0
+      ? v.afterHours + ' of ' + v.conversations + ' conversations (' + v.afterHoursShare +
+        '%) arrived outside opening hours. Before VoiceCore, those rang out.'
+      : 'All conversations arrived inside opening hours this period.';
+
+    $('#briefDoc').innerHTML =
+      '<div class="brief-head">' +
+        '<div><p class="brief-eyebrow">Voice of the Customer</p>' +
+        '<h2>' + esc(VC.config.business) + '</h2></div>' +
+        '<div style="text-align:right;"><p class="brief-eyebrow">' + esc(month + ' ' + now.getFullYear()) + '</p>' +
+        '<p style="font-size:.85rem;color:#6a7387;">Prepared by ' + esc(VC.config.persona) + ' · VoiceCore</p></div>' +
+      '</div>' +
+      '<div class="brief-grid">' +
+        '<div><b>' + v.conversations + '</b><span>Conversations</span></div>' +
+        '<div><b>' + v.bookings + '</b><span>Bookings</span></div>' +
+        '<div><b>' + v.leads + '</b><span>Leads</span></div>' +
+        '<div><b>' + v.afterHoursShare + '%</b><span>After hours</span></div>' +
+        '<div><b>' + v.handoffs + '</b><span>To a human</span></div>' +
+      '</div>' +
+      '<h4>What customers actually asked about</h4><ul>' + themes + '</ul>' +
+      '<h4>Complaints and urgent flags</h4><ul>' + complaints + '</ul>' +
+      '<h4>Missed opportunities</h4><p>' + esc(missedLine) + '</p>' +
+      '<h4>Out of hours</h4><p>' + esc(afterHoursLine) + '</p>' +
+      '<div class="brief-foot">Blessed Digital Solutions &nbsp;|&nbsp; VoiceCore &nbsp;|&nbsp; ' +
+        esc(VC.config.business) + '</div>';
+  }
+
+  /* ---- Setup ---- */
+  function renderSetup() {
+    $('#fBiz').value = VC.config.business;
+    $('#fPersona').value = VC.config.persona;
+    $('#fPhone').value = VC.config.handoffNumber;
+    $('#fLoc').value = VC.config.location;
+    $('#fPromise').value = VC.config.afterHoursPromise;
+    renderServices();
+    $('#embedCode').textContent =
+      '<script src="' + location.origin + '/app/voicecore/engine.js"><\/script>\n' +
+      '<script src="' + location.origin + '/app/voicecore/widget.js"\n' +
+      '        data-business="' + VC.config.business + '"\n' +
+      '        data-persona="' + VC.config.persona + '"\n' +
+      '        data-phone="' + VC.config.handoffNumber + '"><\/script>';
+  }
+
+  function renderServices() {
+    $('#svcList').innerHTML = VC.config.services.map(function (s, i) {
+      return '<div class="svc-row" data-i="' + i + '">' +
+        '<input type="text" value="' + esc(s.name) + '" data-k="name" aria-label="Service name">' +
+        '<input type="number" value="' + esc(s.minutes) + '" data-k="minutes" aria-label="Minutes">' +
+        '<input type="text" value="' + esc(s.price || '') + '" data-k="price" aria-label="Price">' +
+        '<button class="svc-del" type="button" aria-label="Remove">&times;</button></div>';
+    }).join('');
+    $$('#svcList .svc-row').forEach(function (row) {
+      var i = parseInt(row.dataset.i, 10);
+      row.querySelectorAll('input').forEach(function (inp) {
+        inp.addEventListener('input', function () {
+          var k = inp.dataset.k;
+          VC.config.services[i][k] = k === 'minutes' ? parseInt(inp.value, 10) || 30 : inp.value;
+        });
+      });
+      row.querySelector('.svc-del').addEventListener('click', function () {
+        VC.config.services.splice(i, 1);
+        renderServices();
+      });
+    });
+  }
+
+  $('#addSvc').addEventListener('click', function () {
+    VC.config.services.push({ name: 'New service', minutes: 30, price: 'UGX 0' });
+    renderServices();
+  });
+
+  $('#saveCfg').addEventListener('click', function () {
+    VC.config.business = $('#fBiz').value.trim() || VC.config.business;
+    VC.config.persona = $('#fPersona').value.trim() || VC.config.persona;
+    VC.config.handoffNumber = VC.config.phone = $('#fPhone').value.trim();
+    VC.config.location = $('#fLoc').value.trim();
+    VC.config.afterHoursPromise = $('#fPromise').value.trim();
+    VC.saveConfig();
+    renderStatus(); renderSetup();
+    toast('Profile saved — the widget picks it up immediately');
+  });
+
+  $('#resetCfg').addEventListener('click', function () {
+    VC.config = JSON.parse(JSON.stringify(VC.defaultConfig));
+    VC.saveConfig();
+    renderStatus(); renderSetup();
+    toast('Reset to the sample profile');
+  });
+
+  $('#copyEmbed').addEventListener('click', function () {
+    var text = $('#embedCode').textContent;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(function () { toast('Embed code copied'); },
+        function () { toast('Select the code and copy manually'); });
+    } else { toast('Select the code and copy manually'); }
+  });
+
+  $('#clearBtn').addEventListener('click', function () {
+    if (!confirm('Delete every conversation, booking and lead on this browser?')) return;
+    VC.store.reset();
+    render();
+    toast('All data cleared');
+  });
+
+  /* ---- Sample day: a realistic set of conversations for a pitch ---- */
+  $('#seedBtn').addEventListener('click', function () {
+    var scripts = [
+      { ch: 'phone',    lines: ['Hello, can I book an appointment?', 'Teeth cleaning', 'tomorrow', '10am', 'Grace Namutebi', '0772456789'] },
+      { ch: 'whatsapp', lines: ['how much is a filling?', 'ok book me a filling on friday at 2pm', 'Daniel Okello', '0700334455'] },
+      { ch: 'web',      lines: ['are you open on sunday?'] },
+      { ch: 'phone',    lines: ['I waited two hours yesterday, the service was terrible'] },
+      { ch: 'whatsapp', lines: ['Habari, nataka kuweka miadi', 'Consultation', 'kesho', '11am', 'Amina Hassan', '0781223344'] },
+      { ch: 'web',      lines: ['where are you located?', 'thanks'] },
+      { ch: 'phone',    lines: ['let me speak to a real person'] },
+      { ch: 'web',      lines: ['Oli otya, njagala okulagaana', 'Extraction', 'monday', '9am', 'Joseph Ssekandi', '0755667788'] }
+    ];
+    scripts.forEach(function (s) {
+      var sess = new VC.Session(s.ch);
+      sess.greeting();
+      s.lines.forEach(function (l) { sess.reply(l); });
+    });
+    render();
+    toast('Sample day loaded — ' + scripts.length + ' conversations');
+  });
+
+  /* ---- Render everything ---- */
+  function render() {
+    renderStatus();
+    renderFeed();
+    renderBookings();
+    renderBrief();
+    renderSetup();
+  }
+
+  VC.store.onChange(function () {
+    renderFeed(); renderBookings(); renderBrief();
+  });
+
+  render();
+  setInterval(renderFeed, 30000);
+})();
+</script>
+</body>
+</html>
