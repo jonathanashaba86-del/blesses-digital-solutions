@@ -1,332 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blessed Digital Solutions</title>
+# MANNIE — Fashion in the Round
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+A single-file, dependency-free storefront built by **Blessed Digital Solutions** (Kampala, Uganda).
 
-body{
-    font-family:'Segoe UI',sans-serif;
-    line-height:1.6;
-    background:#f5f7fa;
-    color:#333;
-}
+Every garment, bag, shoe and accessory on the site sits on a turntable: drag it and it turns a
+full 360°, front to back, so a customer reads the stitching before they commit. Colourways recolour
+the piece live, every size shows its real stock count, and the bag checks out over WhatsApp.
 
-header{
-    background:linear-gradient(135deg,#0f172a,#1e3a8a);
-    color:white;
-    text-align:center;
-    padding:120px 20px;
-}
+**Live file:** [`index.html`](index.html) — open it in a browser. No build step, no server, no npm.
 
-header h1{
-    font-size:3rem;
-    margin-bottom:15px;
-}
+---
 
-header p{
-    font-size:1.2rem;
-    margin-bottom:30px;
-}
+## What is in the box
 
-.btn{
-    display:inline-block;
-    background:#2563eb;
-    color:white;
-    text-decoration:none;
-    padding:12px 30px;
-    border-radius:8px;
-    transition:0.3s;
-}
+| | |
+|---|---|
+| **57 products** | 14 categories — tops, outerwear, bottoms, dresses, sleep, footwear, bags, belts, eyewear, headwear, accessories, intimates, heritage |
+| **126 photographs** | A front and a back frame for almost every piece, so the turntable shows two real angles |
+| **3D vector fallback** | Every silhouette is also drawn as an extruded SVG garment. If a photo ever fails to load, the piece falls back to it silently — a client never sees a broken image |
+| **Live stock** | Per-size counts, "only N left" and sold-out states drive the badges and the buttons |
+| **WhatsApp checkout** | The bag becomes a formatted message to `+256 777 691011` |
+| **Photo Studio** | A built-in panel (⧉, bottom left) to swap any product's photography without opening the code |
+| **Zero dependencies** | Two Google Fonts and the image CDN. Everything else is hand-written HTML, CSS and JS |
 
-.btn:hover{
-    background:#1d4ed8;
-}
+## Photography
 
-nav{
-    background:#111827;
-    text-align:center;
-    padding:15px;
-    position:sticky;
-    top:0;
-    z-index:100;
-}
+The site ships with real photography served from the Unsplash CDN — free for commercial use,
+no API key, no expiry, no attribution required (we credit it anyway in the footer).
 
-nav a{
-    color:white;
-    text-decoration:none;
-    margin:0 15px;
-    font-weight:600;
-}
+Images are pulled at two sizes: a light **620px** crop for the 57 grid cards and a **1100px** crop
+inside the studio, all lazily loaded, so the page stays fast on a Kampala mobile connection.
 
-nav a:hover{
-    color:#60a5fa;
-}
+### Replacing them with your own shoot
 
-section{
-    max-width:1100px;
-    margin:auto;
-    padding:80px 20px;
-}
+1. Open the site and click **⧉ Photo Studio** (bottom left).
+2. Pick a product, paste a **front** image URL, optionally a **back** one.
+3. For a true turntable, paste 8–36 frames (one URL per line) into the 360° box — dragging then
+   scrubs the real frames and the object genuinely rotates.
+4. Hit **Apply** to preview, then **Export code** and paste the block over the `SHOTS` object near
+   the top of the `<script>` in `index.html`.
 
-h2{
-    text-align:center;
-    margin-bottom:40px;
-    color:#1e3a8a;
-}
+Shooting a 360°: phone on a tripod, product on a turntable marked at 24 points, one frame per mark.
+Never move the phone.
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:25px;
-}
+## Deploying
 
-.card{
-    background:white;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
-    transition:0.3s;
-}
+The whole site is one file, so anything that serves static files works:
 
-.card:hover{
-    transform:translateY(-8px);
-}
+```bash
+# GitHub Pages — Settings → Pages → deploy from branch → root
+# Netlify / Vercel — drag the folder in, no build command
+# Any cPanel host — upload index.html to public_html
+```
 
-.card h3{
-    margin-bottom:10px;
-}
+Set the canonical domain in the `<link rel="canonical">` tag and the Open Graph URLs in `<head>`
+before going live.
 
-.about{
-    text-align:center;
-    font-size:1.1rem;
-}
+## Repository contents
 
-.testimonial{
-    text-align:center;
-}
+- `index.html` — the MANNIE storefront (this project)
+- `blessed-digital-solutions.html` — the earlier Blessed Digital Solutions agency page, kept intact
+- `README.md` — you are here
 
-form{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-}
+## Built by
 
-input, textarea{
-    padding:12px;
-    border:1px solid #ccc;
-    border-radius:8px;
-    font-size:16px;
-}
-
-button{
-    background:#2563eb;
-    color:white;
-    border:none;
-    padding:14px;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:16px;
-}
-
-button:hover{
-    background:#1d4ed8;
-}
-
-footer{
-    background:#111827;
-    color:white;
-    text-align:center;
-    padding:30px;
-}
-
-.social a{
-    color:white;
-    text-decoration:none;
-    margin:0 10px;
-}
-
-.social a:hover{
-    color:#60a5fa;
-}
-
-@media(max-width:768px){
-    header h1{
-        font-size:2.2rem;
-    }
-
-    nav a{
-        display:block;
-        margin:10px 0;
-    }
-}
-</style>
-</head>
-
-<body>
-
-<header>
-    <h1>Blessed Digital Solutions</h1>
-    <p>Professional Web Development • Digital Marketing • Brand Growth</p>
-    <a href="#contact" class="btn">Get Started</a>
-</header>
-
-<nav>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#testimonials">Testimonials</a>
-    <a href="#contact">Contact</a>
-</nav>
-
-<section id="about">
-    <h2>About Us</h2>
-    <div class="about">
-        <p>
-            Blessed Digital Solutions helps businesses establish a strong online
-            presence through professional website development, digital marketing,
-            branding, and content creation. We focus on delivering modern digital
-            solutions that drive growth and increase visibility.
-        </p>
-    </div>
-</section>
-
-<section id="services">
-    <h2>Our Services</h2>
-
-    <div class="grid">
-        <div class="card">
-            <h3>Web Development</h3>
-            <p>Responsive business websites, portfolios, landing pages and e-commerce solutions.</p>
-        </div>
-
-        <div class="card">
-            <h3>Digital Marketing</h3>
-            <p>Social media marketing, SEO optimization and online advertising.</p>
-        </div>
-
-        <div class="card">
-            <h3>Graphic Design</h3>
-            <p>Professional logos, posters, company profiles and branding materials.</p>
-        </div>
-
-        <div class="card">
-            <h3>Content Creation</h3>
-            <p>Creative content for TikTok, YouTube, Facebook and Instagram.</p>
-        </div>
-    </div>
-</section>
-
-<section id="skills">
-    <h2>Skills</h2>
-
-    <div class="grid">
-        <div class="card">
-            <h3>HTML & CSS</h3>
-            <p>Modern responsive website design.</p>
-        </div>
-
-        <div class="card">
-            <h3>JavaScript</h3>
-            <p>Interactive user experiences and functionality.</p>
-        </div>
-
-        <div class="card">
-            <h3>SEO</h3>
-            <p>Search engine optimization and website ranking.</p>
-        </div>
-
-        <div class="card">
-            <h3>Digital Marketing</h3>
-            <p>Audience growth and lead generation strategies.</p>
-        </div>
-    </div>
-</section>
-
-<section id="projects">
-    <h2>Featured Projects</h2>
-
-    <div class="grid">
-        <div class="card">
-            <h3>Corporate Website</h3>
-            <p>Developed a professional website for a local business to improve online visibility.</p>
-        </div>
-
-        <div class="card">
-            <h3>Marketing Campaign</h3>
-            <p>Created a social media campaign that increased engagement and brand awareness.</p>
-        </div>
-
-        <div class="card">
-            <h3>Brand Identity Package</h3>
-            <p>Designed logos, banners and marketing materials for a startup company.</p>
-        </div>
-    </div>
-</section>
-
-<section id="testimonials">
-    <h2>Client Testimonials</h2>
-
-    <div class="grid">
-        <div class="card testimonial">
-            <p>
-                "Excellent website design and outstanding support throughout the project."
-            </p>
-            <strong>- Client A</strong>
-        </div>
-
-        <div class="card testimonial">
-            <p>
-                "Our social media engagement improved significantly after working with Blessed Digital Solutions."
-            </p>
-            <strong>- Client B</strong>
-        </div>
-
-        <div class="card testimonial">
-            <p>
-                "Professional, reliable and highly recommended."
-            </p>
-            <strong>- Client C</strong>
-        </div>
-    </div>
-</section>
-
-<section id="contact">
-    <h2>Contact Us</h2>
-
-    <form>
-        <input type="text" placeholder="Your Name" required>
-
-        <input type="email" placeholder="Your Email" required>
-
-        <textarea rows="5" placeholder="Your Message"></textarea>
-
-        <button type="submit">Send Message</button>
-    </form>
-</section>
-
-<footer>
-    <h3>Blessed Digital Solutions</h3>
-
-    <div class="social">
-        <a href="#">Facebook</a>
-        <a href="#">LinkedIn</a>
-        <a href="#">GitHub</a>
-        <a href="#">Instagram</a>
-    </div>
-
-    <p style="margin-top:15px;">
-        © 2026 Blessed Digital Solutions. All Rights Reserved.
-    </p>
-</footer>
-
-</body>
-</html>
+**Blessed Digital Solutions** — web development, digital marketing, branding and content.
+WhatsApp [+256 777 691011](https://wa.me/256777691011) · [jonathanashaba86@gmail.com](mailto:jonathanashaba86@gmail.com)

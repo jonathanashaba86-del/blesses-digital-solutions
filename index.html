@@ -2,331 +2,2032 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blessed Digital Solutions</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MANNIE — Fashion in the Round</title>
+<meta name="description" content="MANNIE is a fashion house built for rotation. Every garment, bag, shoe and accessory turns a full 360° so you see every seam before you buy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta name="theme-color" content="#F4F2EC">
+<meta name="author" content="MANNIE — built by Blessed Digital Solutions">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MANNIE">
+<meta property="og:title" content="MANNIE — Fashion in the Round">
+<meta property="og:description" content="Every garment, bag, shoe and accessory turns a full 360°. Real photographs, live stock counts, checkout on WhatsApp. Cut in Kampala, shipped worldwide.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=1200&q=75">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MANNIE — Fashion in the Round">
+<meta name="twitter:description" content="Turn any piece a full 360° before you buy it.">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=1200&q=75">
+<link rel="canonical" href="https://mannie.ug/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2314151A'/%3E%3Ccircle cx='16' cy='16' r='8' fill='none' stroke='%235B3FD6' stroke-width='2.4'/%3E%3Ccircle cx='16' cy='16' r='2.2' fill='%23F4F2EC'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&family=Jost:wght@200;300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+/* ══════════════════════════════════════════════════════
+   MANNIE — design tokens
+   void/slate  : obsidian with a violet undertone
+   bone        : the "fabric white"
+   iris        : the signature iridescent accent
+   flare       : reserved ONLY for stock urgency
+   ══════════════════════════════════════════════════════ */
+:root{
+  --paper:#F4F2EC;      /* warm porcelain page */
+  --card:#FCFBF8;       /* gallery-white product card */
+  --sink:#EAE6DC;       /* recessed panel */
+  --ink:#14151A;        /* headlines */
+  --body:#3B3B45;       /* running text */
+  --muted:#85838E;      /* labels, captions */
+  --faint:#B4B0A8;
+  --line:#DED9CE;       /* hairlines */
+  --iris:#5B3FD6;       /* signature violet */
+  --teal:#0E8F86;
+  --amber:#C98518;
+  --flare:#BE3419;      /* scarcity only, nothing else */
+  --irid:linear-gradient(100deg,#5B3FD6 0%,#0E8F86 34%,#C98518 66%,#5B3FD6 100%);
+
+  --d:'Bodoni Moda',Didot,Georgia,serif;
+  --u:'Jost',system-ui,sans-serif;
+  --m:'DM Mono',ui-monospace,monospace;
+
+  --pad:clamp(16px,5vw,68px);
+  --r:3px;
 }
 
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
-    font-family:'Segoe UI',sans-serif;
-    line-height:1.6;
-    background:#f5f7fa;
-    color:#333;
+  background:var(--paper);color:var(--body);font-family:var(--u);
+  font-weight:300;line-height:1.6;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+body.lock{overflow:hidden}
+img,svg{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--iris);color:#fff}
+:focus-visible{outline:2px solid var(--iris);outline-offset:3px}
+
+/* film grain — keeps the flat dark from feeling like a screen */
+body::after{
+  content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.022;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* ─── type scale ─── */
+.eyebrow{font-family:var(--u);font-size:10.5px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.serif{font-family:var(--d);font-weight:400;line-height:.92;letter-spacing:-.015em}
+.mono{font-family:var(--m);font-size:11px;letter-spacing:.02em}
+
+/* ══════════════ PRELOADER ══════════════ */
+#boot{
+  position:fixed;inset:0;z-index:1000;background:var(--paper);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;
+  transition:opacity .7s ease,visibility .7s;
+}
+#boot.gone{opacity:0;visibility:hidden}
+#boot .bmark{font-family:var(--d);font-weight:500;font-size:clamp(42px,11vw,84px);letter-spacing:.14em;color:var(--ink);position:relative}
+#boot .bmark span{display:inline-block;opacity:0;transform:translateY(16px) rotateX(-60deg);animation:letterUp .5s forwards}
+@keyframes letterUp{to{opacity:1;transform:none}}
+#boot .bbar{width:min(210px,54vw);height:1px;background:var(--line);position:relative;overflow:hidden}
+#boot .bbar i{position:absolute;inset:0;background:var(--irid);transform:translateX(-100%);animation:load 1.5s .3s cubic-bezier(.6,0,.2,1) forwards}
+@keyframes load{to{transform:translateX(0)}}
+#boot .bnote{font-family:var(--u);font-weight:500;font-size:9.5px;letter-spacing:.34em;color:var(--faint);text-transform:uppercase}
+
+/* ══════════════ NAV ══════════════ */
 header{
-    background:linear-gradient(135deg,#0f172a,#1e3a8a);
-    color:white;
-    text-align:center;
-    padding:120px 20px;
+  position:fixed;top:0;left:0;right:0;z-index:120;
+  padding:16px var(--pad);display:flex;align-items:center;justify-content:space-between;gap:14px;
+  transition:background .4s,backdrop-filter .4s,border-color .4s,padding .4s;
+  border-bottom:1px solid transparent;
 }
-
-header h1{
-    font-size:3rem;
-    margin-bottom:15px;
+header.stuck{background:rgba(244,242,236,.86);backdrop-filter:blur(20px) saturate(1.3);border-bottom-color:var(--line);padding-top:11px;padding-bottom:11px}
+.wordmark{font-family:var(--d);font-weight:500;color:var(--ink);font-size:clamp(20px,3.3vw,26px);letter-spacing:.16em;line-height:1;display:flex;align-items:center;gap:10px}
+.wordmark i{
+  width:7px;height:7px;border-radius:50%;background:var(--irid);background-size:300% 100%;
+  animation:shift 5s linear infinite;flex:none;
 }
-
-header p{
-    font-size:1.2rem;
-    margin-bottom:30px;
+@keyframes shift{to{background-position:300% 0}}
+nav.links{display:flex;gap:26px}
+nav.links a{font-family:var(--u);font-weight:500;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);transition:color .25s;position:relative}
+nav.links a::after{content:'';position:absolute;left:0;right:100%;bottom:-5px;height:1px;background:var(--iris);transition:right .3s}
+nav.links a:hover{color:var(--ink)}
+nav.links a:hover::after{right:0}
+.navr{display:flex;align-items:center;gap:8px}
+.cartbtn{
+  display:flex;align-items:center;gap:9px;padding:9px 15px;border:1px solid var(--line);
+  border-radius:100px;font-family:var(--u);font-weight:500;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink);transition:border-color .25s,background .25s;
 }
+.cartbtn:hover{border-color:var(--iris);background:rgba(91,63,214,.06)}
+.cartbtn b{
+  min-width:17px;height:17px;border-radius:9px;background:var(--iris);color:#fff;
+  display:grid;place-items:center;font-size:9.5px;font-weight:700;
+}
+.burger{display:none;width:36px;height:36px;place-items:center;border:1px solid var(--line);border-radius:50%}
+.burger span{display:block;width:14px;height:1px;background:var(--ink);position:relative}
+.burger span::before,.burger span::after{content:'';position:absolute;left:0;width:14px;height:1px;background:var(--ink);transition:.3s}
+.burger span::before{top:-4px}.burger span::after{top:4px}
 
+/* ══════════════ HERO — the turntable thesis ══════════════ */
+.hero{
+  min-height:100svh;position:relative;display:grid;
+  grid-template-columns:1fr min(46vw,560px);align-items:center;gap:20px;
+  padding:104px var(--pad) 48px;overflow:hidden;
+}
+.hero::before{ /* horizon glow under the plinth */
+  content:'';position:absolute;right:-6%;top:50%;width:min(72vw,760px);aspect-ratio:1;
+  transform:translateY(-46%);border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(91,63,214,.10) 0%,rgba(14,143,134,.06) 44%,transparent 70%);
+  filter:blur(30px);
+}
+.hero-copy{position:relative;z-index:2;max-width:640px}
+.hero h1{
+  font-family:var(--d);font-weight:500;color:var(--ink);
+  font-size:clamp(46px,11vw,132px);line-height:.86;letter-spacing:-.028em;margin:20px 0 0;
+}
+.hero h1 em{font-style:italic;color:transparent;background:var(--irid);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;animation:shift 7s linear infinite}
+.hero h1 .ln{display:block;overflow:hidden}
+.hero h1 .ln > s{display:block;text-decoration:none;transform:translateY(105%);animation:riseIn .95s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes riseIn{to{transform:none}}
+.hero p.lede{margin:26px 0 0;max-width:44ch;color:var(--body);font-size:clamp(14.5px,1.6vw,17px);line-height:1.75}
+.hero .acts{display:flex;flex-wrap:wrap;gap:11px;margin-top:34px}
 .btn{
-    display:inline-block;
-    background:#2563eb;
-    color:white;
-    text-decoration:none;
-    padding:12px 30px;
-    border-radius:8px;
-    transition:0.3s;
+  display:inline-flex;align-items:center;gap:11px;padding:14px 26px;border-radius:100px;
+  font-family:var(--u);font-weight:500;font-size:10.5px;letter-spacing:.19em;text-transform:uppercase;
+  color:var(--ink);border:1px solid var(--line);transition:.3s;position:relative;overflow:hidden;
+}
+.btn:hover{border-color:transparent;color:#fff}
+.btn::before{content:'';position:absolute;inset:0;background:var(--irid);background-size:200% 100%;transform:translateY(101%);transition:transform .4s cubic-bezier(.16,1,.3,1);z-index:-1}
+.btn:hover::before{transform:none}
+.btn span{position:relative;z-index:1}
+.btn.solid{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn.solid:hover{color:#fff}
+
+.hero-stats{display:flex;gap:34px;margin-top:52px;flex-wrap:wrap}
+.hero-stats div b{display:block;font-family:var(--d);font-weight:500;color:var(--ink);font-size:32px;line-height:1}
+.hero-stats div span{font-family:var(--u);font-weight:500;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-top:5px;display:block}
+
+/* the hero turntable */
+.hero-stage{position:relative;z-index:1;display:grid;place-items:center;perspective:1400px;min-height:min(72vh,620px)}
+.hero-model{width:min(38vw,430px);animation:hoverFloat 7s ease-in-out infinite}
+@keyframes hoverFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+
+/* ══════════════ TURNTABLE (signature element) ══════════════ */
+.tt{position:relative;display:grid;place-items:center;perspective:1200px;touch-action:pan-y}
+.tt-spin{
+  position:relative;transform-style:preserve-3d;
+  transform:rotateY(var(--rot,0deg));width:100%;aspect-ratio:200/260;
+}
+.tt-spin .slice{position:absolute;inset:0;backface-visibility:hidden}
+.tt-ring{
+  position:absolute;bottom:-2%;left:50%;width:78%;aspect-ratio:3/1;
+  transform:translateX(-50%) rotateX(74deg);border-radius:50%;
+  border:1px solid transparent;
+  background:linear-gradient(var(--paper),var(--paper)) padding-box,var(--irid) border-box;
+  background-size:100% 100%,300% 100%;animation:shift 6s linear infinite;
+  opacity:.65;pointer-events:none;
+}
+.tt-ring::after{
+  content:'';position:absolute;inset:-14%;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(91,63,214,.16),transparent 70%);filter:blur(12px);
+}
+.ph-face,.ph-plate{display:grid;place-items:center;overflow:visible}
+.ph-img{width:100%;height:100%;object-fit:contain;pointer-events:none;user-select:none;
+  filter:drop-shadow(0 14px 24px rgba(20,21,26,.22))}
+.ph-edge{position:absolute;inset:16% 20%;border-radius:6px;background:#A9A296}
+.mode-tog{display:flex;gap:4px;padding:3px;border:1px solid var(--line);border-radius:100px}
+.mode-tog button{padding:6px 13px;border-radius:100px;font-family:var(--u);font-weight:500;font-size:9.5px;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--muted);transition:.25s}
+.mode-tog button.on{background:var(--ink);color:#fff}
+.tt-shadow{
+  position:absolute;bottom:1%;left:50%;transform:translateX(-50%);width:52%;height:12px;
+  background:radial-gradient(ellipse,rgba(20,21,26,.30),transparent 72%);filter:blur(8px);pointer-events:none;
 }
 
-.btn:hover{
-    background:#1d4ed8;
+/* ══════════════ MARQUEE ══════════════ */
+.ticker{
+  border-block:1px solid var(--line);padding:14px 0;overflow:hidden;
+  display:flex;gap:0;white-space:nowrap;background:var(--sink);
 }
+.ticker div{display:flex;gap:52px;padding-right:52px;animation:roll 34s linear infinite;flex:none}
+@keyframes roll{to{transform:translateX(-100%)}}
+.ticker span{font-family:var(--u);font-weight:500;font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--body);display:flex;align-items:center;gap:52px}
+.ticker span::after{content:'';width:4px;height:4px;border-radius:50%;background:var(--iris);flex:none}
 
-nav{
-    background:#111827;
-    text-align:center;
-    padding:15px;
-    position:sticky;
-    top:0;
-    z-index:100;
+/* ══════════════ SECTION SHELL ══════════════ */
+section{padding:clamp(64px,9vw,120px) var(--pad);position:relative}
+.shead{display:flex;align-items:flex-end;justify-content:space-between;gap:26px;flex-wrap:wrap;margin-bottom:38px}
+.shead h2{font-family:var(--d);font-weight:500;color:var(--ink);font-size:clamp(31px,6.2vw,70px);line-height:.92;letter-spacing:-.018em;max-width:14ch}
+.shead h2 em{font-style:italic;color:var(--iris)}
+.shead p{color:var(--body);max-width:38ch;font-size:14.5px;line-height:1.75}
+
+/* ══════════════ FILTER RAIL ══════════════ */
+.rail{
+  display:flex;gap:7px;overflow-x:auto;padding-bottom:12px;margin-bottom:26px;
+  scrollbar-width:none;-ms-overflow-style:none;
 }
-
-nav a{
-    color:white;
-    text-decoration:none;
-    margin:0 15px;
-    font-weight:600;
+.rail::-webkit-scrollbar{display:none}
+.chip{
+  flex:none;padding:10px 17px;border:1px solid var(--line);border-radius:100px;
+  font-family:var(--u);font-weight:500;font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);background:var(--card);transition:.25s;white-space:nowrap;
 }
+.chip:hover{color:var(--ink);border-color:var(--faint)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chip b{font-weight:400;opacity:.5;margin-left:6px}
 
-nav a:hover{
-    color:#60a5fa;
-}
-
-section{
-    max-width:1100px;
-    margin:auto;
-    padding:80px 20px;
-}
-
-h2{
-    text-align:center;
-    margin-bottom:40px;
-    color:#1e3a8a;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:25px;
-}
-
+/* ══════════════ PRODUCT GRID ══════════════ */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(48%,250px),1fr));gap:clamp(10px,1.5vw,20px)}
 .card{
-    background:white;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
-    transition:0.3s;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:14px 14px 13px;position:relative;overflow:hidden;cursor:pointer;
+  transition:border-color .35s,box-shadow .35s,transform .35s;
+  opacity:0;transform:translateY(22px);
+}
+.card.in{opacity:1;transform:none;transition:opacity .6s,transform .6s,border-color .35s,background .35s}
+.card:hover{border-color:var(--faint);box-shadow:0 14px 34px rgba(20,21,26,.09)}
+.card:hover .card-stage{transform:translateY(-4px)}
+.card-tags{position:absolute;top:13px;left:13px;z-index:3;display:flex;flex-direction:column;gap:5px;align-items:flex-start}
+.tag{
+  font-family:var(--u);font-size:8.5px;letter-spacing:.17em;text-transform:uppercase;
+  padding:4px 9px;border-radius:100px;background:var(--ink);color:#fff;font-family:var(--u);font-weight:500;
+}
+.tag.low{background:var(--flare);color:#fff}
+.tag.out{background:var(--sink);border:1px solid var(--line);color:var(--muted)}
+.tag.irid{background:var(--irid);background-size:200% 100%;color:#fff;animation:shift 5s linear infinite}
+.spin-cue{
+  position:absolute;top:13px;right:13px;z-index:3;width:30px;height:30px;border-radius:50%;
+  border:1px solid var(--line);display:grid;place-items:center;color:var(--muted);
+  background:var(--card);transition:.3s;font-size:13px;
+}
+.card:hover .spin-cue{border-color:var(--iris);color:var(--iris);transform:rotate(180deg)}
+.card-stage{
+  aspect-ratio:1/1.06;display:grid;place-items:center;margin-bottom:13px;border-radius:2px;
+  background:radial-gradient(ellipse at 50% 38%,#fff 0%,var(--sink) 100%);
+  transition:transform .45s cubic-bezier(.16,1,.3,1);overflow:hidden;
+}
+.card-stage .tt-spin{transition:transform .95s cubic-bezier(.42,0,.18,1)}
+.card-stage .tt{width:min(74%,190px);max-height:96%}
+.card-meta{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.card-meta h3{font-size:14px;font-weight:500;color:var(--ink);letter-spacing:-.005em;line-height:1.32}
+.card-meta .cat{font-family:var(--u);font-weight:400;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:5px;display:block}
+.card-price{text-align:right;flex:none}
+.card-price b{display:block;font-family:var(--m);font-size:12.5px;font-weight:500;color:var(--ink)}
+.card-price s{display:block;font-family:var(--m);font-size:9.5px;color:var(--muted);text-decoration:none;margin-top:3px}
+.card-swatches{display:flex;gap:5px;margin-top:12px}
+.card-swatches i{width:13px;height:13px;border-radius:50%;border:1px solid var(--line);display:block}
+.card-swatches u{font-family:var(--u);font-size:9.5px;color:var(--muted);text-decoration:none;align-self:center;margin-left:4px}
+
+/* ══════════════ EDITORIAL INVERSION ══════════════ */
+.editorial{background:var(--ink);color:var(--paper)}
+.editorial .eyebrow{color:#A6A2B0}
+.editorial h2{font-family:var(--d);font-weight:500;color:#fff;font-size:clamp(33px,6.8vw,84px);line-height:.9;letter-spacing:-.022em;max-width:16ch}
+.editorial h2 em{font-style:italic}
+.ed-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:32px;margin-top:52px}
+.editorial .ed-item{border-top:1px solid rgba(255,255,255,.18)}
+.ed-item{border-top:1px solid var(--line);padding-top:18px}
+.ed-item .num{font-family:var(--u);font-weight:500;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:12px}
+.editorial .ed-item .num{color:#A6A2B0}
+.ed-item h4{font-size:16.5px;font-weight:500;color:var(--ink);margin-bottom:9px;letter-spacing:-.005em}
+.editorial .ed-item h4{color:#fff}
+.ed-item p{font-size:13.5px;line-height:1.72;color:var(--body)}
+.editorial .ed-item p{color:#BFBBC6}
+
+/* ══════════════ MODAL / STUDIO ══════════════ */
+.scrim{
+  position:fixed;inset:0;z-index:200;background:rgba(20,21,26,.5);backdrop-filter:blur(10px);
+  opacity:0;visibility:hidden;transition:.4s;
+}
+.scrim.open{opacity:1;visibility:visible}
+.studio{
+  position:fixed;inset:0;z-index:210;display:grid;place-items:center;padding:14px;
+  opacity:0;visibility:hidden;transition:.45s;pointer-events:none;
+}
+.studio.open{opacity:1;visibility:visible;pointer-events:auto}
+.studio-in{
+  width:min(1080px,100%);max-height:94svh;overflow-y:auto;background:var(--card);
+  border:1px solid var(--line);border-radius:var(--r);box-shadow:0 30px 80px rgba(20,21,26,.28);
+  display:grid;grid-template-columns:1.05fr .95fr;
+  transform:translateY(26px) scale(.98);transition:transform .45s cubic-bezier(.16,1,.3,1);
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent;
+}
+.studio.open .studio-in{transform:none}
+.studio-in::-webkit-scrollbar{width:5px}
+.studio-in::-webkit-scrollbar-thumb{background:var(--line)}
+
+.st-left{
+  padding:26px;border-right:1px solid var(--line);position:relative;
+  display:flex;flex-direction:column;background:
+    radial-gradient(ellipse at 50% 36%,#fff 0%,var(--sink) 74%,#E2DDD1 100%);
+}
+.st-stage{flex:1;display:grid;place-items:center;min-height:min(46svh,400px);cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.st-stage:active{cursor:grabbing}
+.st-stage .tt{width:min(70%,270px);max-height:100%}
+.st-readout{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:16px;
+  padding-top:14px;border-top:1px solid var(--line);
+}
+.deg{font-family:var(--m);font-size:12px;font-weight:500;letter-spacing:.06em;color:var(--iris)}
+.deg u{color:var(--muted);text-decoration:none}
+.st-hint{font-family:var(--u);font-weight:500;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px}
+.st-hint i{width:16px;height:16px;border:1px solid var(--faint);border-radius:50%;display:grid;place-items:center;font-size:8px;font-style:normal}
+.snapbtns{display:flex;gap:5px}
+.snapbtns button{
+  padding:6px 10px;border:1px solid var(--line);border-radius:100px;
+  font-family:var(--u);font-weight:500;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);background:var(--card);transition:.25s;
+}
+.snapbtns button:hover{border-color:var(--iris);color:var(--iris)}
+
+.st-right{padding:26px;display:flex;flex-direction:column;gap:0}
+.st-close{
+  position:absolute;top:14px;right:14px;z-index:5;width:34px;height:34px;border-radius:50%;
+  border:1px solid var(--line);background:var(--card);display:grid;place-items:center;
+  font-size:17px;color:var(--muted);transition:.25s;
+}
+.st-close:hover{border-color:var(--flare);color:var(--flare);transform:rotate(90deg)}
+.st-cat{font-family:var(--u);font-weight:500;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--iris)}
+.st-name{font-family:var(--d);font-weight:500;color:var(--ink);font-size:clamp(28px,4.4vw,44px);line-height:1;letter-spacing:-.018em;margin:10px 0 4px}
+.st-blurb{color:var(--body);font-size:14px;line-height:1.75;margin-top:11px}
+.st-price{display:flex;align-items:baseline;gap:11px;margin:18px 0 22px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.st-price b{font-family:var(--m);font-size:21px;font-weight:500;color:var(--ink)}
+.st-price s{font-family:var(--m);font-size:12px;color:var(--muted);text-decoration:none}
+
+.blk{margin-bottom:20px}
+.blk-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}
+.blk-h span{font-family:var(--u);font-weight:500;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.blk-h em{font-family:var(--m);font-size:10px;font-style:normal;color:var(--ink);letter-spacing:.02em}
+
+.swatches{display:flex;gap:9px;flex-wrap:wrap}
+.sw{
+  width:36px;height:36px;border-radius:50%;position:relative;border:1px solid var(--line);
+  transition:transform .25s;
+}
+.sw:hover{transform:scale(1.09)}
+.sw.on::after{
+  content:'';position:absolute;inset:-5px;border-radius:50%;border:1px solid var(--iris);
+}
+.sizes{display:grid;grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:6px}
+.sz{
+  padding:11px 5px;border:1px solid var(--line);border-radius:var(--r);text-align:center;
+  transition:.22s;position:relative;
+}
+.sz b{display:block;font-family:var(--m);font-size:12px;font-weight:500;color:var(--ink)}
+.sz u{display:block;font-family:var(--u);font-size:9px;color:var(--muted);text-decoration:none;margin-top:3px}
+.sz:hover:not(.gone){border-color:var(--faint);background:var(--sink)}
+.sz.on{background:var(--ink);border-color:var(--ink)}
+.sz.on b{color:#fff}
+.sz.on u{color:rgba(255,255,255,.6)}
+.sz.thin u{color:var(--flare)}
+.sz.gone{opacity:.28;cursor:not-allowed}
+.sz.gone::after{
+  content:'';position:absolute;left:14%;right:14%;top:50%;height:1px;background:var(--faint);
+  transform:rotate(-16deg);
 }
 
-.card:hover{
-    transform:translateY(-8px);
+.specs{border-top:1px solid var(--line);margin-top:4px}
+.spec{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid var(--line);font-size:12.5px}
+.spec span{font-family:var(--u);font-weight:500;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);flex:none}
+.spec b{font-weight:400;text-align:right;color:var(--ink)}
+
+.st-cta{display:flex;gap:8px;margin-top:22px;position:sticky;bottom:0;background:var(--card);padding:14px 0 2px}
+.st-cta .btn{flex:1;justify-content:center;padding:16px 18px}
+.st-note{font-family:var(--u);font-size:10.5px;letter-spacing:.03em;color:var(--muted);margin-top:11px;text-align:center;line-height:1.7}
+
+/* ══════════════ CART DRAWER ══════════════ */
+.cart{
+  position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);z-index:220;background:var(--card);
+  border-left:1px solid var(--line);transform:translateX(101%);transition:transform .5s cubic-bezier(.16,1,.3,1);
+  display:flex;flex-direction:column;
 }
+.cart.open{transform:none}
+.cart-h{padding:22px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.cart-h h3{font-family:var(--d);font-weight:500;color:var(--ink);font-size:27px;letter-spacing:-.01em}
+.cart-body{flex:1;overflow-y:auto;padding:8px 22px}
+.cart-empty{padding:56px 0;text-align:center;color:var(--muted)}
+.cart-empty p{font-size:13px;margin-top:12px;line-height:1.7}
+.ci{display:flex;gap:13px;padding:16px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+.ci-img{width:58px;height:66px;flex:none;background:var(--sink);border:1px solid var(--line);display:grid;place-items:center;padding:6px}
+.ci-b{flex:1;min-width:0}
+.ci-b h5{font-size:13px;font-weight:500;color:var(--ink);line-height:1.35}
+.ci-b .ci-v{font-family:var(--u);font-size:10px;letter-spacing:.1em;color:var(--muted);margin-top:5px;text-transform:uppercase}
+.ci-b .ci-p{font-family:var(--m);font-size:12.5px;font-weight:500;color:var(--ink);margin-top:7px}
+.qty{display:flex;align-items:center;gap:2px;margin-top:9px;border:1px solid var(--line);border-radius:100px;width:fit-content}
+.qty button{width:26px;height:26px;display:grid;place-items:center;color:var(--muted);font-size:14px;transition:color .2s}
+.qty button:hover{color:var(--iris)}
+.qty span{font-family:var(--m);font-size:11px;min-width:19px;text-align:center}
+.ci-x{color:var(--faint);font-size:16px;transition:color .2s;flex:none}
+.ci-x:hover{color:var(--flare)}
+.cart-f{padding:20px 22px;border-top:1px solid var(--line)}
+.cart-row{display:flex;justify-content:space-between;margin-bottom:9px;font-size:13px}
+.cart-row.tot{font-family:var(--m);font-size:16px;font-weight:500;color:var(--ink);padding-top:12px;margin-top:6px;border-top:1px solid var(--line)}
+.cart-row span{color:var(--muted)}
+.cart-f .btn{width:100%;justify-content:center;margin-top:14px;padding:16px}
 
-.card h3{
-    margin-bottom:10px;
+/* ══════════════ FOOTER ══════════════ */
+footer{border-top:1px solid var(--line);padding:clamp(48px,7vw,88px) var(--pad) 30px;background:var(--sink)}
+.f-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:38px;margin-bottom:56px}
+.f-brand .wordmark{margin-bottom:16px}
+.f-brand p{color:var(--body);font-size:13.5px;line-height:1.78;max-width:34ch}
+.f-col h5{font-family:var(--u);font-weight:500;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:15px}
+.f-col a{display:block;font-size:13.5px;color:var(--body);padding:5px 0;transition:color .22s}
+.f-col a:hover{color:var(--ink)}
+.f-bot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:24px;border-top:1px solid var(--line)}
+.f-bot p{font-family:var(--u);font-size:11px;letter-spacing:.04em;color:var(--muted)}
+.f-bot a{color:var(--iris)}
+
+/* ══════════════ TOAST ══════════════ */
+.toast{
+  position:fixed;left:50%;bottom:26px;z-index:400;transform:translate(-50%,90px);
+  background:var(--ink);color:#fff;padding:13px 24px;border-radius:100px;
+  font-family:var(--u);font-weight:500;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  box-shadow:0 10px 30px rgba(20,21,26,.26);
+  transition:transform .45s cubic-bezier(.16,1,.3,1);white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis;
 }
+.toast.show{transform:translate(-50%,0)}
 
-.about{
-    text-align:center;
-    font-size:1.1rem;
+/* ══════════════ REVEAL ══════════════ */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.rv.in{opacity:1;transform:none}
+
+/* ══════════════ PHOTOGRAPHIC PLATES ══════════════
+   The shipped photography is full-bleed, so the plate fills the whole
+   footprint and the extruded edges line up with it exactly. */
+.ph-img{object-fit:cover;border-radius:3px;filter:drop-shadow(0 18px 34px rgba(20,21,26,.24))}
+.ph-edge{inset:0;border-radius:3px}
+.card-stage .tt.has-photo{width:min(88%,246px);max-height:100%}
+.st-stage .tt.has-photo{width:min(80%,330px)}
+.hero-model .tt.has-photo{width:100%}
+
+/* ══════════════ ATELIER PLATES ══════════════ */
+.at-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,236px),1fr));gap:26px;margin-top:44px}
+.at-card{border-top:1px solid var(--line);padding-top:16px}
+.at-shot{position:relative;aspect-ratio:4/5;overflow:hidden;border-radius:var(--r);background:var(--sink);margin-bottom:16px}
+.at-shot img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.7,.3,1);filter:saturate(.94)}
+.at-card:hover .at-shot img{transform:scale(1.055)}
+.at-shot::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(20,21,26,.28),transparent 46%)}
+.at-card .num{font-family:var(--u);font-weight:500;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--iris);display:block;margin-bottom:10px}
+.at-card h4{font-size:16.5px;font-weight:500;color:var(--ink);margin-bottom:9px;letter-spacing:-.005em}
+.at-card p{font-size:13.5px;line-height:1.72;color:var(--body)}
+
+/* ══════════════ LOOKBOOK ══════════════ */
+.look{padding:0 0 clamp(56px,9vw,110px)}
+.look-h{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:0 var(--pad);margin-bottom:26px}
+.look-h h2{font-family:var(--d);font-weight:500;font-size:clamp(30px,5.4vw,60px);line-height:.94;letter-spacing:-.022em;color:var(--ink)}
+.look-h h2 em{font-style:italic;color:var(--iris)}
+.look-h p{font-size:13px;color:var(--muted);max-width:34ch;line-height:1.7}
+.look-rail{display:flex;gap:14px;overflow-x:auto;padding:4px var(--pad) 18px;scroll-snap-type:x proximity;scroll-padding-inline:var(--pad);-webkit-overflow-scrolling:touch}
+.look-rail::-webkit-scrollbar{height:3px}
+.look-rail::-webkit-scrollbar-thumb{background:var(--line)}
+.look-fig{flex:none;width:clamp(196px,25vw,286px);scroll-snap-align:start;position:relative}
+.look-fig .f{aspect-ratio:2/3;overflow:hidden;border-radius:var(--r);background:var(--sink)}
+.look-fig img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.3,1),filter .5s;filter:saturate(.92) contrast(1.02)}
+.look-fig:hover img{transform:scale(1.06);filter:saturate(1.04)}
+.look-fig figcaption{display:flex;justify-content:space-between;gap:10px;margin-top:11px;
+  font-family:var(--m);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.look-fig figcaption b{color:var(--ink);font-weight:500}
+.look-note{padding:0 var(--pad);font-family:var(--m);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+
+/* ══════════════ RESPONSIVE ══════════════ */
+@media(max-width:1000px){
+  .hero{grid-template-columns:1fr;text-align:left;padding-top:96px;min-height:auto}
+  .hero-stage{order:-1;min-height:44svh;margin-bottom:6px}
+  .hero-model{width:min(64vw,300px)}
+  .hero::before{right:auto;left:50%;top:26%;transform:translateX(-50%)}
+  .studio-in{grid-template-columns:1fr}
+  .st-left{border-right:none;border-bottom:1px solid var(--line)}
+  .f-top{grid-template-columns:1fr 1fr}
 }
-
-.testimonial{
-    text-align:center;
+@media(max-width:720px){
+  nav.links{display:none}
+  .burger{display:grid}
+  .cartbtn span{display:none}
+  .cartbtn{padding:9px 12px}
+  .look-fig figcaption{flex-direction:column;gap:2px}
+  .grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .card{padding:11px 11px 12px}
+  .card-meta h3{font-size:12.5px}
+  .card-price b{font-size:11px}
+  .card-tags .tag{font-size:7.5px;padding:3px 6px}
+  .spin-cue{width:24px;height:24px;font-size:11px;top:10px;right:10px}
+  .hero-stats{gap:24px;margin-top:36px}
+  .f-top{grid-template-columns:1fr;gap:28px}
+  .st-left,.st-right{padding:20px}
 }
-
-form{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
+@media(max-width:340px){
+  .grid{grid-template-columns:1fr}
 }
-
-input, textarea{
-    padding:12px;
-    border:1px solid #ccc;
-    border-radius:8px;
-    font-size:16px;
-}
-
-button{
-    background:#2563eb;
-    color:white;
-    border:none;
-    padding:14px;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:16px;
-}
-
-button:hover{
-    background:#1d4ed8;
-}
-
-footer{
-    background:#111827;
-    color:white;
-    text-align:center;
-    padding:30px;
-}
-
-.social a{
-    color:white;
-    text-decoration:none;
-    margin:0 10px;
-}
-
-.social a:hover{
-    color:#60a5fa;
-}
-
-@media(max-width:768px){
-    header h1{
-        font-size:2.2rem;
-    }
-
-    nav a{
-        display:block;
-        margin:10px 0;
-    }
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+  .rv,.card{opacity:1;transform:none}
 }
 </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "ClothingStore", "name": "MANNIE", "description": "A fashion house built for rotation. Every piece turns a full 360° before you buy it.", "image": "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=1200&q=75", "address": {"@type": "PostalAddress", "addressLocality": "Kampala", "addressCountry": "UG"}, "telephone": "+256777691011", "email": "jonathanashaba86@gmail.com", "currenciesAccepted": "UGX", "priceRange": "UGX 35,000 – 1,900,000", "areaServed": "Worldwide", "sameAs": ["https://wa.me/256777691011"]}</script>
 </head>
-
 <body>
 
-<header>
-    <h1>Blessed Digital Solutions</h1>
-    <p>Professional Web Development • Digital Marketing • Brand Growth</p>
-    <a href="#contact" class="btn">Get Started</a>
+<!-- ══════════ BOOT ══════════ -->
+<div id="boot">
+  <div class="bmark" id="bootMark"></div>
+  <div class="bbar"><i></i></div>
+  <div class="bnote">Calibrating the turntable</div>
+</div>
+
+<!-- ══════════ HEADER ══════════ -->
+<header id="hdr">
+  <a href="#top" class="wordmark"><i></i>MANNIE</a>
+  <nav class="links">
+    <a href="#atelier">Atelier</a>
+    <a href="#collection">Collection</a>
+    <a href="#lookbook">Lookbook</a>
+    <a href="#method">Method</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="navr">
+    <button class="cartbtn" id="openCart"><span>Bag</span><b id="cartCount">0</b></button>
+    <button class="burger" aria-label="Menu"><span></span></button>
+  </div>
 </header>
 
-<nav>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#testimonials">Testimonials</a>
-    <a href="#contact">Contact</a>
-</nav>
-
-<section id="about">
-    <h2>About Us</h2>
-    <div class="about">
-        <p>
-            Blessed Digital Solutions helps businesses establish a strong online
-            presence through professional website development, digital marketing,
-            branding, and content creation. We focus on delivering modern digital
-            solutions that drive growth and increase visibility.
-        </p>
+<!-- ══════════ HERO ══════════ -->
+<div id="top"></div>
+<div class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow">Est. Kampala &nbsp;·&nbsp; Ships worldwide</div>
+    <h1>
+      <span class="ln"><s style="animation-delay:.05s">Fashion</s></span>
+      <span class="ln"><s style="animation-delay:.14s">in the</s></span>
+      <span class="ln"><s style="animation-delay:.23s"><em>round.</em></s></span>
+    </h1>
+    <p class="lede">Photographs lie by omission. Every piece here sits on a turntable — drag it, spin it, read the stitch on the back before you commit. Sizes, colourways and live stock, all on one screen.</p>
+    <div class="acts">
+      <a href="#collection" class="btn solid"><span>Enter the collection</span></a>
+      <a href="#method" class="btn"><span>How it works</span></a>
     </div>
+    <div class="hero-stats">
+      <div><b id="stCount">0</b><span>Pieces</span></div>
+      <div><b>360°</b><span>Every angle</span></div>
+      <div><b>14</b><span>Categories</span></div>
+      <div><b>48h</b><span>Kampala delivery</span></div>
+    </div>
+  </div>
+  <div class="hero-stage">
+    <div class="hero-model" id="heroModel"></div>
+  </div>
+</div>
+
+<!-- ══════════ TICKER ══════════ -->
+<div class="ticker" aria-hidden="true">
+  <div id="tick1"></div><div id="tick2"></div>
+</div>
+
+<!-- ══════════ COLLECTION ══════════ -->
+<section id="collection">
+  <div class="shead rv">
+    <div>
+      <div class="eyebrow">The collection</div>
+      <h2 style="margin-top:14px">Turn it <em>over</em>.</h2>
+    </div>
+    <p>Tap any piece to open the studio. Drag left or right to rotate it a full circle, swap the colourway live, and see exactly how many are left in your size.</p>
+  </div>
+<div class="rail" id="rail"></div>
+  <div class="grid" id="grid"></div>
 </section>
 
-<section id="services">
-    <h2>Our Services</h2>
-
-    <div class="grid">
-        <div class="card">
-            <h3>Web Development</h3>
-            <p>Responsive business websites, portfolios, landing pages and e-commerce solutions.</p>
-        </div>
-
-        <div class="card">
-            <h3>Digital Marketing</h3>
-            <p>Social media marketing, SEO optimization and online advertising.</p>
-        </div>
-
-        <div class="card">
-            <h3>Graphic Design</h3>
-            <p>Professional logos, posters, company profiles and branding materials.</p>
-        </div>
-
-        <div class="card">
-            <h3>Content Creation</h3>
-            <p>Creative content for TikTok, YouTube, Facebook and Instagram.</p>
-        </div>
+<!-- ══════════ EDITORIAL / METHOD ══════════ -->
+<section class="editorial" id="method">
+  <div class="eyebrow">The method</div>
+  <h2 style="margin-top:16px">Four <em>rotations</em><br>from browse to box.</h2>
+  <div class="ed-grid">
+    <div class="ed-item">
+      <span class="num">Rotation 01</span>
+      <h4>Spin before you decide</h4>
+      <p>A flat photo hides the seam, the drape, the back panel. Drag any piece through 360° and judge it the way you would in a fitting room.</p>
     </div>
+    <div class="ed-item">
+      <span class="num">Rotation 02</span>
+      <h4>Colour changes on the garment</h4>
+      <p>Swatches don't sit in a corner here. Pick a colourway and the piece itself recolours while it turns, so you see the real thing.</p>
+    </div>
+    <div class="ed-item">
+      <span class="num">Rotation 03</span>
+      <h4>Stock you can count</h4>
+      <p>Every size shows the exact number left. Nothing goes in your bag that we can't put in a box the same week.</p>
+    </div>
+    <div class="ed-item">
+      <span class="num">Rotation 04</span>
+      <h4>Checkout on WhatsApp</h4>
+      <p>Your bag becomes a message. Confirm on the app you already use, pay on mobile money or card, and we dispatch from Kampala.</p>
+    </div>
+  </div>
 </section>
 
-<section id="skills">
-    <h2>Skills</h2>
-
-    <div class="grid">
-        <div class="card">
-            <h3>HTML & CSS</h3>
-            <p>Modern responsive website design.</p>
-        </div>
-
-        <div class="card">
-            <h3>JavaScript</h3>
-            <p>Interactive user experiences and functionality.</p>
-        </div>
-
-        <div class="card">
-            <h3>SEO</h3>
-            <p>Search engine optimization and website ranking.</p>
-        </div>
-
-        <div class="card">
-            <h3>Digital Marketing</h3>
-            <p>Audience growth and lead generation strategies.</p>
-        </div>
+<!-- ══════════ ATELIER ══════════ -->
+<section id="atelier">
+  <div class="shead rv">
+    <div>
+      <div class="eyebrow">The atelier</div>
+      <h2 style="margin-top:14px">Cut here.<br>Worn <em>everywhere</em>.</h2>
     </div>
+    <p>MANNIE works from a studio in Kampala with tailors, leatherworkers and print houses across the region — alongside pieces sourced from partners in Milan, Lagos and Seoul.</p>
+  </div>
+  <div class="at-grid">
+    <article class="at-card rv">
+      <div class="at-shot"><img src="https://images.unsplash.com/photo-1612423284934-2850a4ea6b0f?auto=format&fit=crop&w=760&q=74" alt="Kitenge & Ankara — Regional print, cut sharp" loading="lazy" decoding="async" width="800" height="1000"></div>
+      <span class="num">Kitenge &amp; Ankara</span>
+      <h4>Regional print, cut sharp</h4>
+      <p>Wax prints sourced from regional mills and tailored into modern silhouettes — not costume, just very good clothes.</p>
+    </article>
+    <article class="at-card rv">
+      <div class="at-shot"><img src="https://images.unsplash.com/photo-1758252510544-867de633a4cd?auto=format&fit=crop&w=760&q=74" alt="Leather — Belts, bags, boots" loading="lazy" decoding="async" width="800" height="1000"></div>
+      <span class="num">Leather</span>
+      <h4>Belts, bags, boots</h4>
+      <p>Vegetable-tanned hides finished by hand. Edges burnished, hardware solid brass, stitching done to last a decade.</p>
+    </article>
+    <article class="at-card rv">
+      <div class="at-shot"><img src="https://images.unsplash.com/photo-1594350532402-72001d9fe5a0?auto=format&fit=crop&w=760&q=74" alt="Knitwear — Weight you can feel" loading="lazy" decoding="async" width="800" height="1000"></div>
+      <span class="num">Knitwear</span>
+      <h4>Weight you can feel</h4>
+      <p>Nothing under 240gsm. Every knit is specified by gram weight, so you know what arrives before it does.</p>
+    </article>
+    <article class="at-card rv">
+      <div class="at-shot"><img src="https://images.unsplash.com/photo-1517840545241-b491010a8af4?auto=format&fit=crop&w=760&q=74" alt="Fit — Graded on real bodies" loading="lazy" decoding="async" width="800" height="1000"></div>
+      <span class="num">Fit</span>
+      <h4>Graded on real bodies</h4>
+      <p>Sizes XS through 3XL on most cuts, graded on fit models rather than scaled from a single sample.</p>
+    </article>
+  </div>
 </section>
 
-<section id="projects">
-    <h2>Featured Projects</h2>
-
-    <div class="grid">
-        <div class="card">
-            <h3>Corporate Website</h3>
-            <p>Developed a professional website for a local business to improve online visibility.</p>
-        </div>
-
-        <div class="card">
-            <h3>Marketing Campaign</h3>
-            <p>Created a social media campaign that increased engagement and brand awareness.</p>
-        </div>
-
-        <div class="card">
-            <h3>Brand Identity Package</h3>
-            <p>Designed logos, banners and marketing materials for a startup company.</p>
-        </div>
+<!-- ══════════ LOOKBOOK ══════════ -->
+<section class="look" id="lookbook">
+  <div class="look-h rv">
+    <div>
+      <div class="eyebrow">Season 01 · Lookbook</div>
+      <h2 style="margin-top:14px">Shot in <em>Kampala</em>.</h2>
     </div>
+    <p>The same pieces you can spin in the collection, photographed on the street they were cut on. Drag the rail sideways.</p>
+  </div>
+  <div class="look-rail">
+    <figure class="look-fig"><div class="f"><img src="https://images.unsplash.com/photo-1531123414780-f74242c2b052?auto=format&fit=crop&w=640&q=73" alt="MANNIE lookbook — Kampala, first light" loading="lazy" decoding="async" width="640" height="960"></div><figcaption><b>Look 01</b><span>Kampala, first light</span></figcaption></figure>
+    <figure class="look-fig"><div class="f"><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=640&q=73" alt="MANNIE lookbook — The rail, Nakasero studio" loading="lazy" decoding="async" width="640" height="960"></div><figcaption><b>Look 02</b><span>The rail, Nakasero studio</span></figcaption></figure>
+    <figure class="look-fig"><div class="f"><img src="https://images.unsplash.com/photo-1687052093309-7a14efa58ecb?auto=format&fit=crop&w=640&q=73" alt="MANNIE lookbook — Heritage, cut modern" loading="lazy" decoding="async" width="640" height="960"></div><figcaption><b>Look 03</b><span>Heritage, cut modern</span></figcaption></figure>
+    <figure class="look-fig"><div class="f"><img src="https://images.unsplash.com/photo-1762430790606-bf626757a00b?auto=format&fit=crop&w=640&q=73" alt="MANNIE lookbook — Runway, Season 01" loading="lazy" decoding="async" width="640" height="960"></div><figcaption><b>Look 04</b><span>Runway, Season 01</span></figcaption></figure>
+    <figure class="look-fig"><div class="f"><img src="https://images.unsplash.com/photo-1529245019870-59b249281fd3?auto=format&fit=crop&w=640&q=73" alt="MANNIE lookbook — Field, long weight" loading="lazy" decoding="async" width="640" height="960"></div><figcaption><b>Look 05</b><span>Field, long weight</span></figcaption></figure>
+    <figure class="look-fig"><div class="f"><img src="https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=640&q=73" alt="MANNIE lookbook — Colourways in the round" loading="lazy" decoding="async" width="640" height="960"></div><figcaption><b>Look 06</b><span>Colourways in the round</span></figcaption></figure>
+    <figure class="look-fig"><div class="f"><img src="https://images.unsplash.com/photo-1568252748074-f9c8d964e834?auto=format&fit=crop&w=640&q=73" alt="MANNIE lookbook — Movement test" loading="lazy" decoding="async" width="640" height="960"></div><figcaption><b>Look 07</b><span>Movement test</span></figcaption></figure>
+    <figure class="look-fig"><div class="f"><img src="https://images.unsplash.com/photo-1518838439236-2b73ceb4638a?auto=format&fit=crop&w=640&q=73" alt="MANNIE lookbook — Everything, turning" loading="lazy" decoding="async" width="640" height="960"></div><figcaption><b>Look 08</b><span>Everything, turning</span></figcaption></figure>
+  </div>
+  <p class="look-note">Photography licensed under the Unsplash licence · swap in your own shoot from the Photo Studio</p>
 </section>
 
-<section id="testimonials">
-    <h2>Client Testimonials</h2>
-
-    <div class="grid">
-        <div class="card testimonial">
-            <p>
-                "Excellent website design and outstanding support throughout the project."
-            </p>
-            <strong>- Client A</strong>
-        </div>
-
-        <div class="card testimonial">
-            <p>
-                "Our social media engagement improved significantly after working with Blessed Digital Solutions."
-            </p>
-            <strong>- Client B</strong>
-        </div>
-
-        <div class="card testimonial">
-            <p>
-                "Professional, reliable and highly recommended."
-            </p>
-            <strong>- Client C</strong>
-        </div>
+<!-- ══════════ FOOTER ══════════ -->
+<footer id="contact">
+  <div class="f-top">
+    <div class="f-brand">
+      <div class="wordmark"><i></i>MANNIE</div>
+      <p>A fashion house built around a single idea: you should be able to turn a garment over before you buy it. Kampala, Uganda.</p>
     </div>
-</section>
-
-<section id="contact">
-    <h2>Contact Us</h2>
-
-    <form>
-        <input type="text" placeholder="Your Name" required>
-
-        <input type="email" placeholder="Your Email" required>
-
-        <textarea rows="5" placeholder="Your Message"></textarea>
-
-        <button type="submit">Send Message</button>
-    </form>
-</section>
-
-<footer>
-    <h3>Blessed Digital Solutions</h3>
-
-    <div class="social">
-        <a href="#">Facebook</a>
-        <a href="#">LinkedIn</a>
-        <a href="#">GitHub</a>
-        <a href="#">Instagram</a>
+    <div class="f-col">
+      <h5>Shop</h5>
+      <a href="#collection">New arrivals</a><a href="#collection">Outerwear</a>
+      <a href="#collection">Footwear</a><a href="#collection">Accessories</a><a href="#collection">Heritage</a>
     </div>
-
-    <p style="margin-top:15px;">
-        © 2026 Blessed Digital Solutions. All Rights Reserved.
-    </p>
+    <div class="f-col">
+      <h5>Care</h5>
+      <a href="#">Size &amp; fit guide</a><a href="#">Shipping</a>
+      <a href="#">Returns &amp; exchanges</a><a href="#">Repairs</a><a href="#">Track an order</a>
+    </div>
+    <div class="f-col">
+      <h5>Reach us</h5>
+      <a href="https://wa.me/256777691011">WhatsApp 0777 691011</a>
+      <a href="mailto:jonathanashaba86@gmail.com">Email the studio</a>
+      <a href="#">Instagram</a><a href="#">TikTok</a>
+    </div>
+  </div>
+  <div class="f-bot">
+    <p>© 2026 MANNIE — Fashion in the round. Photography under the Unsplash licence.</p>
+    <p>Built by <a href="https://wa.me/256777691011">Blessed Digital Solutions</a></p>
+  </div>
 </footer>
 
+<!-- ══════════ OVERLAYS ══════════ -->
+<div class="scrim" id="scrim"></div>
+
+<div class="studio" id="studio">
+  <div class="studio-in">
+    <div class="st-left">
+      <button class="st-close" id="stClose" aria-label="Close">×</button>
+      <div class="st-stage" id="stStage"></div>
+      <div class="st-readout">
+        <div class="deg"><span id="degVal">000</span>° <u>/ 360</u></div>
+        <div class="snapbtns">
+          <button data-snap="0">Front</button>
+          <button data-snap="90">Side</button>
+          <button data-snap="180">Back</button>
+        </div>
+      </div>
+      <div class="st-hint" style="margin-top:10px"><i>↔</i> <span id="dragHint">Drag the piece to rotate</span></div>
+    </div>
+    <div class="st-right" id="stRight"></div>
+  </div>
+</div>
+
+<aside class="cart" id="cart">
+  <div class="cart-h">
+    <h3>Your bag</h3>
+    <button id="closeCart" style="font-size:20px;color:var(--ash)" aria-label="Close bag">×</button>
+  </div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-f" id="cartFoot" style="display:none">
+    <div class="cart-row"><span>Subtotal</span><b id="sub"></b></div>
+    <div class="cart-row"><span>Delivery — Kampala</span><b>Free</b></div>
+    <div class="cart-row tot"><span style="color:var(--bone)">Total</span><b id="tot"></b></div>
+    <button class="btn solid" id="checkout"><span>Checkout on WhatsApp</span></button>
+  </div>
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══════════════════════════════════════════════════════════
+   GARMENT GEOMETRY — every silhouette drawn on a 200×260 grid.
+   b = body (extruded), f = front detail, k = back detail
+   ══════════════════════════════════════════════════════════ */
+const SHAPES={
+tee:{b:'M76 36 L48 44 L14 76 L34 106 L52 90 L52 200 L148 200 L148 90 L166 106 L186 76 L152 44 L124 36 C120 54 112 62 100 62 C88 62 80 54 76 36 Z',
+ f:'M76 36 C80 54 88 62 100 62 C112 62 120 54 124 36 M52 200 L148 200',
+ k:'M78 36 C82 48 90 54 100 54 C110 54 118 48 122 36 M52 96 L148 96'},
+
+polo:{b:'M76 36 L48 44 L14 76 L34 106 L52 90 L52 200 L148 200 L148 90 L166 106 L186 76 L152 44 L124 36 L100 66 Z',
+ f:'M76 36 L100 66 L124 36 M86 32 L100 52 L114 32 M95 64 L95 116 M105 64 L105 116',
+ k:'M78 36 C82 48 90 54 100 54 C110 54 118 48 122 36 M52 96 L148 96'},
+
+shirt:{b:'M76 38 L46 46 L18 82 L10 180 L42 188 L52 116 L52 212 L148 212 L148 116 L158 188 L190 180 L182 82 L154 46 L124 38 L100 68 Z',
+ f:'M76 38 L100 68 L124 38 M85 32 L100 52 L115 32 M94 66 L94 212 M106 66 L106 212 M52 116 L42 188 M148 116 L158 188',
+ k:'M76 38 C80 50 90 56 100 56 C110 56 120 50 124 38 M46 90 L154 90 M100 90 L100 212'},
+
+blouse:{b:'M76 38 L48 46 L18 84 L10 168 L42 176 L52 112 L52 204 L148 204 L148 112 L158 176 L190 168 L182 84 L152 46 L124 38 C120 56 112 62 100 62 C88 62 80 56 76 38 Z',
+ f:'M76 38 C80 56 88 62 100 62 C112 62 120 56 124 38 M70 100 Q100 114 130 100 M66 134 Q100 148 134 134',
+ k:'M52 98 L148 98 M100 98 L100 204'},
+
+croptop:{b:'M74 52 L48 60 L18 90 L38 116 L52 100 L52 162 L148 162 L148 100 L162 116 L182 90 L152 60 L126 52 C122 70 112 78 100 78 C88 78 78 70 74 52 Z',
+ f:'M74 52 C78 70 88 78 100 78 C112 78 122 70 126 52 M52 156 L148 156',
+ k:'M52 108 L148 108'},
+
+hoodie:{b:'M70 50 L42 58 L14 96 L34 126 L50 110 L50 208 L150 208 L150 110 L166 126 L186 96 L158 58 L130 50 Z',
+ f:'M70 50 C74 22 126 22 130 50 C122 66 78 66 70 50 Z@fill M86 58 L84 106 M114 58 L116 106 M58 148 L142 148 L146 186 L54 186 Z',
+ k:'M68 52 C72 14 128 14 132 52 L122 62 L78 62 Z@fill M50 118 L150 118'},
+
+sweater:{b:'M74 42 L44 50 L14 86 L8 172 L40 180 L50 114 L50 206 L150 206 L150 114 L160 180 L192 172 L186 86 L156 50 L126 42 C122 62 112 70 100 70 C88 70 78 62 74 42 Z',
+ f:'M74 42 C78 62 88 70 100 70 C112 70 122 62 126 42 M50 192 L150 192 M72 82 L72 192 M100 82 L100 192 M128 82 L128 192',
+ k:'M50 104 L150 104 M50 192 L150 192'},
+
+blazer:{b:'M78 34 L52 42 L26 78 L20 200 L48 208 L58 116 L58 228 L142 228 L142 116 L152 208 L180 200 L174 78 L148 42 L122 34 L100 72 Z',
+ f:'M78 34 L100 72 L92 118 L72 62 Z@fill M122 34 L100 72 L108 118 L128 62 Z@fill M64 166 L88 172 L88 182 L64 176 Z M136 166 L112 172 L112 182 L136 176 Z M100 128 L100 228',
+ k:'M52 42 L150 42 M56 92 L144 92 M100 176 L100 228'},
+
+trench:{b:'M78 32 L50 40 L24 76 L18 208 L46 214 L56 120 L52 250 L148 250 L144 120 L154 214 L182 208 L176 76 L150 40 L122 32 L100 66 Z',
+ f:'M78 32 L100 66 L122 32 M78 40 L120 52 L120 96 L84 84 Z@fill M52 148 L148 148 L148 164 L52 164 Z@fill M100 66 L100 250 M78 108 M122 108',
+ k:'M50 40 L150 40 M56 86 L144 86 M52 148 L148 148 L148 164 L52 164 Z@fill M100 186 L100 250'},
+
+puffer:{b:'M76 42 L46 50 L14 94 L8 174 L42 184 L52 118 L52 212 L148 212 L148 118 L158 184 L192 174 L186 94 L154 50 L124 42 C120 60 112 68 100 68 C88 68 80 60 76 42 Z',
+ f:'M52 96 L148 96 M52 126 L148 126 M52 156 L148 156 M52 186 L148 186 M100 68 L100 212 M16 108 L44 116 M184 108 L156 116 M14 140 L42 148 M186 140 L158 148',
+ k:'M52 96 L148 96 M52 126 L148 126 M52 156 L148 156 M52 186 L148 186 M16 108 L44 116 M184 108 L156 116'},
+
+bomber:{b:'M76 42 L48 50 L16 90 L10 166 L42 176 L52 114 L52 194 L148 194 L148 114 L158 176 L190 166 L184 90 L152 50 L124 42 C120 58 112 66 100 66 C88 66 80 58 76 42 Z',
+ f:'M100 66 L100 194 M52 180 L148 180 M42 162 L52 166 M158 166 L148 162 M76 42 C80 58 88 66 100 66 C112 66 120 58 124 42',
+ k:'M52 104 L148 104 M52 180 L148 180 M42 162 L52 166 M158 166 L148 162'},
+
+cape:{b:'M100 28 C78 28 66 38 62 48 L20 226 L180 226 L138 48 C134 38 122 28 100 28 Z',
+ f:'M62 48 C76 62 124 62 138 48 M80 40 L120 40 L120 54 L80 54 Z@fill M72 72 L44 226 M128 72 L156 226 M100 62 L100 226',
+ k:'M62 48 C76 62 124 62 138 48 M100 56 L100 226 M76 68 L48 226 M124 68 L152 226'},
+
+kimono:{b:'M74 34 L40 44 L12 152 L44 162 L56 96 L56 232 L144 232 L144 96 L156 162 L188 152 L160 44 L126 34 L100 66 Z',
+ f:'M74 34 L100 66 L100 232 M126 34 L100 66 M56 150 L144 150 L144 172 L56 172 Z@fill M144 160 L164 176 M56 160 L36 176',
+ k:'M56 88 L144 88 M100 88 L100 232 M56 150 L144 150 L144 172 L56 172 Z@fill'},
+
+gilet:{b:'M78 42 L50 50 L32 84 L28 200 L172 200 L168 84 L150 50 L122 42 L100 74 Z',
+ f:'M78 42 L100 74 L122 42 M100 74 L100 200 M34 116 L166 116 M34 150 L166 150 M34 182 L166 182',
+ k:'M50 50 L150 50 M32 100 L168 100 M34 142 L166 142 M34 176 L166 176'},
+
+dress:{b:'M76 34 L54 42 L28 74 L46 96 L60 82 L58 140 L34 240 L166 240 L142 140 L140 82 L154 96 L172 74 L146 42 L124 34 C120 50 112 56 100 56 C88 56 80 50 76 34 Z',
+ f:'M76 34 C80 50 90 56 100 56 C110 56 120 50 124 34 M58 140 L142 140 M78 146 L64 240 M122 146 L136 240',
+ k:'M100 56 L100 140 M58 140 L142 140 M100 146 L100 240'},
+
+gown:{b:'M78 44 L74 62 L64 132 L26 248 L174 248 L136 132 L126 62 L122 44 C118 54 110 58 100 58 C90 58 82 54 78 44 Z',
+ f:'M78 44 L88 22 M122 44 L112 22 M64 132 L136 132 M100 138 L88 248 M100 138 L112 248',
+ k:'M78 44 L88 22 M122 44 L112 22 M86 50 Q100 92 114 50 M100 100 L100 132 M64 132 L136 132'},
+
+jumpsuit:{b:'M76 34 L54 42 L28 74 L46 96 L60 82 L58 140 L52 238 L94 238 L100 152 L106 238 L148 238 L142 140 L140 82 L154 96 L172 74 L146 42 L124 34 C120 50 112 56 100 56 C88 56 80 50 76 34 Z',
+ f:'M76 34 C80 50 90 56 100 56 C110 56 120 50 124 34 M58 134 L142 134 L142 148 L58 148 Z@fill M100 56 L100 134',
+ k:'M58 96 L142 96 M58 134 L142 134 L142 148 L58 148 Z@fill M100 148 L100 238'},
+
+trousers:{b:'M56 30 L144 30 L152 250 L110 250 L100 122 L90 250 L48 250 Z',
+ f:'M56 30 L144 30 L145 50 L55 50 Z@fill M78 50 L72 250 M122 50 L128 250 M100 50 L100 116',
+ k:'M56 30 L144 30 L145 50 L55 50 Z@fill M62 62 L88 62 L88 86 L62 86 Z M138 62 L112 62 L112 86 L138 86 Z M100 50 L100 116'},
+
+jeans:{b:'M56 30 L144 30 L152 250 L110 250 L100 122 L90 250 L48 250 Z',
+ f:'M56 30 L144 30 L145 50 L55 50 Z@fill M96 50 L96 100 M58 52 Q78 76 88 52 M142 52 Q122 76 112 52 M60 240 L92 240 M108 240 L148 240',
+ k:'M56 30 L144 30 L145 50 L55 50 Z@fill M60 62 L90 62 L86 90 L64 90 Z M140 62 L110 62 L114 90 L136 90 Z M100 50 L100 118'},
+
+joggers:{b:'M56 32 L144 32 L144 228 L110 240 L100 132 L90 240 L56 228 Z',
+ f:'M56 32 L144 32 L145 52 L55 52 Z@fill M88 40 L82 56 M112 40 L118 56 M58 216 L92 226 M108 226 L142 216 M100 52 L100 126',
+ k:'M56 32 L144 32 L145 52 L55 52 Z@fill M58 216 L92 226 M108 226 L142 216'},
+
+shorts:{b:'M54 34 L146 34 L154 148 L112 148 L100 96 L88 148 L46 148 Z',
+ f:'M54 34 L146 34 L147 54 L53 54 Z@fill M100 54 L100 92 M48 136 L92 136 M108 136 L152 136',
+ k:'M54 34 L146 34 L147 54 L53 54 Z@fill M62 66 L88 66 L88 88 L62 88 Z M138 66 L112 66 L112 88 L138 88 Z'},
+
+skirt:{b:'M62 40 L138 40 L168 234 L32 234 Z',
+ f:'M62 40 L138 40 L140 60 L60 60 Z@fill M80 60 L66 234 M100 60 L100 234 M120 60 L134 234',
+ k:'M62 40 L138 40 L140 60 L60 60 Z@fill M100 60 L100 234'},
+
+pajamas:{b:'M74 24 L54 30 L32 54 L46 70 L60 60 L60 130 L140 130 L140 60 L154 70 L168 54 L146 30 L126 24 Z@@M64 148 L136 148 L144 248 L110 248 L100 180 L90 248 L56 248 Z',
+ f:'M74 24 L100 44 L126 24 M100 44 L100 130 M60 124 L140 124 M64 148 L136 148 L137 164 L63 164 Z@fill M100 164 L100 176',
+ k:'M60 66 L140 66 M60 124 L140 124 M64 148 L136 148 L137 164 L63 164 Z@fill'},
+
+robe:{b:'M76 36 L52 44 L26 84 L44 106 L58 92 L56 242 L144 242 L142 92 L156 106 L174 84 L148 44 L124 36 L100 72 Z',
+ f:'M76 36 L100 72 L100 242 M124 36 L100 72 M48 150 L152 150 L152 168 L48 168 Z@fill M62 168 L58 214 M138 168 L142 214',
+ k:'M56 88 L144 88 M100 88 L100 242 M48 150 L152 150 L152 168 L48 168 Z@fill'},
+
+sneaker:{b:'M20 178 C20 178 26 128 50 122 C72 116 90 128 110 132 C136 138 168 138 176 152 C184 164 182 188 176 194 L26 194 C21 194 20 186 20 178 Z',
+ f:'M20 180 L180 180 M52 126 L66 152 M68 122 L82 148 M84 124 L96 150 M40 138 L48 168 M132 142 L136 176',
+ k:'M20 180 L180 180 M154 138 L160 180 M40 126 L36 178'},
+
+boot:{b:'M56 34 L118 34 L120 130 C120 130 152 140 168 152 C178 160 178 190 172 196 L36 196 C28 196 24 188 26 178 C30 150 52 138 54 122 Z',
+ f:'M26 182 L176 182 M56 34 L118 34 L118 48 L56 48 Z@fill M56 80 L118 80 M60 120 L118 120',
+ k:'M26 182 L176 182 M56 34 L118 34 L118 48 L56 48 Z@fill M86 48 L86 128'},
+
+heel:{b:'M38 76 C38 76 42 66 52 72 L94 140 C112 166 142 180 160 184 C170 186 174 192 170 196 L118 196 C118 196 106 196 98 190 C80 178 42 122 36 96 C34 88 34 78 38 76 Z@@M148 184 L160 184 L166 196 L142 196 Z',
+ f:'M48 78 L96 146 M60 90 L110 158',k:'M52 84 L104 154'},
+
+loafer:{b:'M22 158 C22 158 34 128 62 126 C90 124 116 134 142 140 C166 145 178 152 180 166 C182 178 176 186 166 186 L34 186 C24 186 20 172 22 158 Z',
+ f:'M22 174 L180 174 M62 130 L74 150 Q92 158 110 150 L118 134 M84 140 L98 140',
+ k:'M22 174 L180 174 M46 130 L42 172'},
+
+sandal:{b:'M24 156 C24 156 36 140 66 140 L150 140 C170 140 180 150 180 164 C180 176 172 182 158 182 L40 182 C28 182 22 170 24 156 Z',
+ f:'M50 140 L92 106 M92 106 L136 140 M92 106 L92 88 M70 122 L118 122',k:'M24 170 L180 170'},
+
+tote:{b:'M40 90 L160 90 L172 228 L28 228 Z',
+ f:'M74 90 C74 54 126 54 126 90 M40 108 L160 108 M100 150 L100 190',
+ k:'M74 90 C74 54 126 54 126 90 M40 108 L160 108'},
+
+crossbody:{b:'M54 116 L146 116 L152 202 L48 202 Z',
+ f:'M62 116 C62 56 138 56 138 116 M54 116 L146 116 L146 154 L54 154 Z@fill M94 154 L106 154 L106 166 L94 166 Z',
+ k:'M62 116 C62 56 138 56 138 116 M54 160 L146 160'},
+
+backpack:{b:'M46 92 Q46 66 74 66 L126 66 Q154 66 154 92 L158 216 Q158 230 142 230 L58 230 Q42 230 42 216 Z',
+ f:'M46 92 Q100 118 154 92 M58 152 L142 152 L146 200 L54 200 Z M92 118 L108 118 L108 130 L92 130 Z M74 66 L74 40 M126 66 L126 40',
+ k:'M76 76 Q64 150 72 224 M124 76 Q136 150 128 224 M46 92 Q100 108 154 92'},
+
+clutch:{b:'M32 118 L168 118 L168 188 L32 188 Z@@M32 118 L100 76 L168 118 Z',
+ f:'M32 118 L168 118 M92 128 L108 128 L108 142 L92 142 Z',k:'M32 118 L168 118'},
+
+wallet:{b:'M46 96 L154 96 Q162 96 162 106 L162 172 Q162 182 154 182 L46 182 Q38 182 38 172 L38 106 Q38 96 46 96 Z',
+ f:'M38 134 L162 134 M120 126 L150 126 L150 146 L120 146 Z',k:'M38 134 L162 134 M62 110 L138 110'},
+
+belt:{b:'M16 116 L148 116 L148 144 L16 144 Z@@M146 108 L186 108 L186 152 L146 152 Z',
+ f:'M158 118 L178 118 L178 142 L158 142 Z M40 130 L44 130 M62 130 L66 130 M84 130 L88 130 M106 130 L110 130 M128 130 L132 130 M154 126 L154 134',
+ k:'M16 122 L146 122 M16 138 L146 138'},
+
+sunglasses:{b:'M26 104 Q26 88 50 88 L88 88 Q96 88 94 102 Q92 132 68 138 Q38 142 30 122 Z@@M174 104 Q174 88 150 88 L112 88 Q104 88 106 102 Q108 132 132 138 Q162 142 170 122 Z@@M92 96 L108 96 L108 104 L92 104 Z',
+ f:'M26 100 L10 92 M174 100 L190 92 M40 100 Q56 96 72 100',k:'M26 100 L8 118 M174 100 L192 118'},
+
+glasses:{b:'M28 106 Q28 84 58 84 Q88 84 88 106 Q88 130 58 130 Q28 130 28 106 Z@@M172 106 Q172 84 142 84 Q112 84 112 106 Q112 130 142 130 Q172 130 172 106 Z@@M88 104 L112 104 L112 110 L88 110 Z',
+ f:'M28 100 L8 92 M172 100 L192 92',k:'M28 100 L6 116 M172 100 L194 116'},
+
+cap:{b:'M50 132 Q50 68 100 68 Q150 68 150 132 Z@@M38 130 L166 130 Q188 132 184 146 Q180 156 162 156 L44 156 Q34 156 34 143 Q34 132 38 130 Z',
+ f:'M100 68 L100 132 M76 74 L84 132 M124 74 L116 132 M96 62 L104 62 L104 70 L96 70 Z',
+ k:'M50 110 L150 110 M92 116 L108 116 L108 132 L92 132 Z'},
+
+bucket:{b:'M58 128 Q58 76 100 76 Q142 76 142 128 Z@@M26 128 L174 128 Q188 132 180 146 Q172 158 154 158 L46 158 Q28 158 20 146 Q14 132 26 128 Z',
+ f:'M58 112 L142 112 M100 76 L100 128 M136 118 L142 124',k:'M58 112 L142 112'},
+
+beanie:{b:'M56 140 Q56 62 100 62 Q144 62 144 140 Z@@M50 138 L150 138 L150 164 L50 164 Z',
+ f:'M74 68 L74 138 M100 62 L100 138 M126 68 L126 138 M50 150 L150 150',k:'M50 150 L150 150 M100 62 L100 138'},
+
+headwrap:{b:'M46 124 Q46 66 100 66 Q154 66 154 124 Q154 148 126 150 L74 150 Q46 148 46 124 Z@@M120 84 L176 46 L192 70 L138 108 Z',
+ f:'M56 96 Q100 80 144 96 M56 118 Q100 104 144 118 M120 84 L176 46',k:'M56 106 Q100 90 144 106'},
+
+scarf:{b:'M70 28 L130 28 L124 148 L140 238 L108 238 L100 168 L92 238 L60 238 L76 148 Z',
+ f:'M70 60 L130 60 M72 96 L128 96 M74 130 L126 130 M62 226 L88 226 M112 226 L138 226',
+ k:'M70 60 L130 60 M74 130 L126 130'},
+
+tie:{b:'M84 30 L116 30 L126 58 L112 78 L126 192 L100 228 L74 192 L88 78 L74 58 Z',
+ f:'M84 30 L116 30 L126 58 L74 58 Z@fill M92 90 L108 96 M90 120 L110 126 M88 150 L112 156',
+ k:'M74 58 L126 58 M100 78 L100 228'},
+
+watch:{b:'M84 36 L116 36 L114 98 L86 98 Z@@M86 162 L114 162 L116 226 L84 226 Z@@M72 100 Q72 88 86 88 L114 88 Q128 88 128 100 L128 160 Q128 172 114 172 L86 172 Q72 172 72 160 Z',
+ f:'M100 104 L100 130 L118 130 M128 118 L138 118 L138 132 L128 132 Z M86 44 L114 44 M86 218 L114 218',
+ k:'M86 44 L114 44 M86 62 L114 62 M86 80 L114 80 M86 180 L114 180 M86 198 L114 198'},
+
+socks:{b:'M74 40 L126 40 L126 148 Q126 180 96 188 L60 198 Q42 202 38 186 L34 170 Q30 152 50 148 Q74 142 74 116 Z',
+ f:'M74 56 L126 56 M74 70 L126 70 M46 176 Q62 190 78 184',k:'M74 56 L126 56 M74 70 L126 70'},
+
+gloves:{b:'M64 100 Q64 80 80 82 L84 44 Q86 30 96 30 Q106 30 106 44 L108 78 L122 76 Q134 76 136 88 L142 142 Q146 178 120 194 L92 210 Q70 220 62 198 L48 152 Q42 128 56 118 Z',
+ f:'M84 82 L86 46 M100 80 L102 50 M64 100 L70 130 M112 96 Q126 110 128 138',
+ k:'M70 110 Q100 130 132 118 M80 160 Q104 172 128 160'},
+
+swimsuit:{b:'M68 46 L132 46 L136 112 Q138 162 118 180 L114 204 L86 204 L82 180 Q62 162 64 112 Z',
+ f:'M68 46 L84 18 M132 46 L116 18 M78 60 Q100 74 122 60 M84 180 L116 180',
+ k:'M68 46 Q100 96 132 46 M84 180 L116 180'},
+
+bra:{b:'M40 96 Q40 76 60 78 Q84 80 100 100 Q116 80 140 78 Q160 76 160 96 Q160 132 130 140 Q112 144 100 132 Q88 144 70 140 Q40 132 40 96 Z',
+ f:'M100 100 L100 128 M62 92 Q72 112 88 118 M138 92 Q128 112 112 118',k:'M40 104 L160 104 M40 118 L160 118'},
+
+briefs:{b:'M48 88 L152 88 L146 130 Q136 168 100 174 Q64 168 54 130 Z',
+ f:'M48 88 L152 88 L152 104 L48 104 Z@fill M100 104 L100 170',k:'M48 88 L152 88 L152 104 L48 104 Z@fill'},
+
+kitenge:{b:'M74 36 L50 44 L24 76 L44 98 L58 84 L58 138 L30 240 L170 240 L142 138 L142 84 L156 98 L176 76 L150 44 L126 36 L100 60 Z',
+ f:'M58 138 L142 138 M74 36 L100 60 L126 36',k:'M58 96 L142 96 M58 138 L142 138',pat:1},
+
+agbada:{b:'M76 36 L18 62 L6 172 L42 180 L58 112 L56 238 L144 238 L142 112 L158 180 L194 172 L182 62 L124 36 L100 62 Z',
+ f:'M76 36 L100 62 L124 36 M100 62 L100 238 M84 74 L116 74 M80 90 L120 90 M84 106 L116 106',
+ k:'M56 100 L144 100 M100 100 L100 238',pat:1},
+
+gomesi:{b:'M70 46 L58 24 L50 48 L46 132 L34 244 L166 244 L154 132 L150 48 L142 24 L130 46 L100 68 Z',
+ f:'M70 46 L100 68 L130 46 M42 128 L158 128 L162 160 L38 160 Z@fill M158 152 L184 168 L176 186 L154 172 Z@fill',
+ k:'M46 106 L154 106 M42 128 L158 128 L162 160 L38 160 Z@fill',pat:1},
+
+kanzu:{b:'M78 34 L56 42 L32 62 L26 212 L52 216 L58 100 L54 246 L146 246 L142 100 L148 216 L174 212 L168 62 L144 42 L122 34 L100 58 Z',
+ f:'M78 34 L100 58 L122 34 M92 58 L92 130 M108 58 L108 130 M96 74 L104 74 M96 92 L104 92 M96 110 L104 110',
+ k:'M56 88 L144 88 M100 88 L100 246'},
+
+dashiki:{b:'M74 38 L44 48 L20 108 L48 120 L58 96 L58 208 L142 208 L142 96 L152 120 L180 108 L156 48 L126 38 L100 66 Z',
+ f:'M74 38 L100 66 L126 38 M100 66 L100 130 M76 78 L124 78 M72 94 L128 94 M76 110 L124 110 M58 196 L142 196',
+ k:'M58 92 L142 92 M58 196 L142 196',pat:1},
+
+umbrella:{b:'M16 130 Q16 44 100 44 Q184 44 184 130 Q142 112 100 130 Q58 112 16 130 Z@@M96 130 L104 130 L104 216 Q104 232 88 232 Q74 232 74 218 L82 218 Q82 224 88 224 Q96 224 96 216 Z',
+ f:'M100 44 L100 130 M58 50 Q58 100 58 122 M142 50 Q142 100 142 122 M96 36 L104 36 L104 46 L96 46 Z',
+ k:'M16 130 Q16 44 100 44 Q184 44 184 130'},
+
+suspenders:{b:'M50 44 L68 44 L96 130 L96 200 L82 200 L82 134 Z@@M150 44 L132 44 L104 130 L104 200 L118 200 L118 134 Z',
+ f:'M82 190 L118 190 M50 52 L68 52 M132 52 L150 52',k:'M82 190 L118 190'},
+};
+
+/* ══════════════════════════════════════════════════════════
+   CATALOG
+   ══════════════════════════════════════════════════════════ */
+const RATE=3760;
+const C={bone:'#EFE9DE',obs:'#1B1A21',ink:'#101018',clay:'#B4674A',olive:'#5D6349',sand:'#C9B48E',rust:'#8E3B24',
+ cream:'#E4D9C3',navy:'#25324D',sage:'#8FA08A',plum:'#4A2F45',camel:'#B08968',ochre:'#C98A2E',slate:'#4C5058',
+ blush:'#D9B6AE',forest:'#25402F',cocoa:'#4A342A',ecru:'#DCD3C3',wine:'#5C1F2E',ice:'#C7D4DA',gold:'#B08D3F',
+ char:'#2E2E34',tan:'#A87B52',mint:'#A9C4B4',coral:'#C96A4E',indigo:'#2B3A63',oat:'#CFC3AC'};
+
+const ap=[['XS',0],['S',0],['M',0],['L',0],['XL',0],['2XL',0]];
+function sz(list){return list.map(([s,q])=>({s,q}))}
+const SZ={
+ a:()=>sz([['XS',3],['S',11],['M',18],['L',14],['XL',7],['2XL',4]]),
+ b:()=>sz([['XS',0],['S',6],['M',12],['L',9],['XL',2],['2XL',0]]),
+ c:()=>sz([['XS',5],['S',9],['M',4],['L',13],['XL',11],['2XL',6],['3XL',3]]),
+ d:()=>sz([['S',8],['M',15],['L',10],['XL',3]]),
+ sh:()=>sz([['38',4],['39',7],['40',9],['41',12],['42',10],['43',6],['44',3],['45',0]]),
+ sh2:()=>sz([['38',2],['39',5],['40',8],['41',6],['42',9],['43',4],['44',1]]),
+ belt:()=>sz([['28',6],['30',9],['32',12],['34',8],['36',5],['38',2]]),
+ one:()=>sz([['ONE',24]]),
+ one2:()=>sz([['ONE',7]]),
+ lo:()=>sz([['S',2],['M',5],['L',3],['XL',1]]),
+ lo2:()=>sz([['XS',1],['S',4],['M',6],['L',2],['XL',0]]),
+ slml:()=>sz([['S',9],['M',14],['L',8]]),
+};
+
+const P=[
+/* ─── TOPS ─── */
+{n:'Kigo Boxy Tee',s:'tee',c:'tops',p:85000,was:0,t:'NEW',
+ col:[['Bone',C.bone],['Obsidian',C.obs],['Clay',C.clay],['Olive',C.olive]],z:SZ.a(),
+ m:'240gsm combed cotton',fit:'Boxy, drops at the shoulder',care:'Cold wash, line dry',o:'Cut in Kampala',
+ d:'A heavyweight tee that keeps its shape after the tenth wash. Wide body, short sleeve, ribbed neck that will not curl.'},
+{n:'Serena Silk Blouse',s:'blouse',c:'tops',p:245000,was:0,t:'',
+ col:[['Ecru',C.ecru],['Plum',C.plum],['Ink',C.ink],['Blush',C.blush]],z:SZ.b(),
+ m:'19mm sandwashed silk',fit:'Relaxed through the body',care:'Dry clean',o:'Milan partner mill',
+ d:'Sandwashed silk with a matte finish that photographs well and never clings. Cut long enough to tuck or leave out.'},
+{n:'Meridian Oxford Shirt',s:'shirt',c:'tops',p:165000,was:198000,t:'',
+ col:[['Bone',C.bone],['Ice',C.ice],['Navy',C.navy],['Sand',C.sand]],z:SZ.c(),
+ m:'Two-ply cotton oxford',fit:'Regular, slight taper',care:'Warm wash, iron damp',o:'Cut in Kampala',
+ d:'The shirt you reach for when the day could go either way. Button-down collar, single-needle side seams, real shell buttons.'},
+{n:'Court Piqué Polo',s:'polo',c:'tops',p:128000,was:0,t:'',
+ col:[['Sage',C.sage],['Bone',C.bone],['Wine',C.wine],['Slate',C.slate]],z:SZ.a(),
+ m:'Cotton piqué, 220gsm',fit:'Trim',care:'Cold wash',o:'Cut in Kampala',
+ d:'Three-button placket, ribbed collar that holds a stand. Cut short enough to wear untucked without looking undecided.'},
+{n:'Ridge Cable Knit',s:'sweater',c:'tops',p:295000,was:0,t:'',
+ col:[['Oat',C.oat],['Forest',C.forest],['Cocoa',C.cocoa],['Char',C.char]],z:SZ.b(),
+ m:'Lambswool, 7-gauge',fit:'Roomy',care:'Hand wash cold, dry flat',o:'Knit in Nairobi',
+ d:'Chunky cable running front and back, ribbed hem and cuffs. Warm without the bulk of a jacket.'},
+{n:'Studio Crop',s:'croptop',c:'tops',p:78000,was:0,t:'NEW',
+ col:[['Bone',C.bone],['Coral',C.coral],['Obsidian',C.obs],['Mint',C.mint]],z:SZ.d(),
+ m:'Ribbed cotton jersey',fit:'Close',care:'Cold wash',o:'Cut in Kampala',
+ d:'Ribbed, cropped at the natural waist, with a neckline that stays put. Made to layer under an open shirt.'},
+{n:'Overtime Hoodie',s:'hoodie',c:'tops',p:215000,was:0,t:'',
+ col:[['Char',C.char],['Oat',C.oat],['Olive',C.olive],['Rust',C.rust]],z:SZ.c(),
+ m:'420gsm brushed fleece',fit:'Oversized',care:'Cold wash inside out',o:'Cut in Kampala',
+ d:'Double-lined hood that stands up on its own, kangaroo pocket deep enough to actually use, cuffs that stay tight.'},
+
+/* ─── OUTERWEAR ─── */
+{n:'Bellwether Blazer',s:'blazer',c:'outerwear',p:485000,was:0,t:'',
+ col:[['Char',C.char],['Camel',C.tan],['Navy',C.navy],['Olive',C.olive]],z:SZ.b(),
+ m:'Wool-linen, half-canvas',fit:'Structured, soft shoulder',care:'Dry clean',o:'Tailored in Kampala',
+ d:'Half-canvassed with a soft shoulder, so it moves with you instead of sitting on you. Two-button front, single vent.'},
+{n:'Longitude Trench',s:'trench',c:'outerwear',p:640000,was:748000,t:'',
+ col:[['Sand',C.sand],['Obsidian',C.obs],['Olive',C.olive]],z:SZ.b(),
+ m:'Waxed cotton gabardine',fit:'Straight, generous',care:'Re-wax annually',o:'Cut in Kampala',
+ d:'Double-breasted, storm flap, D-ring belt. Waxed rather than coated, so it ages into something better.'},
+{n:'Altitude Puffer',s:'puffer',c:'outerwear',p:520000,was:0,t:'',
+ col:[['Obsidian',C.obs],['Ochre',C.ochre],['Ice',C.ice],['Forest',C.forest]],z:SZ.d(),
+ m:'700-fill recycled down',fit:'Regular',care:'Tumble low with dryer balls',o:'Seoul partner',
+ d:'Baffled rather than sewn-through, so cold does not find the seams. Packs into its own pocket.'},
+{n:'Signal Bomber',s:'bomber',c:'outerwear',p:398000,was:0,t:'NEW',
+ col:[['Ink',C.ink],['Rust',C.rust],['Sage',C.sage],['Bone',C.bone]],z:SZ.c(),
+ m:'Cotton twill, satin lined',fit:'Regular',care:'Dry clean',o:'Cut in Kampala',
+ d:'Ribbed collar, cuffs and hem in a contrast weight. Lined in satin so it slides over knitwear.'},
+{n:'Nocturne Opera Cape',s:'cape',c:'outerwear',p:720000,was:0,t:'ATELIER',
+ col:[['Obsidian',C.obs],['Wine',C.wine],['Plum',C.plum]],z:SZ.lo(),
+ m:'Wool melton, satin lined',fit:'One length, full drape',care:'Dry clean',o:'Tailored in Kampala',
+ d:'Floor-skimming wool melton with a hidden clasp at the throat. Cut on the bias so it falls in a full circle when you turn.'},
+{n:'Asa Wide-Sleeve Kimono',s:'kimono',c:'outerwear',p:340000,was:0,t:'',
+ col:[['Ink',C.ink],['Clay',C.clay],['Ecru',C.ecru],['Indigo',C.indigo]],z:SZ.slml(),
+ m:'Washed linen',fit:'One size, wrap',care:'Machine wash cold',o:'Cut in Kampala',
+ d:'Wide dropped sleeve, self-tie obi belt, no closures to fuss with. Works over a swimsuit or a suit.'},
+{n:'Field Quilted Gilet',s:'gilet',c:'outerwear',p:265000,was:0,t:'',
+ col:[['Olive',C.olive],['Cocoa',C.cocoa],['Char',C.char]],z:SZ.c(),
+ m:'Diamond-quilted nylon',fit:'Layering cut',care:'Machine wash cold',o:'Cut in Kampala',
+ d:'Sleeveless, so it layers under a coat without bunching. Four external pockets, two internal.'},
+
+/* ─── BOTTOMS ─── */
+{n:'Meridian Wide Trouser',s:'trousers',c:'bottoms',p:225000,was:0,t:'',
+ col:[['Char',C.char],['Oat',C.oat],['Olive',C.olive],['Navy',C.navy]],z:SZ.a(),
+ m:'Wool-blend suiting',fit:'High rise, wide leg',care:'Dry clean',o:'Tailored in Kampala',
+ d:'High-rise with a pressed crease that holds. Wide through the leg, breaking just once over the shoe.'},
+{n:'Nile Selvedge Jean',s:'jeans',c:'bottoms',p:275000,was:0,t:'NEW',
+ col:[['Indigo',C.indigo],['Obsidian',C.obs],['Ice',C.ice]],z:SZ.a(),
+ m:'14oz selvedge denim',fit:'Straight, mid rise',care:'Wash rarely, cold, inside out',o:'Japan mill, cut in Kampala',
+ d:'Raw 14oz selvedge with a red line at the outseam. Fades to your shape in about six months.'},
+{n:'Base Layer Jogger',s:'joggers',c:'bottoms',p:145000,was:0,t:'',
+ col:[['Char',C.char],['Oat',C.oat],['Forest',C.forest],['Slate',C.slate]],z:SZ.c(),
+ m:'380gsm loopback cotton',fit:'Tapered',care:'Cold wash',o:'Cut in Kampala',
+ d:'Tapered through the calf with a proper ribbed cuff. Drawcord flat so it does not print through.'},
+{n:'Harbour Knicker Short',s:'shorts',c:'bottoms',p:112000,was:0,t:'',
+ col:[['Sand',C.sand],['Navy',C.navy],['Clay',C.clay],['Bone',C.bone]],z:SZ.a(),
+ m:'Cotton-linen twill',fit:'Above the knee',care:'Machine wash cold',o:'Cut in Kampala',
+ d:'Cut just above the knee with a turned cuff. Four pockets, all deep enough for a phone.'},
+{n:'Pivot A-Line Skirt',s:'skirt',c:'bottoms',p:168000,was:0,t:'',
+ col:[['Obsidian',C.obs],['Camel',C.tan],['Wine',C.wine],['Sage',C.sage]],z:SZ.d(),
+ m:'Ponte knit',fit:'High waist, A-line',care:'Machine wash cold',o:'Cut in Kampala',
+ d:'Sits at the natural waist and flares from there. Ponte holds structure without needing a lining.'},
+
+/* ─── DRESSES ─── */
+{n:'Solstice Slip Dress',s:'dress',c:'dresses',p:285000,was:0,t:'',
+ col:[['Plum',C.plum],['Ecru',C.ecru],['Obsidian',C.obs],['Sage',C.sage]],z:SZ.lo2(),
+ m:'Bias-cut satin',fit:'Bias, close',care:'Dry clean',o:'Cut in Kampala',
+ d:'Cut on the bias so it moves with the body rather than hanging off it. Adjustable strap, no zip.'},
+{n:'Aria Evening Gown',s:'gown',c:'dresses',p:890000,was:0,t:'ATELIER',
+ col:[['Wine',C.wine],['Obsidian',C.obs],['Gold',C.gold]],z:SZ.lo(),
+ m:'Silk crepe, boned bodice',fit:'Column, floor length',care:'Dry clean only',o:'Atelier, Kampala',
+ d:'Boned bodice, column skirt, a slit that stops exactly where it should. Made to order in three fittings.'},
+{n:'Corso Utility Jumpsuit',s:'jumpsuit',c:'dresses',p:320000,was:0,t:'',
+ col:[['Olive',C.olive],['Obsidian',C.obs],['Sand',C.sand]],z:SZ.d(),
+ m:'Tencel twill',fit:'Relaxed, belted',care:'Machine wash cold',o:'Cut in Kampala',
+ d:'One piece, six pockets, removable belt. Fits over a tee in the morning and stands alone at night.'},
+
+/* ─── SLEEP & LOUNGE ─── */
+{n:'Quiet Hours Pyjama Set',s:'pajamas',c:'sleep',p:198000,was:0,t:'NEW',
+ col:[['Ice',C.ice],['Plum',C.plum],['Oat',C.oat],['Navy',C.navy]],z:SZ.c(),
+ m:'Cotton sateen, piped',fit:'Relaxed',care:'Machine wash warm',o:'Cut in Kampala',
+ d:'Contrast piping on the collar and cuff, a proper camp collar, and an elastic-plus-drawcord waist.'},
+{n:'Longhouse Robe',s:'robe',c:'sleep',p:225000,was:0,t:'',
+ col:[['Ecru',C.ecru],['Char',C.char],['Wine',C.wine]],z:SZ.slml(),
+ m:'Waffle cotton',fit:'Wrap, mid-calf',care:'Machine wash warm',o:'Cut in Kampala',
+ d:'Waffle weave that dries fast and gets softer. Self-tie belt with proper belt loops so it does not vanish.'},
+
+/* ─── FOOTWEAR ─── */
+{n:'Cadence Court Sneaker',s:'sneaker',c:'shoes',p:340000,was:0,t:'',
+ col:[['Bone',C.bone],['Obsidian',C.obs],['Sage',C.sage],['Clay',C.clay]],z:SZ.sh(),
+ m:'Full-grain leather, gum sole',fit:'True to size',care:'Wipe, condition monthly',o:'Portugal partner',
+ d:'Cupsole construction so it can be resoled. Full-grain upper that creases instead of cracking.'},
+{n:'Ascent Chelsea Boot',s:'boot',c:'shoes',p:465000,was:0,t:'',
+ col:[['Cocoa',C.cocoa],['Obsidian',C.obs],['Tan',C.tan]],z:SZ.sh2(),
+ m:'Veg-tan leather, Goodyear welt',fit:'Size down a half',care:'Cream and brush',o:'Leatherworks, Kampala',
+ d:'Goodyear welted, so a cobbler can rebuild it twice. Elastic gusset set into the quarter, not stitched on top.'},
+{n:'Vertice Stiletto',s:'heel',c:'shoes',p:395000,was:448000,t:'',
+ col:[['Obsidian',C.obs],['Wine',C.wine],['Bone',C.bone],['Gold',C.gold]],z:SZ.sh2(),
+ m:'Nappa leather, 90mm',fit:'True to size',care:'Store with shapers',o:'Milan partner',
+ d:'90mm on a steel shank, which is what keeps it comfortable past hour three. Leather lining throughout.'},
+{n:'Ledger Penny Loafer',s:'loafer',c:'shoes',p:355000,was:0,t:'',
+ col:[['Cocoa',C.cocoa],['Obsidian',C.obs],['Wine',C.wine]],z:SZ.sh(),
+ m:'Calf leather, leather sole',fit:'True to size',care:'Cream and brush',o:'Leatherworks, Kampala',
+ d:'Hand-lasted with a leather sole and a proper penny strap. Wears in at the vamp within a week.'},
+{n:'Coast Leather Sandal',s:'sandal',c:'shoes',p:185000,was:0,t:'',
+ col:[['Tan',C.tan],['Obsidian',C.obs],['Bone',C.bone]],z:SZ.sh(),
+ m:'Veg-tan leather, cork bed',fit:'True to size',care:'Keep dry',o:'Leatherworks, Kampala',
+ d:'Cork footbed that moulds to the foot. Adjustable buckle at the ankle, nothing digging at the toe.'},
+
+/* ─── BAGS ─── */
+{n:'Meridian Tote',s:'tote',c:'bags',p:385000,was:0,t:'NEW',
+ col:[['Tan',C.tan],['Obsidian',C.obs],['Cocoa',C.cocoa],['Bone',C.bone]],z:SZ.one(),
+ m:'Veg-tan leather, brass',fit:'38 × 32 × 14 cm',care:'Condition twice a year',o:'Leatherworks, Kampala',
+ d:'Holds a 16-inch laptop flat. Burnished edges, solid brass hardware, and a base that stands on its own.'},
+{n:'Verso Crossbody',s:'crossbody',c:'bags',p:295000,was:0,t:'',
+ col:[['Obsidian',C.obs],['Clay',C.clay],['Sand',C.sand],['Forest',C.forest]],z:SZ.one(),
+ m:'Pebbled leather',fit:'24 × 18 × 7 cm',care:'Wipe clean',o:'Leatherworks, Kampala',
+ d:'Magnetic flap under a decorative buckle, so it opens one-handed. Strap adjusts from hip to shoulder.'},
+{n:'Transit Backpack',s:'backpack',c:'bags',p:420000,was:0,t:'',
+ col:[['Obsidian',C.obs],['Olive',C.olive],['Slate',C.slate]],z:SZ.one(),
+ m:'Coated canvas, leather trim',fit:'22L',care:'Spot clean',o:'Cut in Kampala',
+ d:'Padded 16-inch sleeve, a quick pocket at the top, and straps wide enough to carry it full all day.'},
+{n:'Onyx Evening Clutch',s:'clutch',c:'bags',p:245000,was:0,t:'',
+ col:[['Obsidian',C.obs],['Gold',C.gold],['Wine',C.wine],['Bone',C.bone]],z:SZ.one2(),
+ m:'Satin, crystal clasp',fit:'26 × 14 cm',care:'Store in dust bag',o:'Atelier, Kampala',
+ d:'Envelope fold with a concealed chain if you want your hands back. Fits a phone, a card and a lipstick.'},
+{n:'Ledger Bifold Wallet',s:'wallet',c:'bags',p:118000,was:0,t:'',
+ col:[['Cocoa',C.cocoa],['Obsidian',C.obs],['Tan',C.tan]],z:SZ.one(),
+ m:'Veg-tan leather',fit:'11 × 9 cm',care:'Condition yearly',o:'Leatherworks, Kampala',
+ d:'Six card slots, two note sleeves, no coin pocket to make it fat. Skived thin at the fold.'},
+
+/* ─── BELTS ─── */
+{n:'Anchor Leather Belt',s:'belt',c:'belts',p:98000,was:0,t:'',
+ col:[['Cocoa',C.cocoa],['Obsidian',C.obs],['Tan',C.tan]],z:SZ.belt(),
+ m:'35mm veg-tan, brass buckle',fit:'Order your trouser size',care:'Condition yearly',o:'Leatherworks, Kampala',
+ d:'One piece of hide, not bonded strips. Solid brass buckle on a screw so you can swap it.'},
+{n:'Corsair Waist Belt',s:'belt',c:'belts',p:135000,was:0,t:'NEW',
+ col:[['Obsidian',C.obs],['Wine',C.wine],['Gold',C.gold]],z:SZ.slml(),
+ m:'60mm leather, boned',fit:'Sits at the natural waist',care:'Wipe clean',o:'Atelier, Kampala',
+ d:'Wide, lightly boned, worn over a dress or a coat. Two-prong buckle for a symmetrical pull.'},
+
+/* ─── EYEWEAR ─── */
+{n:'Meridian Sunglasses',s:'sunglasses',c:'eyewear',p:215000,was:0,t:'',
+ col:[['Obsidian',C.obs],['Tan',C.tan],['Wine',C.wine],['Gold',C.gold]],z:SZ.one(),
+ m:'Italian acetate, CR-39 lens',fit:'145mm temple',care:'Case supplied',o:'Milan partner',
+ d:'Hand-polished acetate with pin hinges. Polarised CR-39 lenses at category 3, cut for real glare.'},
+{n:'Study Optical Frame',s:'glasses',c:'eyewear',p:178000,was:0,t:'',
+ col:[['Char',C.char],['Tan',C.tan],['Ice',C.ice]],z:SZ.one(),
+ m:'Acetate, blue-filter lens',fit:'142mm temple',care:'Case supplied',o:'Milan partner',
+ d:'Round acetate with a keyhole bridge. Ships with a blue-filter demo lens your optician can swap.'},
+
+/* ─── HEADWEAR ─── */
+{n:'Field Six-Panel Cap',s:'cap',c:'head',p:78000,was:0,t:'',
+ col:[['Olive',C.olive],['Obsidian',C.obs],['Oat',C.oat],['Rust',C.rust]],z:SZ.one(),
+ m:'Washed cotton twill',fit:'Adjustable strap',care:'Hand wash',o:'Cut in Kampala',
+ d:'Six panels, unstructured crown, a pre-curved brim that keeps its shape. Metal slide, not plastic.'},
+{n:'Basin Bucket Hat',s:'bucket',c:'head',p:82000,was:0,t:'NEW',
+ col:[['Sand',C.sand],['Obsidian',C.obs],['Sage',C.sage],['Clay',C.clay]],z:SZ.slml(),
+ m:'Cotton canvas, reversible',fit:'S/M/L',care:'Machine wash cold',o:'Cut in Kampala',
+ d:'Fully reversible with a contrast lining. Brim wide enough to matter at midday.'},
+{n:'Ember Ribbed Beanie',s:'beanie',c:'head',p:65000,was:0,t:'',
+ col:[['Char',C.char],['Rust',C.rust],['Oat',C.oat],['Forest',C.forest]],z:SZ.one(),
+ m:'Merino wool',fit:'One size',care:'Hand wash cold',o:'Knit in Nairobi',
+ d:'Merino rather than acrylic, so it breathes. Deep turn-up that covers the ears when you need it to.'},
+{n:'Nakato Headwrap',s:'headwrap',c:'head',p:72000,was:0,t:'',
+ col:[['Ochre',C.ochre],['Wine',C.wine],['Indigo',C.indigo],['Gold',C.gold]],z:SZ.one(),
+ m:'Wax print cotton',fit:'One size, pre-tied',care:'Hand wash cold',o:'Regional mill',
+ d:'Pre-tied on a soft band so it goes on in one movement and stays put through a full day.'},
+
+/* ─── ACCESSORIES ─── */
+{n:'Longitude Wool Scarf',s:'scarf',c:'acc',p:125000,was:0,t:'',
+ col:[['Oat',C.oat],['Char',C.char],['Wine',C.wine],['Forest',C.forest]],z:SZ.one(),
+ m:'Lambswool, hand-fringed',fit:'190 × 32 cm',care:'Dry clean',o:'Knit in Nairobi',
+ d:'Long enough to loop twice. Fringe knotted by hand rather than cut and glued.'},
+{n:'Register Silk Tie',s:'tie',c:'acc',p:95000,was:0,t:'',
+ col:[['Wine',C.wine],['Navy',C.navy],['Forest',C.forest],['Obsidian',C.obs]],z:SZ.one(),
+ m:'Woven silk, wool interlining',fit:'7cm blade',care:'Dry clean, roll to store',o:'Milan partner',
+ d:'Woven rather than printed, so the pattern sits in the cloth. Wool interlining gives the knot a proper dimple.'},
+{n:'Meridian Field Watch',s:'watch',c:'acc',p:680000,was:0,t:'ATELIER',
+ col:[['Obsidian',C.obs],['Cocoa',C.cocoa],['Gold',C.gold]],z:SZ.one2(),
+ m:'Sapphire crystal, 100m, leather',fit:'38mm case',care:'Service every 5 years',o:'Assembled, Kampala',
+ d:'38mm case, sapphire crystal, water resistant to 100m. Quick-release strap so you can change it in ten seconds.'},
+{n:'Ribbed Crew Sock — Three Pack',s:'socks',c:'acc',p:52000,was:0,t:'',
+ col:[['Char',C.char],['Bone',C.bone],['Olive',C.olive],['Wine',C.wine]],z:SZ.slml(),
+ m:'Combed cotton, reinforced heel',fit:'S/M/L',care:'Machine wash',o:'Regional mill',
+ d:'Reinforced at the heel and toe with a ribbed cuff that grips the calf without leaving a mark.'},
+{n:'Cinder Leather Gloves',s:'gloves',c:'acc',p:148000,was:0,t:'',
+ col:[['Obsidian',C.obs],['Cocoa',C.cocoa],['Wine',C.wine]],z:SZ.slml(),
+ m:'Lambskin, cashmere lined',fit:'S/M/L',care:'Do not machine wash',o:'Milan partner',
+ d:'Lambskin outer, cashmere lining, touchscreen thread in the index and thumb. Three points on the back, as they should be.'},
+{n:'Gallery Suspenders',s:'suspenders',c:'acc',p:88000,was:0,t:'',
+ col:[['Obsidian',C.obs],['Cocoa',C.cocoa],['Wine',C.wine]],z:SZ.one(),
+ m:'Woven elastic, leather ends',fit:'Adjustable',care:'Spot clean',o:'Cut in Kampala',
+ d:'Y-back with real leather ends and button tabs, not clips. Adjusts from the front while wearing.'},
+{n:'Storm Wooden Umbrella',s:'umbrella',c:'acc',p:115000,was:0,t:'',
+ col:[['Obsidian',C.obs],['Navy',C.navy],['Forest',C.forest],['Wine',C.wine]],z:SZ.one(),
+ m:'Ash shaft, fibreglass ribs',fit:'110cm span',care:'Dry open',o:'Cut in Kampala',
+ d:'Solid ash shaft with a bent handle and fibreglass ribs that flex instead of snapping in the wind.'},
+
+/* ─── SWIM & INTIMATES ─── */
+{n:'Tide One-Piece',s:'swimsuit',c:'intimates',p:158000,was:0,t:'',
+ col:[['Obsidian',C.obs],['Rust',C.rust],['Ice',C.ice],['Sage',C.sage]],z:SZ.d(),
+ m:'Recycled nylon, UPF 50',fit:'Close, full seat',care:'Rinse cold after use',o:'Cut in Kampala',
+ d:'UPF 50 fabric that holds colour through a season of chlorine. Full seat coverage and a bonded, chafe-free seam.'},
+{n:'Softline Bralette',s:'bra',c:'intimates',p:72000,was:0,t:'',
+ col:[['Bone',C.bone],['Obsidian',C.obs],['Blush',C.blush],['Sage',C.sage]],z:SZ.slml(),
+ m:'Modal-elastane rib',fit:'Wire-free',care:'Hand wash cold',o:'Cut in Kampala',
+ d:'Wire-free with a wide underband that does the actual work. Modal rib that stays soft after washing.'},
+{n:'Everyday Cotton Brief — Three Pack',s:'briefs',c:'intimates',p:58000,was:0,t:'',
+ col:[['Bone',C.bone],['Char',C.char],['Navy',C.navy]],z:SZ.c(),
+ m:'Pima cotton, covered waistband',fit:'Mid rise',care:'Machine wash',o:'Cut in Kampala',
+ d:'Covered waistband so nothing prints through. Pima cotton with a touch of stretch and flat seams.'},
+
+/* ─── HERITAGE ─── */
+{n:'Nakiwogo Kitenge Set',s:'kitenge',c:'heritage',p:315000,was:0,t:'NEW',
+ col:[['Ochre',C.ochre],['Indigo',C.indigo],['Wine',C.wine],['Forest',C.forest]],z:SZ.d(),
+ m:'Wax print cotton, lined bodice',fit:'Fitted top, full skirt',care:'Hand wash cold, first wash separate',o:'Regional mill, cut in Kampala',
+ d:'Regional wax print cut into a modern two-piece. Fitted bodice, full skirt with pockets, and a lining so it never goes sheer.'},
+{n:'Sabo Agbada',s:'agbada',c:'heritage',p:580000,was:0,t:'ATELIER',
+ col:[['Bone',C.bone],['Gold',C.gold],['Indigo',C.indigo],['Sage',C.sage]],z:SZ.lo(),
+ m:'Guinea brocade, hand embroidery',fit:'Full drape, three pieces',care:'Dry clean',o:'Lagos partner, finished in Kampala',
+ d:'Three pieces — the flowing outer robe, the inner tunic and the trouser. Neckline and cuffs embroidered by hand over roughly forty hours.'},
+{n:'Gomesi Ceremonial',s:'gomesi',c:'heritage',p:425000,was:0,t:'',
+ col:[['Wine',C.wine],['Gold',C.gold],['Indigo',C.indigo],['Plum',C.plum]],z:SZ.slml(),
+ m:'Silk-blend brocade, sash',fit:'Floor length, pointed shoulder',care:'Dry clean',o:'Tailored in Kampala',
+ d:'Pointed shoulders, square neckline and a wide sash tied at the left hip. Cut and finished the traditional way, in a lighter cloth for a full day of wear.'},
+{n:'Kanzu Classic',s:'kanzu',c:'heritage',p:265000,was:0,t:'',
+ col:[['Bone',C.bone],['Ecru',C.ecru],['Sand',C.sand]],z:SZ.c(),
+ m:'Cotton poplin, silk embroidery',fit:'Straight, ankle length',care:'Machine wash cold, press',o:'Tailored in Kampala',
+ d:'Ankle-length with a hand-embroidered placket in matching silk. Side vents so it moves when you walk.'},
+{n:'Ubuntu Dashiki',s:'dashiki',c:'heritage',p:185000,was:0,t:'',
+ col:[['Ochre',C.ochre],['Indigo',C.indigo],['Wine',C.wine],['Forest',C.forest]],z:SZ.c(),
+ m:'Wax print cotton',fit:'Relaxed, pullover',care:'Hand wash cold',o:'Regional mill, cut in Kampala',
+ d:'Pullover cut with an embroidered V-neck and matching hem panel. Loose through the body, made for heat.'},
+];
+
+const CATS=[['all','All'],['new','New in'],['tops','Tops'],['outerwear','Outerwear'],['bottoms','Bottoms'],
+['dresses','Dresses'],['sleep','Sleep & lounge'],['shoes','Footwear'],['bags','Bags'],['belts','Belts'],
+['eyewear','Eyewear'],['head','Headwear'],['acc','Accessories'],['intimates','Swim & intimates'],['heritage','Heritage']];
+
+/* ══════════════════════════════════════════════════════════════════
+   ▓▓  YOUR PHOTOS GO HERE  ▓▓
+   ──────────────────────────────────────────────────────────────────
+   Paste image URLs against a product name. Three modes, auto-detected:
+
+   1. TRUE 360°  — a turntable shoot. Drag scrubs through the frames,
+                   so the real object actually rotates. 8 frames is the
+                   minimum that reads smoothly, 24-36 is showroom grade.
+        'Cadence Court Sneaker': { frames:['f1.jpg','f2.jpg', ...] }
+
+   2. TWO-SIDED  — one front photo, one back photo. The photo sits on a
+                   solid slab with real thickness and turns in 3D.
+        'Meridian Tote': { front:'front.jpg', back:'back.jpg' }
+
+   3. SINGLE     — one photo. Back face is auto-generated (mirrored and
+                   dropped into shadow), which reads correctly for bags,
+                   shoes, eyewear and accessories.
+        'Onyx Evening Clutch': { front:'photo.jpg' }
+
+   Anything with no entry keeps the built-in 3D vector render.
+   Any URL that fails to load falls back to it silently — this site
+   will never show you a broken image icon in front of a client.
+
+   Photos should be shot on a plain background, PNG with transparency
+   if you can get it. Name must match the product exactly.
+   ══════════════════════════════════════════════════════════════════ */
+/* Real photography, one shoot per product — 57 pieces, 126 frames, every
+   URL a live Unsplash CDN address (free for commercial use, no key, no
+   expiry). Front and back are different frames, so a piece genuinely turns.
+   Swap any of them for your own studio shots in the Photo Studio panel,
+   then Export code and paste the block back over this one. */
+const SHOTS = {
+  "Kigo Boxy Tee": {"front": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab", "back": "https://images.unsplash.com/photo-1581655353564-df123a1eb820"},
+  "Serena Silk Blouse": {"front": "https://images.unsplash.com/photo-1704775983658-2773a9c0cce2", "back": "https://images.unsplash.com/photo-1694243382362-14da84ba6a2d"},
+  "Meridian Oxford Shirt": {"front": "https://images.unsplash.com/photo-1603252109303-2751441dd157", "back": "https://images.unsplash.com/photo-1679056835084-7f21e64a3402"},
+  "Court Piqué Polo": {"front": "https://images.unsplash.com/photo-1720514496161-914011a9ee02", "back": "https://images.unsplash.com/photo-1720514496478-78ae7a0a1173"},
+  "Ridge Cable Knit": {"front": "https://images.unsplash.com/photo-1631541909061-71e349d1f203", "back": "https://images.unsplash.com/photo-1574201635302-388dd92a4c3f"},
+  "Studio Crop": {"front": "https://images.unsplash.com/photo-1548389995-fbd3151a501f", "back": "https://images.unsplash.com/photo-1673925205809-601b5a22eb61"},
+  "Overtime Hoodie": {"front": "https://images.unsplash.com/photo-1556821840-3a63f95609a7", "back": "https://images.unsplash.com/photo-1601063476271-a159c71ab0b3"},
+  "Bellwether Blazer": {"front": "https://images.unsplash.com/photo-1592343516109-362f7bd871aa", "back": "https://images.unsplash.com/photo-1598915850252-fb07ad1e6768"},
+  "Longitude Trench": {"front": "https://images.unsplash.com/photo-1676716105765-e19fe6a01851", "back": "https://images.unsplash.com/photo-1589400445193-c881a4b0b38a"},
+  "Altitude Puffer": {"front": "https://images.unsplash.com/photo-1557418669-db3f781a58c0", "back": "https://images.unsplash.com/photo-1711527088900-f7ebabda4e3f"},
+  "Signal Bomber": {"front": "https://images.unsplash.com/photo-1591047139829-d91aecb6caea", "back": "https://images.unsplash.com/photo-1629353689974-af4d5c70440f"},
+  "Nocturne Opera Cape": {"front": "https://images.unsplash.com/photo-1642513616538-e9cd88a842b8", "back": "https://images.unsplash.com/photo-1673530619673-2185f5b20e19"},
+  "Asa Wide-Sleeve Kimono": {"front": "https://images.unsplash.com/photo-1755483503929-a2eb08de1c7d", "back": "https://images.unsplash.com/photo-1639650538388-2f163f167f2c"},
+  "Field Quilted Gilet": {"front": "https://images.unsplash.com/photo-1732165289122-713c00969877", "back": "https://images.unsplash.com/photo-1764787016268-31d48b3978f0"},
+  "Meridian Wide Trouser": {"front": "https://images.unsplash.com/photo-1774005906344-57048d3f5856", "back": "https://images.unsplash.com/photo-1768289222386-93b3e854cf31"},
+  "Nile Selvedge Jean": {"front": "https://images.unsplash.com/photo-1602293589930-45aad59ba3ab", "back": "https://images.unsplash.com/photo-1714729382668-7bc3bb261662"},
+  "Base Layer Jogger": {"front": "https://images.unsplash.com/photo-1719473442938-c605886ba1c3"},
+  "Harbour Knicker Short": {"front": "https://images.unsplash.com/photo-1719473442915-016f3ebda79a", "back": "https://images.unsplash.com/photo-1601393709771-3938c63d41a6"},
+  "Pivot A-Line Skirt": {"front": "https://images.unsplash.com/photo-1618244942912-7351be026e8b", "back": "https://images.unsplash.com/photo-1534445538923-ab38438550d2"},
+  "Solstice Slip Dress": {"front": "https://images.unsplash.com/photo-1594739033447-80ab21e24b4c", "back": "https://images.unsplash.com/photo-1623580674393-edf6eb7090f8"},
+  "Aria Evening Gown": {"front": "https://images.unsplash.com/photo-1568252542512-9fe8fe9c87bb", "back": "https://images.unsplash.com/photo-1765229284842-e0160d7e7ff6"},
+  "Corso Utility Jumpsuit": {"front": "https://images.unsplash.com/photo-1531439248310-501d477497ce", "back": "https://images.unsplash.com/photo-1768803968262-320d4752966f"},
+  "Quiet Hours Pyjama Set": {"front": "https://images.unsplash.com/photo-1768696082668-411638a55476", "back": "https://images.unsplash.com/photo-1768696082915-bdc6774f94c7"},
+  "Longhouse Robe": {"front": "https://images.unsplash.com/photo-1704428381445-dc61b037cfd2", "back": "https://images.unsplash.com/photo-1774552803574-05c6fd3108c4"},
+  "Cadence Court Sneaker": {"front": "https://images.unsplash.com/photo-1600269452121-4f2416e55c28", "back": "https://images.unsplash.com/photo-1597350584914-55bb62285896"},
+  "Ascent Chelsea Boot": {"front": "https://images.unsplash.com/photo-1608256246200-53e635b5b65f", "back": "https://images.unsplash.com/photo-1613673720017-56e42d90fee4"},
+  "Vertice Stiletto": {"front": "https://images.unsplash.com/photo-1573100925118-870b8efc799d", "back": "https://images.unsplash.com/photo-1596702874230-b5706dfb5bc7"},
+  "Ledger Penny Loafer": {"front": "https://images.unsplash.com/photo-1777987601447-266e128de448", "back": "https://images.unsplash.com/photo-1760616172899-0681b97a2de3"},
+  "Coast Leather Sandal": {"front": "https://images.unsplash.com/photo-1585120824848-8a5cd41493d2", "back": "https://images.unsplash.com/photo-1625318880107-49baad6765fd"},
+  "Meridian Tote": {"front": "https://images.unsplash.com/photo-1578237493287-8d4d2b03591a", "back": "https://images.unsplash.com/photo-1572196284554-4e321b0e7e0b"},
+  "Verso Crossbody": {"front": "https://images.unsplash.com/photo-1603219527847-24c87f552a77", "back": "https://images.unsplash.com/photo-1594223274512-ad4803739b7c"},
+  "Transit Backpack": {"front": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62", "back": "https://images.unsplash.com/photo-1622560480605-d83c853bc5c3"},
+  "Onyx Evening Clutch": {"front": "https://images.unsplash.com/photo-1741417458353-1780257930d7", "back": "https://images.unsplash.com/photo-1749294435694-ce3c586591e6"},
+  "Ledger Bifold Wallet": {"front": "https://images.unsplash.com/photo-1636023189308-06668418548d", "back": "https://images.unsplash.com/photo-1713425885238-bb89c67ac266"},
+  "Anchor Leather Belt": {"front": "https://images.unsplash.com/photo-1711443982852-b3df5c563448", "back": "https://images.unsplash.com/photo-1734383524180-3c6f9b21e8e3"},
+  "Corsair Waist Belt": {"front": "https://images.unsplash.com/photo-1698170370603-62f83e96d04e", "back": "https://images.unsplash.com/photo-1637868796504-32f45a96d5a0"},
+  "Meridian Sunglasses": {"front": "https://images.unsplash.com/photo-1584036553516-bf83210aa16c", "back": "https://images.unsplash.com/photo-1566421966482-ad8076104d8e"},
+  "Study Optical Frame": {"front": "https://images.unsplash.com/photo-1614715838608-dd527c46231d", "back": "https://images.unsplash.com/photo-1591076482161-42ce6da69f67"},
+  "Field Six-Panel Cap": {"front": "https://images.unsplash.com/photo-1588850561407-ed78c282e89b", "back": "https://images.unsplash.com/photo-1560774358-d727658f457c"},
+  "Basin Bucket Hat": {"front": "https://images.unsplash.com/photo-1563319078-0b3ad9b6007a", "back": "https://images.unsplash.com/photo-1627683566270-bf7e75dfec0a"},
+  "Ember Ribbed Beanie": {"front": "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9", "back": "https://images.unsplash.com/photo-1664289321749-07316ab5e374"},
+  "Nakato Headwrap": {"front": "https://images.unsplash.com/photo-1781184921114-cff561eb51c3", "back": "https://images.unsplash.com/photo-1591726265496-0bbd67e5c0e8"},
+  "Longitude Wool Scarf": {"front": "https://images.unsplash.com/photo-1609803384069-19f3e5a70e75", "back": "https://images.unsplash.com/photo-1737043814915-2e23c00ba7cf"},
+  "Register Silk Tie": {"front": "https://images.unsplash.com/photo-1589756823695-278bc923f962", "back": "https://images.unsplash.com/photo-1730342755326-d25f1624123d"},
+  "Meridian Field Watch": {"front": "https://images.unsplash.com/photo-1524805444758-089113d48a6d", "back": "https://images.unsplash.com/photo-1557531365-e8b22d93dbd0"},
+  "Ribbed Crew Sock — Three Pack": {"front": "https://images.unsplash.com/photo-1640026199235-c24aa417b552", "back": "https://images.unsplash.com/photo-1640025867572-f6b3a8410c81"},
+  "Cinder Leather Gloves": {"front": "https://images.unsplash.com/photo-1642952180306-588f9eddce8e", "back": "https://images.unsplash.com/photo-1644308977849-45a83bf3b067"},
+  "Gallery Suspenders": {"front": "https://images.unsplash.com/photo-1580965081770-1169d59f1bbd", "back": "https://images.unsplash.com/photo-1745894901981-de4bbc22c880"},
+  "Storm Wooden Umbrella": {"front": "https://images.unsplash.com/photo-1611511450282-af4421e9e05d", "back": "https://images.unsplash.com/photo-1517398629-9d24ea1f4f94"},
+  "Tide One-Piece": {"front": "https://images.unsplash.com/photo-1585924756944-b82af627eca9", "back": "https://images.unsplash.com/photo-1542427361-4388a46a654a"},
+  "Softline Bralette": {"front": "https://images.unsplash.com/photo-1504198458649-3128b932f49e", "back": "https://images.unsplash.com/photo-1742932759518-af30ef9087e4"},
+  "Everyday Cotton Brief — Three Pack": {"front": "https://images.unsplash.com/photo-1582735689283-7b70dbe630ea", "back": "https://images.unsplash.com/photo-1617811449482-31093c8cee16"},
+  "Nakiwogo Kitenge Set": {"front": "https://images.unsplash.com/photo-1709809081557-78f803ce93a0", "back": "https://images.unsplash.com/photo-1611853904829-6d0f4034ce2f"},
+  "Sabo Agbada": {"front": "https://images.unsplash.com/photo-1763823133159-c6f8ec380e33", "back": "https://images.unsplash.com/photo-1605302596032-15e67c3cf66a"},
+  "Gomesi Ceremonial": {"front": "https://images.unsplash.com/photo-1687052001151-316f9356dbc0", "back": "https://images.unsplash.com/photo-1625646741211-711bdd65c570"},
+  "Kanzu Classic": {"front": "https://images.unsplash.com/photo-1550679893-b5ba03f0b643", "back": "https://images.unsplash.com/photo-1722481736707-4732886f020b"},
+  "Ubuntu Dashiki": {"front": "https://images.unsplash.com/photo-1696962678565-bee84e6b9cb6", "back": "https://images.unsplash.com/photo-1708170236215-b6edcad7f49a"},
+};
+
+/* Sized on demand: the grid pulls a light 620px crop, the studio a 1100px
+   one, so 57 cards do not cost the visitor a 40MB page. */
+function shotURL(url,w){
+  return /images\.unsplash\.com/.test(url)
+    ? url+`?auto=format&fit=crop&w=${w}&q=${w>800?76:71}` : url;
+}
+function shotSet(ph,w){
+  if(!ph) return ph;
+  const o={};
+  if(ph.frames&&ph.frames.length) o.frames=ph.frames.map(x=>shotURL(x,w));
+  if(ph.front) o.front=shotURL(ph.front,w);
+  if(ph.back)  o.back =shotURL(ph.back ,w);
+  return o;
+}
+
+let PHOTOS = JSON.parse(JSON.stringify(SHOTS));
+
+/* ══════════════════════════════════════════════════════════════════
+   MATERIAL RESPONSE — how each cloth catches light
+   ══════════════════════════════════════════════════════════════════ */
+function material(m){
+  const s=(m||'').toLowerCase();
+  if(/patent|nappa|calf|veg-tan|lambskin|leather|brass|sapphire/.test(s))
+    return {spec:.52,band:.30,weave:0,edge:34};        // leather: tight, wet highlight
+  if(/silk|satin|sateen|crepe|brocade/.test(s))
+    return {spec:.34,band:.46,weave:0,edge:20};        // silk: broad travelling sheen
+  if(/denim|selvedge/.test(s))
+    return {spec:.10,band:.06,weave:2,edge:30};        // denim: twill, almost no shine
+  if(/wool|lambswool|merino|melton|knit|cable|fleece|waffle/.test(s))
+    return {spec:.06,band:.04,weave:3,edge:38};        // wool: matte, deep, chunky edge
+  if(/acetate|nylon|coated|quilted|down/.test(s))
+    return {spec:.40,band:.24,weave:0,edge:32};        // synthetic: slick
+  if(/wax print|guinea|linen/.test(s))
+    return {spec:.12,band:.08,weave:1,edge:26};        // print cotton: flat, crisp
+  return {spec:.16,band:.10,weave:1,edge:24};          // cotton default
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   PHOTO RENDERER — a real photograph, given real thickness
+   ══════════════════════════════════════════════════════════════════ */
+const edgeCache={};
+function sampleEdge(url,cb){
+  if(edgeCache[url]) return cb(edgeCache[url]);
+  const im=new Image(); im.crossOrigin='anonymous';
+  im.onload=()=>{
+    try{
+      const c=document.createElement('canvas'); c.width=c.height=14;
+      const x=c.getContext('2d',{willReadFrequently:true}); x.drawImage(im,0,0,14,14);
+      const d=x.getImageData(0,0,14,14).data;
+      let r=0,g=0,b=0,n=0;
+      for(let i=0;i<d.length;i+=4){ if(d[i+3]<120) continue; r+=d[i];g+=d[i+1];b+=d[i+2];n++ }
+      if(!n) return cb(null);
+      const col=`rgb(${(r/n*.62)|0},${(g/n*.62)|0},${(b/n*.62)|0})`;
+      edgeCache[url]=col; cb(col);
+    }catch(e){ cb(null) }                    // canvas tainted by CORS — no harm done
+  };
+  im.onerror=()=>cb(null);
+  im.src=url;
+}
+
+function photoTurntable(ph,depth,slices,ring,fallbackHTML,uid){
+  const has360 = ph.frames && ph.frames.length>=2;
+  const front  = has360 ? ph.frames[0] : ph.front;
+  if(!front) return fallbackHTML;
+  const back   = ph.back || null;
+
+  let h=`<div class="tt-spin" data-photo="1" ${has360?`data-frames='${JSON.stringify(ph.frames)}'`:''} data-uid="${uid}">`;
+
+  if(has360){
+    // true turntable: one plate, the frame swaps as it turns
+    h+=`<div class="slice ph-plate" style="transform:translateZ(0px)">
+          <img class="ph-img" data-uid="${uid}" src="${front}" alt="" decoding="async" loading="lazy" onload="photoOK()"
+               onerror="photoFailed('${uid}')"></div>`;
+  }else{
+    h+=`<div class="slice ph-face" style="transform:translateZ(${depth+.6}px);backface-visibility:hidden">
+          <img class="ph-img" src="${front}" alt="" decoding="async" loading="lazy" onload="photoOK()"
+               onerror="photoFailed('${uid}')"></div>`;
+    // Edges must sit CLEARLY behind the front face. At sub-pixel separation the
+    // depth buffer picks a winner at random and an opaque slab hides the photo.
+    const gap=Math.max(3,depth*0.34);
+    const lo=-depth+1, hi=depth-gap;
+    for(let i=0;i<slices;i++){
+      const t=slices===1?1:i/(slices-1);
+      const z=(lo+t*(hi-lo)).toFixed(1);
+      h+=`<div class="slice ph-edge" data-uid="${uid}"
+              style="transform:translateZ(${z}px);opacity:${(.22+t*.5).toFixed(2)}"></div>`;
+    }
+    h+=`<div class="slice ph-face ph-rear" style="transform:rotateY(180deg) translateZ(${depth+.6}px);backface-visibility:hidden">
+          <img class="ph-img" src="${back||front}" alt="" decoding="async" loading="lazy"
+               style="${back?'':'transform:scaleX(-1);filter:brightness(.52) saturate(.82) contrast(1.05)'}"
+               onerror="photoFailed('${uid}')"></div>`;
+  }
+  h+='</div>';
+  if(ring) h+='<div class="tt-ring"></div><div class="tt-shadow"></div>';
+
+  // tint the extruded edges to match the photograph
+  setTimeout(()=>sampleEdge(front,c=>{
+    if(!c) return;
+    document.querySelectorAll(`.ph-edge[data-uid="${uid}"]`).forEach(e=>e.style.background=c);
+  }),0);
+  return h;
+}
+
+/* Loading is now audited out loud. Silence was the real bug. */
+let PHOTO_OK=0, PHOTO_BAD=0;
+function photoOK(){ PHOTO_OK++; paintDiag() }
+function paintDiag(){
+  const el=document.getElementById('diag'); if(!el) return;
+  const want=Object.keys(PHOTOS).filter(k=>PHOTOS[k]&&(PHOTOS[k].front||PHOTOS[k].frames)).length;
+  el.textContent=`images: ${PHOTO_OK} loaded · ${PHOTO_BAD} failed · ${want} assigned`;
+  el.style.color = PHOTO_BAD ? 'var(--flare)' : PHOTO_OK ? 'var(--teal)' : 'var(--muted)';
+}
+
+// a dead URL must never reach the client's eyes
+const FAILED={};
+function photoFailed(uid){
+  if(FAILED[uid]) return; FAILED[uid]=1; PHOTO_BAD++; paintDiag();
+  const host=document.querySelector(`[data-uid="${uid}"]`)?.closest('.tt');
+  if(host && host.dataset.fallback) host.innerHTML=decodeURIComponent(host.dataset.fallback);
+}
+
+/* frame scrubbing — this is what makes a photo genuinely rotate */
+function scrubFrames(spin,rot){
+  if(!spin || !spin.dataset.frames) return;
+  let f; try{ f=JSON.parse(spin.dataset.frames) }catch(e){ return }
+  const d=((rot%360)+360)%360;
+  const i=Math.floor(d/(360/f.length))%f.length;
+  const img=spin.querySelector('.ph-img');
+  if(img && img.dataset.f!==String(i)){ img.dataset.f=String(i); img.src=f[i] }
+}
+
+/* ══════════════════════════════════════════════════════════
+   RENDER ENGINE — 3D extrusion turntable
+   ══════════════════════════════════════════════════════════ */
+const $=(q,r=document)=>r.querySelector(q), $$=(q,r=document)=>[...r.querySelectorAll(q)];
+const ugx=n=>n.toLocaleString('en-US');
+const usd=n=>Math.round(n/RATE);
+const lum=h=>{const c=h.replace('#','');return .299*parseInt(c.substr(0,2),16)+.587*parseInt(c.substr(2,2),16)+.114*parseInt(c.substr(4,2),16)};
+const shade=(h,pct)=>{const c=h.replace('#','');const f=1-pct/100;
+  const r=Math.round(parseInt(c.substr(0,2),16)*f),g=Math.round(parseInt(c.substr(2,2),16)*f),b=Math.round(parseInt(c.substr(4,2),16)*f);
+  return `rgb(${r},${g},${b})`};
+
+function paths(str,col,sw){
+  if(!str) return '';
+  return str.split(' M').map((p,i)=>i?'M'+p:p).map(p=>{
+    const fill=p.includes('@fill');
+    const d=p.replace('@fill','').trim();
+    return `<path d="${d}" fill="${fill?sw:'none'}" stroke="${sw}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="${fill?.42:.75}"/>`;
+  }).join('');
+}
+function bodyPaths(d,fill){
+  return d.split('@@').map(p=>`<path d="${p}" fill="${fill}"/>`).join('');
+}
+function weaveDef(id,kind){
+  if(kind===3) return `<pattern id="w${id}" width="9" height="9" patternUnits="userSpaceOnUse">
+    <path d="M0 4.5 Q2.2 0 4.5 4.5 Q6.8 9 9 4.5" stroke="#000" stroke-opacity=".15" fill="none" stroke-width="1.5"/></pattern>`;
+  if(kind===2) return `<pattern id="w${id}" width="6" height="6" patternUnits="userSpaceOnUse">
+    <path d="M0 6 L6 0" stroke="#000" stroke-opacity=".16" stroke-width="1.3"/></pattern>`;
+  return `<pattern id="w${id}" width="5" height="5" patternUnits="userSpaceOnUse">
+    <path d="M0 0 H5 M0 0 V5" stroke="#000" stroke-opacity=".08" stroke-width="1"/></pattern>`;
+}
+function patternDefs(id,col){
+  const a=shade(col,45);
+  return `<defs><pattern id="${id}" width="26" height="26" patternUnits="userSpaceOnUse">
+  <rect width="26" height="26" fill="${col}"/>
+  <circle cx="7" cy="7" r="3.4" fill="${a}"/><circle cx="20" cy="20" r="3.4" fill="${a}"/>
+  <path d="M0 13 L13 0 M13 26 L26 13" stroke="${a}" stroke-width="1.6" opacity=".7"/>
+  </pattern></defs>`;
+}
+
+/**
+ * Builds a full 3D turntable. Depth is faked with stacked slices —
+ * cheap enough to run 50 of them on a phone, unlike a WebGL scene.
+ */
+let _uid=0;
+/**
+ * Builds a turntable. If the product has photos it renders those on a
+ * solid slab with real depth; otherwise it draws the vector garment,
+ * lit according to what the cloth is actually made of.
+ */
+function turntable(sh,col,depth,slices,ring,patterned,matStr,ph){
+  const S=SHAPES[sh]; if(!S) return '';
+  const uid='u'+(++_uid);
+  const M=material(matStr);
+  const light=lum(col)>140;
+  const sw=light?'rgba(12,10,16,.5)':'rgba(255,255,255,.34)';
+  const pid='p'+uid;
+  const fillFront=patterned&&S.pat?`url(#${pid})`:col;
+  const head=`<svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">`;
+
+  const defs=sfx=>`<defs>
+    <linearGradient id="g${pid}${sfx}" x1="0" y1="0" x2=".8" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity="${((light?.28:.19)+M.spec*.45).toFixed(3)}"/>
+      <stop offset="${(.26+M.band*.28).toFixed(2)}" stop-color="#fff" stop-opacity="${M.band.toFixed(2)}"/>
+      <stop offset=".62" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".34"/></linearGradient>
+    <radialGradient id="r${pid}${sfx}" cx=".32" cy=".2" r=".82">
+      <stop offset="0" stop-color="#fff" stop-opacity="${(M.spec*.6).toFixed(3)}"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    ${M.weave?weaveDef(pid+sfx,M.weave):''}</defs>`;
+
+  const face=(detail,sfx,fill)=>head+
+    (patterned&&S.pat?patternDefs(pid+sfx,col):'')+defs(sfx)+
+    bodyPaths(S.b,fill)+
+    (M.weave?bodyPaths(S.b,`url(#w${pid}${sfx})`):'')+
+    paths(detail,col,sw)+
+    bodyPaths(S.b,`url(#r${pid}${sfx})`)+
+    bodyPaths(S.b,`url(#g${pid}${sfx})`)+
+    S.b.split('@@').map(d=>`<path d="${d}" fill="none" stroke="${sw}" stroke-width="1.4" opacity=".5"/>`).join('')+
+    '</svg>';
+
+  let h='<div class="tt-spin">';
+  h+=`<div class="slice" style="transform:rotateY(180deg) translateZ(${depth+.6}px);backface-visibility:hidden">
+      ${face(S.k,'b',patterned&&S.pat?`url(#${pid}b)`:col)}</div>`;
+  for(let i=0;i<slices;i++){
+    const t=slices===1?1:i/(slices-1);
+    const z=(-depth+t*2*depth).toFixed(1);
+    h+=`<div class="slice" style="transform:translateZ(${z}px)">${head}${bodyPaths(S.b,shade(col,M.edge+18-t*(M.edge+18)))}</svg></div>`;
+  }
+  h+=`<div class="slice" style="transform:translateZ(${depth+.6}px);backface-visibility:hidden">
+      ${face(S.f,'',fillFront)}</div>`;
+  h+='</div>';
+  if(ring) h+='<div class="tt-ring"></div><div class="tt-shadow"></div>';
+
+  // a photographed product supersedes the vector render, but keeps it as a net
+  if(ph&&(ph.front||ph.frames)) return photoTurntable(ph,depth,slices,ring,h,uid);
+  return h;
+}
+
+/** Wraps a turntable in its stage, carrying an escape route for dead image URLs. */
+function mount(p,col,depth,slices,ring){
+  const ph=shotSet(PHOTOS[p.n], depth>16?1100:620);
+  const vector=turntable(p.s,col,depth,slices,ring,true,p.m,null);
+  const live=turntable(p.s,col,depth,slices,ring,true,p.m,ph);
+  const has=!!(ph&&(ph.front||ph.frames));
+  const fb=has?` data-fallback="${encodeURIComponent(vector)}"`:'';
+  const alt=p.n.replace(/"/g,'')+' — MANNIE, photographed front and back';
+  return `<div class="tt${has?' has-photo':''}"${fb}>${live.split('alt=""').join(`alt="${alt}"`)}</div>`;
+}
+
+/* ══════════════════════════════════════════════════════════
+   BOOT + AMBIENT
+   ══════════════════════════════════════════════════════════ */
+'MANNIE'.split('').forEach((ch,i)=>{
+  const s=document.createElement('span'); s.textContent=ch; s.style.animationDelay=(i*.07)+'s';
+  $('#bootMark').appendChild(s);
+});
+window.addEventListener('load',()=>setTimeout(()=>$('#boot').classList.add('gone'),1500));
+
+const TICK=['Fashion in the round','360° on every piece','Free Kampala delivery','Live stock counts',
+'Cut in Kampala · Worn everywhere','30-day returns','Drag to rotate','Made to be kept'];
+const tickHTML=TICK.map(t=>`<span>${t}</span>`).join('');
+$('#tick1').innerHTML=tickHTML; $('#tick2').innerHTML=tickHTML;
+
+// hero: the piece that best states the thesis — a cape, because it reads at every angle
+const HERO_PIECE=P.find(p=>p.n==='Nocturne Opera Cape')||P[0];
+$('#heroModel').innerHTML=mount(HERO_PIECE,HERO_PIECE.col[0][1],26,9,false);
+let heroRot=0;
+const calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+(function heroSpin(){
+  if(calm){ $('#heroModel .tt-spin')?.style.setProperty('--rot','-18deg'); return }
+  heroRot+=.16;
+  const s=$('#heroModel .tt-spin'); if(s) s.style.setProperty('--rot',heroRot+'deg');
+  requestAnimationFrame(heroSpin);
+})();
+
+// count-up
+(function(){let v=0;const el=$('#stCount');const iv=setInterval(()=>{v+=1;el.textContent=v;if(v>=P.length)clearInterval(iv)},22)})();
+
+// header
+addEventListener('scroll',()=>$('#hdr').classList.toggle('stuck',scrollY>40));
+
+// reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+$$('.rv').forEach(e=>io.observe(e));
+
+/* ══════════════════════════════════════════════════════════
+   GRID + FILTERS
+   ══════════════════════════════════════════════════════════ */
+let filter='all';
+const total=p=>p.z.reduce((a,b)=>a+b.q,0);
+
+$('#rail').innerHTML=CATS.map(([k,l])=>{
+  const n=k==='all'?P.length:k==='new'?P.filter(p=>p.t==='NEW').length:P.filter(p=>p.c===k).length;
+  return `<button class="chip${k==='all'?' on':''}" data-c="${k}">${l}<b>${n}</b></button>`;
+}).join('');
+
+function paint(){
+  const list=P.filter(p=>filter==='all'?1:filter==='new'?p.t==='NEW':p.c===filter);
+  $('#grid').innerHTML=list.map(p=>{
+    const i=P.indexOf(p), st=total(p), col=p.col[0][1];
+    const tag = st===0?'<span class="tag out">Sold out</span>'
+      : st<14?'<span class="tag low">Only '+st+' left</span>'
+      : p.t==='NEW'?'<span class="tag irid">New in</span>'
+      : p.t==='ATELIER'?'<span class="tag">Atelier</span>'
+      : p.was?'<span class="tag low">Reduced</span>':'';
+    return `<article class="card" data-i="${i}" tabindex="0" role="button" aria-label="${p.n} — open the studio">
+      <div class="card-tags">${tag}</div>
+      <div class="spin-cue">↻</div>
+      <div class="card-stage">${mount(p,col,10,3,false)}</div>
+      <div class="card-meta">
+        <div><h3>${p.n}</h3><span class="cat">${CATS.find(c=>c[0]===p.c)[1]}</span></div>
+        <div class="card-price"><b>${ugx(p.p)}</b><s>UGX · $${usd(p.p)}</s></div>
+      </div>
+      <div class="card-swatches">${p.col.slice(0,4).map(c=>`<i style="background:${c[1]}"></i>`).join('')}<u>${p.col.length} colours</u></div>
+    </article>`;
+  }).join('');
+  $$('.card').forEach((c,n)=>{setTimeout(()=>c.classList.add('in'),Math.min(n*28,620))});
+}
+paint();
+
+$('#rail').addEventListener('click',e=>{
+  const b=e.target.closest('.chip'); if(!b) return;
+  $$('.chip').forEach(c=>c.classList.remove('on')); b.classList.add('on');
+  filter=b.dataset.c; paint();
+});
+
+// card: spin on hover, open on click
+$('#grid').addEventListener('pointerover',e=>{
+  const c=e.target.closest('.card'); if(!c) return;
+  const s=$('.tt-spin',c); if(!s) return;
+  if(s.dataset.frames){ let f=0; clearInterval(c._sp);
+    c._sp=setInterval(()=>{ f=(f+14)%360; scrubFrames(s,f) },55); }
+  else s.style.setProperty('--rot','180deg');
+});
+$('#grid').addEventListener('pointerout',e=>{
+  const c=e.target.closest('.card'); if(!c) return;
+  clearInterval(c._sp);
+  const s=$('.tt-spin',c); if(s&&!s.dataset.frames) s.style.setProperty('--rot','0deg');
+});
+$('#grid').addEventListener('click',e=>{
+  const c=e.target.closest('.card'); if(!c) return;
+  const s=$('.tt-spin',c);
+  if(s&&!s.dataset.frames&&!calm){                 // a quick turn confirms the tap landed
+    s.style.setProperty('--rot','360deg');
+    setTimeout(()=>{ s.style.setProperty('--rot','0deg'); openStudio(+c.dataset.i) },340);
+  } else openStudio(+c.dataset.i);
+});
+$('#grid').addEventListener('keydown',e=>{
+  if(e.key!=='Enter'&&e.key!==' ') return;
+  const c=e.target.closest('.card'); if(c){e.preventDefault();openStudio(+c.dataset.i)}
+});
+
+/* ══════════════════════════════════════════════════════════
+   STUDIO — drag to rotate, live colourway, per-size stock
+   ══════════════════════════════════════════════════════════ */
+let cur=null, curCol=0, curSize=-1, rot=0, vel=0, dragging=false, lastX=0, raf=null;
+
+function openStudio(i){
+  cur=P[i]; curCol=0; curSize=cur.z.findIndex(s=>s.q>0); rot=0; vel=0; viewMode='photo';
+  drawStage(); drawPanel();
+  $('#studio').classList.add('open'); $('#scrim').classList.add('open'); document.body.classList.add('lock');
+  spinLoop(); revealSpin();
+}
+function closeStudio(){
+  $('#studio').classList.remove('open'); $('#scrim').classList.remove('open'); document.body.classList.remove('lock');
+  cancelAnimationFrame(raf); raf=null;
+}
+let viewMode='photo';
+function drawStage(){
+  $('#stStage').innerHTML = viewMode==='vector'
+    ? `<div class="tt">${turntable(cur.s,cur.col[curCol][1],24,9,true,true,cur.m,null)}</div>`
+    : mount(cur,cur.col[curCol][1],24,9,true);
+}
+function drawPanel(){
+  const p=cur, st=total(p);
+  $('#stRight').innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div class="st-cat">${CATS.find(c=>c[0]===p.c)[1]}${p.t?' · '+p.t.toLowerCase():''}</div>
+      ${PHOTOS[p.n]?`<div class="mode-tog" id="modeTog">
+        <button data-m="photo" class="on">Photo</button><button data-m="vector">360° view</button></div>`:''}
+    </div>
+    <h2 class="st-name">${p.n}</h2>
+    <p class="st-blurb">${p.d}</p>
+    <div class="st-price"><b>UGX ${ugx(p.p)}</b>${p.was?`<s style="text-decoration:line-through">${ugx(p.was)}</s>`:''}<s>≈ $${usd(p.p)}</s></div>
+
+    <div class="blk">
+      <div class="blk-h"><span>Colourway</span><em id="colName">${p.col[curCol][0]}</em></div>
+      <div class="swatches" id="sws">${p.col.map((c,i)=>
+        `<button class="sw${i===curCol?' on':''}" data-i="${i}" style="background:${c[1]}" aria-label="${c[0]}"></button>`).join('')}</div>
+    </div>
+
+    <div class="blk">
+      <div class="blk-h"><span>Size</span><em>${st} in stock</em></div>
+      <div class="sizes" id="szs">${p.z.map((s,i)=>{
+        const cls=s.q===0?'gone':s.q<=4?'thin':'';
+        return `<button class="sz ${cls}${i===curSize?' on':''}" data-i="${i}" ${s.q===0?'disabled':''}>
+          <b>${s.s}</b><u>${s.q===0?'None':s.q+' left'}</u></button>`}).join('')}</div>
+    </div>
+
+    <div class="blk specs">
+      <div class="spec"><span>Material</span><b>${p.m}</b></div>
+      <div class="spec"><span>Fit</span><b>${p.fit}</b></div>
+      <div class="spec"><span>Care</span><b>${p.care}</b></div>
+      <div class="spec"><span>Made</span><b>${p.o}</b></div>
+    </div>
+
+    <div class="st-cta">
+      <button class="btn solid" id="addBtn"><span>${st?'Add to bag':'Sold out'}</span></button>
+    </div>
+    <p class="st-note">Free delivery in Kampala · 30-day returns · Pay on delivery available</p>`;
+
+  $('#sws').onclick=e=>{const b=e.target.closest('.sw'); if(!b)return;
+    curCol=+b.dataset.i; $$('.sw').forEach(s=>s.classList.remove('on')); b.classList.add('on');
+    $('#colName').textContent=cur.col[curCol][0]; drawStage(); applyRot();};
+  $('#szs').onclick=e=>{const b=e.target.closest('.sz'); if(!b||b.disabled)return;
+    curSize=+b.dataset.i; $$('.sz').forEach(s=>s.classList.remove('on')); b.classList.add('on');};
+  $('#addBtn').onclick=addToBag;
+  const mt=$('#modeTog');
+  if(mt) mt.onclick=e=>{ const b=e.target.closest('button'); if(!b)return;
+    $$('#modeTog button').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+    viewMode=b.dataset.m; drawStage(); rot=0; applyRot(); revealSpin(); };
+}
+/* the piece introduces itself: one full turn, then it is yours to drag */
+function revealSpin(){
+  if(calm){ rot=0; applyRot(); return }
+  const t0=performance.now(), dur=1750;
+  rot=-24; applyRot();
+  (function step(now){
+    if(dragging) return;
+    const k=Math.min(1,(now-t0)/dur), e=1-Math.pow(1-k,3);
+    rot=-24+e*384; applyRot();
+    if(k<1) requestAnimationFrame(step);
+  })(performance.now());
+}
+function applyRot(){
+  const s=$('#stStage .tt-spin');
+  if(s){
+    if(s.dataset.frames){ s.style.setProperty('--rot','0deg'); scrubFrames(s,rot); }
+    else s.style.setProperty('--rot',rot+'deg');
+  }
+  const d=((rot%360)+360)%360;
+  $('#degVal').textContent=String(Math.round(d)).padStart(3,'0');
+}
+function spinLoop(){
+  if(!dragging){ vel*=.94; if(Math.abs(vel)>.02){rot+=vel; applyRot()} }
+  raf=requestAnimationFrame(spinLoop);
+}
+const stage=$('#stStage');
+stage.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;vel=0;stage.setPointerCapture(e.pointerId)});
+stage.addEventListener('pointermove',e=>{
+  if(!dragging)return; const dx=e.clientX-lastX; lastX=e.clientX;
+  rot+=dx*.65; vel=dx*.65; applyRot();
+});
+['pointerup','pointercancel'].forEach(ev=>stage.addEventListener(ev,()=>dragging=false));
+$$('.snapbtns button').forEach(b=>b.onclick=()=>{
+  const t=+b.dataset.snap, base=Math.round(rot/360)*360;
+  rot=base+t; vel=0; applyRot();
+});
+$('#stClose').onclick=closeStudio;
+$('#scrim').onclick=()=>{closeStudio();closeCart()};
+addEventListener('keydown',e=>{if(e.key==='Escape'){closeStudio();closeCart()}});
+
+/* ══════════════════════════════════════════════════════════
+   BAG
+   ══════════════════════════════════════════════════════════ */
+let bag=[];
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2400)}
+
+function addToBag(){
+  if(!total(cur)) return toast('That piece is sold out');
+  if(curSize<0) return toast('Choose a size first');
+  const size=cur.z[curSize], colour=cur.col[curCol];
+  const key=cur.n+'|'+size.s+'|'+colour[0];
+  const ex=bag.find(b=>b.key===key);
+  if(ex){ if(ex.q>=size.q) return toast('That is all we have in '+size.s); ex.q++ }
+  else bag.push({key,n:cur.n,s:cur.s,m:cur.m,size:size.s,cap:size.q,col:colour[0],hex:colour[1],p:cur.p,q:1});
+  drawBag(); toast(cur.n+' added — size '+size.s);
+  openCart();
+}
+function drawBag(){
+  $('#cartCount').textContent=bag.reduce((a,b)=>a+b.q,0);
+  const body=$('#cartBody');
+  if(!bag.length){
+    body.innerHTML=`<div class="cart-empty"><div style="font-size:34px;opacity:.3">↻</div>
+      <p>Nothing here yet.<br>Spin a piece and add your size.</p></div>`;
+    $('#cartFoot').style.display='none'; return;
+  }
+  body.innerHTML=bag.map((b,i)=>`<div class="ci">
+    <div class="ci-img"><div class="tt" style="width:100%">${turntable(b.s,b.hex,4,2,false,true,b.m,null)}</div></div>
+    <div class="ci-b">
+      <h5>${b.n}</h5>
+      <div class="ci-v">${b.col} · Size ${b.size}</div>
+      <div class="ci-p">UGX ${ugx(b.p*b.q)}</div>
+      <div class="qty"><button data-m="-1" data-i="${i}">−</button><span>${b.q}</span><button data-m="1" data-i="${i}">+</button></div>
+    </div>
+    <button class="ci-x" data-x="${i}" aria-label="Remove">×</button>
+  </div>`).join('');
+  const sub=bag.reduce((a,b)=>a+b.p*b.q,0);
+  $('#sub').textContent='UGX '+ugx(sub);
+  $('#tot').textContent='UGX '+ugx(sub);
+  $('#cartFoot').style.display='block';
+}
+$('#cartBody').addEventListener('click',e=>{
+  const x=e.target.closest('[data-x]'), m=e.target.closest('[data-m]');
+  if(x){ bag.splice(+x.dataset.x,1); drawBag(); return }
+  if(m){ const b=bag[+m.dataset.i], d=+m.dataset.m;
+    if(d>0&&b.q>=b.cap) return toast('That is all we have in '+b.size);
+    b.q+=d; if(b.q<1) bag.splice(+m.dataset.i,1); drawBag() }
+});
+function openCart(){$('#cart').classList.add('open');$('#scrim').classList.add('open')}
+function closeCart(){$('#cart').classList.remove('open');if(!$('#studio').classList.contains('open'))$('#scrim').classList.remove('open')}
+$('#openCart').onclick=openCart; $('#closeCart').onclick=closeCart;
+$('#checkout').onclick=()=>{
+  if(!bag.length) return toast('Your bag is empty');
+  const lines=bag.map(b=>`• ${b.n} — ${b.col}, size ${b.size} ×${b.q} — UGX ${ugx(b.p*b.q)}`).join('%0A');
+  const sub=bag.reduce((a,b)=>a+b.p*b.q,0);
+  const msg=`Hello MANNIE, I would like to order:%0A%0A${lines}%0A%0ATotal: UGX ${ugx(sub)}`;
+  window.open('https://wa.me/256777691011?text='+msg,'_blank');
+};
+drawBag();
+
+/* ══════════════════════════════════════════════════════════════════
+   PHOTO STUDIO — add images without opening the code
+   Tap the ⧉ button, bottom-left. Works entirely on a phone.
+   ══════════════════════════════════════════════════════════════════ */
+const PS_CSS=`
+.fab{position:fixed;left:16px;bottom:16px;z-index:300;width:48px;height:48px;border-radius:50%;
+  background:var(--ink);color:#fff;display:grid;place-items:center;font-size:19px;
+  box-shadow:0 8px 26px rgba(0,0,0,.5);transition:transform .3s}
+.fab:hover{transform:scale(1.07)}
+.fab.hide{transform:scale(0);pointer-events:none}
+.ps{position:fixed;left:0;bottom:0;top:0;width:min(430px,100%);z-index:320;background:var(--card);
+  border-right:1px solid var(--line);transform:translateX(-101%);
+  transition:transform .5s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column}
+.ps.open{transform:none}
+.ps-h{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.ps-h h3{font-family:var(--d);font-weight:500;color:var(--ink);font-size:25px}
+.ps-b{flex:1;overflow-y:auto;padding:20px 22px}
+.ps-b label{display:block;font-family:var(--u);font-weight:500;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);margin:16px 0 7px}
+.ps-b select,.ps-b input,.ps-b textarea{width:100%;background:var(--paper);border:1px solid var(--line);
+  border-radius:var(--r);color:var(--ink);padding:11px 12px;font-family:var(--m);font-size:11.5px;
+  outline:none;transition:border-color .25s}
+.ps-b select:focus,.ps-b input:focus,.ps-b textarea:focus{border-color:var(--iris)}
+.ps-b textarea{resize:vertical;min-height:96px;line-height:1.6}
+.ps-note{font-size:12px;line-height:1.7;color:var(--muted);margin-top:7px}
+.ps-row{display:flex;gap:7px;margin-top:16px;flex-wrap:wrap}
+.ps-row .btn{flex:1;justify-content:center;padding:12px 14px;min-width:120px}
+.ps-prev{aspect-ratio:1/1.05;background:var(--sink);border:1px solid var(--line);border-radius:var(--r);
+  display:grid;place-items:center;margin-top:14px;overflow:hidden;padding:14px}
+.ps-prev img{max-width:100%;max-height:100%;object-fit:contain}
+.ps-prev p{font-family:var(--u);font-size:11px;letter-spacing:.04em;color:var(--muted);text-align:center;line-height:1.9}
+.ps-tally{font-family:var(--u);font-weight:500;font-size:11px;letter-spacing:.03em;color:var(--iris);margin-top:14px}
+.ps-hint{border-top:1px solid var(--line);margin-top:22px;padding-top:16px}
+.ps-hint h6{font-family:var(--u);font-weight:500;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+.ps-hint p{font-size:12px;line-height:1.75;color:var(--body);margin-bottom:9px}
+.ps-hint b{color:var(--ink);font-weight:500}
+.filepick{display:flex;align-items:center;gap:10px;padding:13px;border:1px dashed var(--line);
+  border-radius:var(--r);cursor:pointer;transition:border-color .25s}
+.filepick:hover{border-color:var(--iris)}
+.filepick span{font-family:var(--u);font-weight:500;font-size:11px;letter-spacing:.06em;color:var(--body)}
+@media(max-width:720px){.fab{left:12px;bottom:12px;width:44px;height:44px}}
+`;
+const PS_HTML=`
+<button class="fab" id="fabPhoto" title="Photo Studio" aria-label="Open Photo Studio">⧉</button>
+<aside class="ps" id="ps">
+  <div class="ps-h"><h3>Photo Studio</h3>
+    <button id="psClose" style="font-size:20px;color:var(--ash)" aria-label="Close">×</button></div>
+  <div class="ps-b">
+    <label>Product</label>
+    <select id="psPick"></select>
+
+    <label>Front image URL</label>
+    <input id="psFront" placeholder="https://…/shirt-front.jpg" autocomplete="off" spellcheck="false">
+
+    <label>Back image URL — optional</label>
+    <input id="psBack" placeholder="https://…/shirt-back.jpg" autocomplete="off" spellcheck="false">
+
+    <label>360° frames — optional, one URL per line</label>
+    <textarea id="psFrames" placeholder="https://…/01.jpg&#10;https://…/02.jpg&#10;https://…/03.jpg" spellcheck="false"></textarea>
+    <p class="ps-note">Eight frames is the fewest that turns smoothly. Twenty-four looks like a showroom.</p>
+
+    <label>Or take one from this phone</label>
+    <label class="filepick" for="psFile"><span>⇪ &nbsp;Choose a photo</span></label>
+    <input type="file" id="psFile" accept="image/*" style="display:none">
+    <p class="ps-note">A photo picked here previews immediately but lives only in this browser tab. Host it to keep it.</p>
+
+    <div class="ps-prev" id="psPrev"><p>No image yet</p></div>
+
+    <div class="ps-row">
+      <button class="btn solid" id="psApply"><span>Apply</span></button>
+      <button class="btn" id="psClear"><span>Remove</span></button>
+    </div>
+    <div class="ps-row">
+      <button class="btn" id="psTest"><span>Restore demo photos</span></button>
+      <button class="btn" id="psExport"><span>Export code</span></button>
+    </div>
+    <div class="ps-tally" id="psTally"></div>
+    <div class="ps-tally" id="diag" style="color:var(--muted)"></div>
+
+    <div class="ps-hint">
+      <h6>Where to host them</h6>
+      <p>You already run <b>Supabase</b> — make a public Storage bucket, drop the photos in, copy the public URL. That is the shortest path and it costs nothing at this volume.</p>
+      <p>To make photos permanent, hit <b>Export code</b>, copy the block, and paste it over the <b>PHOTOS</b> section near the top of the file. Then redeploy.</p>
+      <h6 style="margin-top:16px">Shooting a 360°</h6>
+      <p>Phone on a tripod, product on a turntable or a plate you rotate by hand. Mark the plate at 24 points, shoot one frame at each. Never move the phone.</p>
+    </div>
+  </div>
+</aside>`;
+
+document.head.insertAdjacentHTML('beforeend','<style>'+PS_CSS+'</style>');
+document.body.insertAdjacentHTML('beforeend',PS_HTML);
+
+const psPick=$('#psPick'), psFront=$('#psFront'), psBack=$('#psBack'), psFrames=$('#psFrames');
+psPick.innerHTML=P.map((p,i)=>`<option value="${i}">${p.n}</option>`).join('');
+
+function psTally(){
+  const n=Object.keys(PHOTOS).filter(k=>PHOTOS[k]&&(PHOTOS[k].front||PHOTOS[k].frames)).length;
+  $('#psTally').textContent=n?`${n} of ${P.length} products have photos`:`No photos yet — all ${P.length} products are using the 3D vector render`;
+}
+function psPreview(src){
+  $('#psPrev').innerHTML=src
+    ? `<img src="${src}" alt="" onerror="this.parentNode.innerHTML='<p>That URL did not load.<br>Check it is a direct link to an image file.</p>'">`
+    : '<p>No image yet</p>';
+}
+function psLoad(){
+  const p=P[+psPick.value], ph=PHOTOS[p.n]||{};
+  psFront.value=ph.front||''; psBack.value=ph.back||'';
+  psFrames.value=(ph.frames||[]).join('\n');
+  psPreview(ph.front||(ph.frames||[])[0]||'');
+}
+psPick.onchange=psLoad;
+psFront.oninput=()=>psPreview(psFront.value.trim());
+
+$('#psFile').onchange=e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{ psFront.value=r.result; psPreview(r.result); toast('Photo loaded — now tap Apply') };
+  r.readAsDataURL(f);
+};
+
+$('#psApply').onclick=()=>{
+  const p=P[+psPick.value];
+  const fr=psFrames.value.split('\n').map(s=>s.trim()).filter(Boolean);
+  const front=psFront.value.trim(), back=psBack.value.trim();
+  if(!front&&!fr.length) return toast('Add a URL or pick a photo first');
+  PHOTOS[p.n]={}; 
+  if(fr.length>=2) PHOTOS[p.n].frames=fr;
+  if(front) PHOTOS[p.n].front=front;
+  if(back) PHOTOS[p.n].back=back;
+  Object.keys(FAILED).forEach(k=>delete FAILED[k]);
+  paint(); if(cur&&cur.n===p.n) drawStage();
+  psTally(); toast(p.n+' updated');
+};
+$('#psClear').onclick=()=>{
+  const p=P[+psPick.value];
+  delete PHOTOS[p.n]; psFront.value=psBack.value=psFrames.value=''; psPreview('');
+  paint(); if(cur&&cur.n===p.n) drawStage();
+  psTally(); toast(p.n+' back to the 3D render');
+};
+
+/* Puts the shipped photography back on every product — the undo button for
+   an afternoon of experimenting. */
+$('#psTest').onclick=()=>{
+  PHOTOS=JSON.parse(JSON.stringify(SHOTS));
+  Object.keys(FAILED).forEach(k=>delete FAILED[k]);
+  PHOTO_OK=0; PHOTO_BAD=0;
+  paint(); psLoad(); psTally(); paintDiag();
+  toast(`Shipped photography restored on all ${Object.keys(SHOTS).length} products`);
+};
+
+$('#psExport').onclick=()=>{
+  const clean={};
+  Object.keys(PHOTOS).forEach(k=>{
+    const v=PHOTOS[k]; if(!v) return;
+    const o={};
+    if(v.frames&&v.frames.length) o.frames=v.frames.filter(u=>!u.startsWith('data:'));
+    if(v.front&&!v.front.startsWith('data:')) o.front=v.front;
+    if(v.back&&!v.back.startsWith('data:')) o.back=v.back;
+    if(o.front||o.frames) clean[k]=o;
+  });
+  const dropped=Object.keys(PHOTOS).length-Object.keys(clean).length;
+  const code='const PHOTOS = '+JSON.stringify(clean,null,2)+';';
+  navigator.clipboard?.writeText(code).then(
+    ()=>toast(dropped?`Copied — ${dropped} phone photo(s) skipped, host those first`:'Code copied — paste it over the PHOTOS block'),
+    ()=>{ psFrames.value=code; toast('Copy it from the frames box') });
+};
+
+$('#fabPhoto').onclick=()=>{ $('#ps').classList.add('open'); $('#fabPhoto').classList.add('hide'); psLoad(); psTally() };
+$('#psClose').onclick=()=>{ $('#ps').classList.remove('open'); $('#fabPhoto').classList.remove('hide') };
+psTally(); psLoad();
+
+paintDiag();
+
+</script>
 </body>
 </html>
