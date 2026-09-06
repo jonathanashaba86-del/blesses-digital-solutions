@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Blessed Digital Solutions">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#dcbb4e"/>
+      <stop offset="1" stop-color="#a8811a"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#08122a"/>
+  <path fill="url(#g)" d="M22 16h13.6c6.4 0 10.4 3.2 10.4 8.4 0 3.3-1.7 5.8-4.6 7 3.6 1 5.8 3.8 5.8 7.7 0 5.7-4.3 8.9-11.3 8.9H22V16zm7 5.4v8.2h5.8c3 0 4.8-1.5 4.8-4.1s-1.8-4.1-4.8-4.1H29zm0 13.2v8.4h6.4c3.2 0 5.1-1.6 5.1-4.2 0-2.7-1.9-4.2-5.1-4.2H29z"/>
+</svg>

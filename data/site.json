@@ -1,0 +1,63 @@
+{
+  "domain": "https://blesseddigitalsolutions.com",
+  "legalName": "Blessed Digital Solutions",
+  "tagline": "Professional Web Development · Digital Marketing · Brand Growth",
+  "descriptor": "A Ugandan digital studio building premium websites, brands and AI products for businesses that intend to be the obvious choice in their market.",
+  "email": "hello@blesseddigitalsolutions.com",
+  "phone": "+256 700 000 000",
+  "whatsapp": "+256 700 000 000",
+  "location": "Kampala, Uganda",
+  "hours": "Mon – Sat, 08:00 – 18:00 EAT",
+  "founder": "Jonah",
+  "founderRole": "Founder & Lead Engineer",
+  "teamSize": "A five-person studio",
+  "social": {
+    "Facebook": "#",
+    "LinkedIn": "#",
+    "Instagram": "#",
+    "TikTok": "#",
+    "GitHub": "https://github.com/jonathanashaba86-del"
+  },
+  "platforms": [
+    { "name": "Bulk-SMS Dashboard", "body": "Campaign SMS at scale on the Africa’s Talking network — the delivery layer VoiceCore extends." },
+    { "name": "InvCore", "body": "Invoicing and expense tracking. Booking events and bookkeeping roles write straight into it." },
+    { "name": "ComplyCore UG", "body": "Compliance tooling built for SACCOs — the trust framing that makes ScoreCore possible." },
+    { "name": "PayCore UG", "body": "Payment and repayment tracking, where ScoreCore’s lending decisions are followed through." }
+  ],
+  "services": [
+    { "name": "Web Development", "body": "Responsive business websites, portfolios, landing pages and e-commerce solutions — engineered to load fast and convert.", "icon": "code" },
+    { "name": "Digital Marketing", "body": "Social media marketing, SEO optimisation and online advertising, measured against leads rather than likes.", "icon": "growth" },
+    { "name": "Graphic Design", "body": "Professional logos, posters, company profiles and branding materials with one consistent visual system.", "icon": "brush" },
+    { "name": "Content Creation", "body": "Creative content for TikTok, YouTube, Facebook and Instagram, produced on a rhythm the brand can sustain.", "icon": "play" }
+  ],
+  "capabilities": [
+    { "name": "HTML & CSS", "body": "Modern, responsive, accessible interface engineering." },
+    { "name": "JavaScript", "body": "Interactive user experiences, dashboards and product front-ends." },
+    { "name": "SEO & AI Visibility", "body": "Search ranking plus the newer discipline: being cited by AI answers." },
+    { "name": "Digital Marketing", "body": "Audience growth, lead generation and conversion strategy." }
+  ],
+  "projects": [
+    { "name": "Corporate Website", "body": "A professional website for a local business, rebuilt to improve online visibility and inbound enquiries.", "tag": "Web build" },
+    { "name": "Marketing Campaign", "body": "A social media campaign that measurably increased engagement and brand awareness.", "tag": "Growth" },
+    { "name": "Brand Identity Package", "body": "Logos, banners and marketing materials designed as one system for a startup company.", "tag": "Brand" }
+  ],
+  "testimonials": [
+    { "quote": "Excellent website design and outstanding support throughout the project.", "author": "Client A" },
+    { "quote": "Our social media engagement improved significantly after working with Blessed Digital Solutions.", "author": "Client B" },
+    { "quote": "Professional, reliable and highly recommended.", "author": "Client C" }
+  ],
+  "method": [
+    { "title": "Discover", "body": "We sit with the owner, map how the business actually earns, and agree the one number the work has to move." },
+    { "title": "Design", "body": "Navy-and-gold discipline: every screen, document and report is designed to be handed to a board without apology." },
+    { "title": "Build", "body": "Shipped in short cycles on infrastructure we already run, so the first useful version arrives in weeks, not quarters." },
+    { "title": "Grow", "body": "A weekly rhythm of reporting and tuning. What got done, what is outstanding, and what needs a decision." }
+  ],
+  "faq": [
+    { "q": "Are these four products available today?", "a": "They are concept and design briefs from the BDS Product Lab, released in build order. VoiceCore ships first because it rides infrastructure we already run; ScoreCore, RadarCore and EmployCore open as new lines behind it. Founding clients are onboarded during the build, not after." },
+    { "q": "Why does BDS sell before it builds?", "a": "Because a product nobody has paid for is a hobby. We prove demand with a small number of founding clients, build against their real workflow, and only then open the line. It is the single reason our products ship finished rather than theoretical." },
+    { "q": "What does a founding client get?", "a": "Direct influence over the roadmap, a persona and reporting designed around their business, and pricing held for the length of the founding term. In exchange we ask for honest weekly feedback during the build." },
+    { "q": "How is pricing structured?", "a": "Never as a software licence. Each product is priced against the business outcome it protects — one missed customer, one bad loan, one invisible listing, one role you cannot yet afford to hire. Exact figures are quoted after a briefing call, because they depend on volume and scope." },
+    { "q": "Is our data safe?", "a": "Sensitive integrations are read-only by default, nothing acts without approval until you switch it on, and every product keeps a full audit trail. ScoreCore in particular is framed under ComplyCore UG so that data handling stands up to UMRA and internal compliance review." },
+    { "q": "Do you work with businesses outside Uganda?", "a": "Yes for web, brand and marketing work. The four Product Lab lines are tuned to Ugandan financial and communication behaviour first — MTN MoMo and Airtel Money, WhatsApp-led enquiries, English, Luganda and Swahili — and travel to comparable markets from there." }
+  ]
+}

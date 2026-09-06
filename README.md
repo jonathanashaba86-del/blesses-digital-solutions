@@ -1,332 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blessed Digital Solutions</title>
+# Blessed Digital Solutions — Studio Site & Product Lab
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+A zero-dependency static site for **Blessed Digital Solutions (BDS)**: the studio
+homepage plus a full premium showcase for the four new product lines defined in
+the *Premium Product Specifications* brief.
 
-body{
-    font-family:'Segoe UI',sans-serif;
-    line-height:1.6;
-    background:#f5f7fa;
-    color:#333;
-}
+**Live sections**
 
-header{
-    background:linear-gradient(135deg,#0f172a,#1e3a8a);
-    color:white;
-    text-align:center;
-    padding:120px 20px;
-}
+| Page | Purpose |
+| --- | --- |
+| `index.html` | Studio homepage — positioning, the four products, services, capability, method, infrastructure, work, testimonials, FAQ, contact |
+| `products/index.html` | Product Lab cover — all four briefs, comparison matrix, release order |
+| `products/voicecore.html` | 01 / 04 — AI Reception & Call Intelligence |
+| `products/scorecore.html` | 02 / 04 — AI Credit Intelligence for SACCOs |
+| `products/radarcore.html` | 03 / 04 — AI Visibility Intelligence |
+| `products/employcore.html` | 04 / 04 — White-Label AI Workforce |
 
-header h1{
-    font-size:3rem;
-    margin-bottom:15px;
-}
+## The four product lines
 
-header p{
-    font-size:1.2rem;
-    margin-bottom:30px;
-}
+1. **VoiceCore** — *“The receptionist who never sleeps, never misses a call, and never forgets a customer.”*
+   24/7 call, WhatsApp and web-chat answering with one shared memory, live booking,
+   English/Luganda/Swahili, human hand-off with full transcript. Extends the Bulk-SMS
+   Dashboard's Africa's Talking integration; bookings write into InvCore.
+2. **ScoreCore** — *“Turn every mobile-money transaction into a lending decision a board can defend.”*
+   MTN MoMo and Airtel Money pattern analysis, explainable credit memos, UMRA-ready audit
+   trail. Sits beside ComplyCore UG and reports into PayCore UG.
+3. **RadarCore** — *“Google isn't where your next customer is asking anymore.”*
+   Multi-engine AI-mention auditing (ChatGPT, Gemini, Perplexity), head-to-head competitor
+   visibility, schema implementation, answer-ready rewrites, live mention tracker.
+4. **EmployCore** — *“The same AI team running BDS, now working for your business.”*
+   Modular Reception / Bookkeeping / Marketing / Sales-follow-up roles, hired like staff,
+   with handbooks, a weekly manager's report and a live activity log.
 
-.btn{
-    display:inline-block;
-    background:#2563eb;
-    color:white;
-    text-decoration:none;
-    padding:12px 30px;
-    border-radius:8px;
-    transition:0.3s;
-}
+**Build order:** VoiceCore first — it rides infrastructure BDS already runs, and every
+existing website client is a warm pitch. Sell it to five clients before opening the next line.
 
-.btn:hover{
-    background:#1d4ed8;
-}
+## Structure
 
-nav{
-    background:#111827;
-    text-align:center;
-    padding:15px;
-    position:sticky;
-    top:0;
-    z-index:100;
-}
+```
+├── index.html              # generated
+├── 404.html                # generated
+├── sitemap.xml             # generated
+├── robots.txt              # generated
+├── products/               # generated (hub + 4 spec pages)
+├── data/
+│   ├── site.json           # studio content: contact, services, work, FAQ, method
+│   └── products.json       # the four product briefs, verbatim from the spec
+├── assets/
+│   ├── css/bds.css         # navy & gold design system (tokens, components, print)
+│   ├── js/bds.js           # nav, scroll reveal, enquiry form — progressive enhancement
+│   └── img/logo.svg        # brand mark, also used as favicon
+├── tools/build.py          # renders every HTML page from the JSON content
+└── netlify.toml            # headers, caching, vanity redirects (/voicecore etc.)
+```
 
-nav a{
-    color:white;
-    text-decoration:none;
-    margin:0 15px;
-    font-weight:600;
-}
+## Editing content
 
-nav a:hover{
-    color:#60a5fa;
-}
+**Never hand-edit the generated HTML** — it is overwritten on the next build. Change the
+JSON, then rebuild:
 
-section{
-    max-width:1100px;
-    margin:auto;
-    padding:80px 20px;
-}
+```bash
+python3 tools/build.py      # no dependencies beyond Python 3
+python3 -m http.server 8000 # preview at http://localhost:8000
+```
 
-h2{
-    text-align:center;
-    margin-bottom:40px;
-    color:#1e3a8a;
-}
+Adding a fifth product is a matter of appending one object to `data/products.json`;
+the card, hub row, spec page, comparison matrix, sitemap and prev/next pager all follow.
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:25px;
-}
+## Before going live
 
-.card{
-    background:white;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
-    transition:0.3s;
-}
+These placeholders live in `data/site.json` and must be replaced with the real details:
 
-.card:hover{
-    transform:translateY(-8px);
-}
+- `domain` — currently `https://blesseddigitalsolutions.com` (used for canonical URLs, Open Graph and the sitemap)
+- `email` — currently `hello@blesseddigitalsolutions.com`
+- `phone` / `whatsapp` — currently `+256 700 000 000`
+- `social` — Facebook, LinkedIn, Instagram and TikTok are `#` placeholders
 
-.card h3{
-    margin-bottom:10px;
-}
+The enquiry form is client-side only: it opens the visitor's mail client with the brief
+prefilled, so nothing is stored on a third-party server. Swap `data-enquiry-form` handling
+in `assets/js/bds.js` for a Netlify Form or a Supabase endpoint when a backend is wanted.
 
-.about{
-    text-align:center;
-    font-size:1.1rem;
-}
+## Design system
 
-.testimonial{
-    text-align:center;
-}
+Navy & gold, as specified. Tokens sit at the top of `assets/css/bds.css` — brand ramps
+(`--navy-*`, `--gold-*`), a fluid type scale (`--step--1` … `--step-5`), spacing, radii and
+shadows. Typography is Jost (display) over Inter (body), matching the spec document.
 
-form{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-}
+Accessibility and robustness: skip link, visible focus rings, `aria-current` on the active
+nav item, keyboard-dismissible mobile nav, `prefers-reduced-motion` honoured, semantic
+landmarks throughout, and a print stylesheet so any spec page prints as a clean leave-behind.
 
-input, textarea{
-    padding:12px;
-    border:1px solid #ccc;
-    border-radius:8px;
-    font-size:16px;
-}
+---
 
-button{
-    background:#2563eb;
-    color:white;
-    border:none;
-    padding:14px;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:16px;
-}
-
-button:hover{
-    background:#1d4ed8;
-}
-
-footer{
-    background:#111827;
-    color:white;
-    text-align:center;
-    padding:30px;
-}
-
-.social a{
-    color:white;
-    text-decoration:none;
-    margin:0 10px;
-}
-
-.social a:hover{
-    color:#60a5fa;
-}
-
-@media(max-width:768px){
-    header h1{
-        font-size:2.2rem;
-    }
-
-    nav a{
-        display:block;
-        margin:10px 0;
-    }
-}
-</style>
-</head>
-
-<body>
-
-<header>
-    <h1>Blessed Digital Solutions</h1>
-    <p>Professional Web Development • Digital Marketing • Brand Growth</p>
-    <a href="#contact" class="btn">Get Started</a>
-</header>
-
-<nav>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#testimonials">Testimonials</a>
-    <a href="#contact">Contact</a>
-</nav>
-
-<section id="about">
-    <h2>About Us</h2>
-    <div class="about">
-        <p>
-            Blessed Digital Solutions helps businesses establish a strong online
-            presence through professional website development, digital marketing,
-            branding, and content creation. We focus on delivering modern digital
-            solutions that drive growth and increase visibility.
-        </p>
-    </div>
-</section>
-
-<section id="services">
-    <h2>Our Services</h2>
-
-    <div class="grid">
-        <div class="card">
-            <h3>Web Development</h3>
-            <p>Responsive business websites, portfolios, landing pages and e-commerce solutions.</p>
-        </div>
-
-        <div class="card">
-            <h3>Digital Marketing</h3>
-            <p>Social media marketing, SEO optimization and online advertising.</p>
-        </div>
-
-        <div class="card">
-            <h3>Graphic Design</h3>
-            <p>Professional logos, posters, company profiles and branding materials.</p>
-        </div>
-
-        <div class="card">
-            <h3>Content Creation</h3>
-            <p>Creative content for TikTok, YouTube, Facebook and Instagram.</p>
-        </div>
-    </div>
-</section>
-
-<section id="skills">
-    <h2>Skills</h2>
-
-    <div class="grid">
-        <div class="card">
-            <h3>HTML & CSS</h3>
-            <p>Modern responsive website design.</p>
-        </div>
-
-        <div class="card">
-            <h3>JavaScript</h3>
-            <p>Interactive user experiences and functionality.</p>
-        </div>
-
-        <div class="card">
-            <h3>SEO</h3>
-            <p>Search engine optimization and website ranking.</p>
-        </div>
-
-        <div class="card">
-            <h3>Digital Marketing</h3>
-            <p>Audience growth and lead generation strategies.</p>
-        </div>
-    </div>
-</section>
-
-<section id="projects">
-    <h2>Featured Projects</h2>
-
-    <div class="grid">
-        <div class="card">
-            <h3>Corporate Website</h3>
-            <p>Developed a professional website for a local business to improve online visibility.</p>
-        </div>
-
-        <div class="card">
-            <h3>Marketing Campaign</h3>
-            <p>Created a social media campaign that increased engagement and brand awareness.</p>
-        </div>
-
-        <div class="card">
-            <h3>Brand Identity Package</h3>
-            <p>Designed logos, banners and marketing materials for a startup company.</p>
-        </div>
-    </div>
-</section>
-
-<section id="testimonials">
-    <h2>Client Testimonials</h2>
-
-    <div class="grid">
-        <div class="card testimonial">
-            <p>
-                "Excellent website design and outstanding support throughout the project."
-            </p>
-            <strong>- Client A</strong>
-        </div>
-
-        <div class="card testimonial">
-            <p>
-                "Our social media engagement improved significantly after working with Blessed Digital Solutions."
-            </p>
-            <strong>- Client B</strong>
-        </div>
-
-        <div class="card testimonial">
-            <p>
-                "Professional, reliable and highly recommended."
-            </p>
-            <strong>- Client C</strong>
-        </div>
-    </div>
-</section>
-
-<section id="contact">
-    <h2>Contact Us</h2>
-
-    <form>
-        <input type="text" placeholder="Your Name" required>
-
-        <input type="email" placeholder="Your Email" required>
-
-        <textarea rows="5" placeholder="Your Message"></textarea>
-
-        <button type="submit">Send Message</button>
-    </form>
-</section>
-
-<footer>
-    <h3>Blessed Digital Solutions</h3>
-
-    <div class="social">
-        <a href="#">Facebook</a>
-        <a href="#">LinkedIn</a>
-        <a href="#">GitHub</a>
-        <a href="#">Instagram</a>
-    </div>
-
-    <p style="margin-top:15px;">
-        © 2026 Blessed Digital Solutions. All Rights Reserved.
-    </p>
-</footer>
-
-</body>
-</html>
+© Blessed Digital Solutions — Kampala, Uganda. Navy & Gold · Sell before build.

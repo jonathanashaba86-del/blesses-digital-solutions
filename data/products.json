@@ -1,0 +1,318 @@
+{
+  "brand": {
+    "name": "Blessed Digital Solutions",
+    "short": "BDS",
+    "division": "BDS — Product Lab",
+    "docTitle": "Premium Product Specifications",
+    "subtitle": "Four New Revenue Lines — Concept & Design Briefs",
+    "preparedFor": "Prepared for Jonah — Founder, BDS",
+    "date": "September 2026",
+    "palette": "Navy & Gold",
+    "principle": "Sell before build",
+    "lineup": "VoiceCore · ScoreCore · RadarCore · EmployCore"
+  },
+  "startHere": {
+    "eyebrow": "Where to start",
+    "title": "VoiceCore First",
+    "body": [
+      "It rides infrastructure BDS already runs — the Bulk-SMS Dashboard and Africa’s Talking integration — so it ships fastest of the four. It is also the easiest upsell: every client BDS has already built a site for is a warm pitch, not a cold one.",
+      "Build it once, sell it to five existing clients before opening ScoreCore, RadarCore or EmployCore as a new line."
+    ],
+    "footline": "BLESSED DIGITAL SOLUTIONS  |  NAVY & GOLD  |  SELL BEFORE BUILD"
+  },
+  "products": [
+    {
+      "slug": "voicecore",
+      "index": "01",
+      "name": "VoiceCore",
+      "category": "AI Reception & Call Intelligence",
+      "icon": "phone",
+      "quote": "The receptionist who never sleeps, never misses a call, and never forgets a customer.",
+      "problem": "Every unanswered call is a customer calling the next business on the list. A full-time receptionist is expensive and inconsistent outside office hours — yet in Uganda, a large share of real bookings begin as an after-hours call or WhatsApp message.",
+      "experience": "VoiceCore should never feel like “a bot.” It answers in a warm, branded voice the client helps choose, with a name and a greeting written to sound like the best receptionist the business has ever had. It listens across phone, WhatsApp and web chat, and remembers the same conversation across all three. The client’s dashboard is not a log file — it is a live conversation feed, every call and chat tagged automatically as a booking, a complaint, a lead, or a general question. When a human steps in, they see the full history instantly; the customer never repeats themselves, and neither does the business.",
+      "capabilities": [
+        "24/7 call, WhatsApp and web-chat answering — one memory across all three",
+        "Live appointment booking synced to the client’s real calendar",
+        "Automatic lead capture and CRM logging",
+        "English, Luganda and Swahili out of the box",
+        "Seamless human hand-off with full transcript and context",
+        "After-call WhatsApp or SMS summary sent to the customer"
+      ],
+      "signature": [
+        "A named, branded voice persona the client helps design — never a generic robotic voice",
+        "Automatic monthly “Voice of the Customer” brief: a one-page, boardroom-styled summary of themes, complaints and missed opportunities",
+        "Custom-branded hold greeting and confirmation jingle",
+        "Optional outbound confirmation calls recorded in the owner’s own voice"
+      ],
+      "buildNotes": "Extends the Bulk-SMS Dashboard’s existing Africa’s Talking integration with a voice/IVR layer and a speech pipeline. Booking events write straight into InvCore for invoice-ready jobs.",
+      "positioning": "Sold as “the cost of one missed customer a month,” not a software licence — setup deposit plus a monthly seat fee tiered by call volume.",
+      "priceModel": [
+        "Once-off setup deposit",
+        "Monthly seat fee, tiered by call volume"
+      ],
+      "idealFor": [
+        "Clinics & dental practices",
+        "Hotels & lodges",
+        "Salons & spas",
+        "Property agents",
+        "Trades & service crews"
+      ],
+      "rollout": [
+        {
+          "title": "Voice design",
+          "body": "We name the persona, choose the voice, and write the greeting with the owner in the room."
+        },
+        {
+          "title": "Line & channel wiring",
+          "body": "Number, WhatsApp and web chat connected through the existing Africa’s Talking layer."
+        },
+        {
+          "title": "Calendar & CRM sync",
+          "body": "Booking rules, working hours and hand-off thresholds mapped to the real calendar."
+        },
+        {
+          "title": "Go live & tune",
+          "body": "Live conversation feed monitored, phrasing tuned weekly, first Voice-of-the-Customer brief issued."
+        }
+      ],
+      "metrics": [
+        {
+          "value": "24/7",
+          "label": "Answering window"
+        },
+        {
+          "value": "3",
+          "label": "Channels, one memory"
+        },
+        {
+          "value": "3",
+          "label": "Languages at launch"
+        }
+      ],
+      "summary": "Answers every call, WhatsApp message and web chat around the clock, books the job, logs the lead, and hands a human the full history the moment they step in."
+    },
+    {
+      "slug": "scorecore",
+      "index": "02",
+      "name": "ScoreCore",
+      "category": "AI Credit Intelligence for SACCOs",
+      "icon": "chart",
+      "quote": "Turn every mobile-money transaction into a lending decision a board can defend.",
+      "problem": "Good borrowers are turned away daily for having no bank statement — only a phone full of MTN MoMo and Airtel Money history. Manual loan review takes SACCOs days, and the final call is often a guess dressed up as policy.",
+      "experience": "ScoreCore should never feel like a black box. A loan officer connects or uploads a member’s mobile-money history and, within minutes, receives a clean, single-page credit memo — the kind a commercial bank underwriter would produce — written in plain language: reasons to lend, reasons to be cautious, and a confidence band, never a bare number. It is watermarked with the SACCO’s own logo, so a small rural SACCO can hand a member, a donor, or a regulator something that reads like it came from a modern financial institution.",
+      "capabilities": [
+        "Mobile-money transaction pattern analysis (MTN MoMo, Airtel Money)",
+        "Scoring model tuned to Ugandan financial behaviour — e.g. regular family transfers read as stability, not suspicion",
+        "Plain-language, explainable credit memos, not a bare score",
+        "Repayment tracking integration with PayCore UG",
+        "Fraud and score-gaming pattern flags",
+        "Full audit trail for UMRA and internal compliance review"
+      ],
+      "signature": [
+        "Branded, watermarked one-page credit memo per loan applicant",
+        "A boardroom-style portfolio risk dashboard for SACCO leadership",
+        "Quarterly “Portfolio Health” report, designed like an annual-report page, fit for an AGM or a donor meeting"
+      ],
+      "buildNotes": "Sits beside ComplyCore UG — SACCOs are already ComplyCore’s target client — and reports into PayCore UG for repayment tracking. ComplyCore’s compliance framing is what earns the trust to handle this data at all.",
+      "positioning": "Per-SACCO licence plus a per-score usage fee, positioned against the cost of one bad loan avoided — not against the price of software.",
+      "priceModel": [
+        "Annual per-SACCO licence",
+        "Per-score usage fee"
+      ],
+      "idealFor": [
+        "SACCOs",
+        "Village banks & VSLAs",
+        "Microfinance institutions",
+        "Employer loan schemes",
+        "Donor-funded lending programmes"
+      ],
+      "rollout": [
+        {
+          "title": "Compliance framing",
+          "body": "Data-handling, consent and retention set out under the ComplyCore UG framework before a single statement is read."
+        },
+        {
+          "title": "Data connection",
+          "body": "Loan officers connect or upload MTN MoMo and Airtel Money history for a member."
+        },
+        {
+          "title": "Model calibration",
+          "body": "Scoring bands tuned to the SACCO’s own book and to Ugandan financial behaviour."
+        },
+        {
+          "title": "Memo & portfolio rollout",
+          "body": "Watermarked credit memos in production, leadership dashboard live, first quarterly Portfolio Health report issued."
+        }
+      ],
+      "metrics": [
+        {
+          "value": "Minutes",
+          "label": "From upload to credit memo"
+        },
+        {
+          "value": "1 page",
+          "label": "Plain-language memo"
+        },
+        {
+          "value": "Full",
+          "label": "Audit trail for UMRA"
+        }
+      ],
+      "summary": "Reads a member’s MTN MoMo and Airtel Money history and returns a bank-grade, plain-language credit memo in minutes — with the reasons, not just a number."
+    },
+    {
+      "slug": "radarcore",
+      "index": "03",
+      "name": "RadarCore",
+      "category": "AI Visibility Intelligence",
+      "icon": "radar",
+      "quote": "Google isn’t where your next customer is asking anymore.",
+      "problem": "Clients whose websites BDS has already built have never once checked whether ChatGPT, Gemini or Perplexity mention their business when someone asks “best clinic in Entebbe” or “best hotel near Lake Victoria.” Right now, most are invisible.",
+      "experience": "RadarCore should feel like a boardroom scorecard, not an SEO report. The client receives a magazine-styled “AI Visibility Report”: the real questions a customer might ask an AI, whether the business was mentioned, which competitors were named instead, and exactly why — missing structured data, thin reviews, unclear service pages. A small live dashboard then tracks one number over time — were we mentioned this week — checked the way an owner checks a stock price. The most premium page in the report: the client versus their three biggest rivals, visibility measured head to head.",
+      "capabilities": [
+        "Multi-engine AI-mention auditing (ChatGPT, Gemini, Perplexity and others)",
+        "Competitor AI-visibility comparison, head to head",
+        "Structured data and schema implementation on the client’s site",
+        "“Answer-ready” content rewrites engineered to be cited",
+        "Monthly re-audit with a running visibility trend"
+      ],
+      "signature": [
+        "Magazine-styled AI Visibility Report, not a spreadsheet",
+        "A live “AI Mention Tracker” dashboard the client checks monthly",
+        "An “AI-Visibility Verified” badge for the client’s own site — a trust signal that quietly markets BDS too"
+      ],
+      "buildNotes": "The audit draws on the AI-citation tooling already connected to BDS’s workflow; content rewrites plug into the existing web-build service; the dashboard reuses the portfolio hub’s Netlify/Supabase stack.",
+      "positioning": "Sold as a premium retainer add-on to every new website build — “your site is finished, now let’s make sure the AI is answering with your name in it” — never as a stand-alone discount service.",
+      "priceModel": [
+        "Retainer add-on to every new website build",
+        "Never sold as a stand-alone discount service"
+      ],
+      "idealFor": [
+        "Every BDS website client",
+        "Clinics & hospitals",
+        "Hotels & tour operators",
+        "Law & accounting firms",
+        "Schools & training centres"
+      ],
+      "rollout": [
+        {
+          "title": "Question set",
+          "body": "We write the real questions a customer would ask an AI about this category, in this town."
+        },
+        {
+          "title": "Multi-engine audit",
+          "body": "ChatGPT, Gemini, Perplexity and others queried; mentions, omissions and named rivals recorded."
+        },
+        {
+          "title": "Fix the causes",
+          "body": "Structured data, schema and answer-ready content rewrites shipped to the client’s site."
+        },
+        {
+          "title": "Track & re-audit",
+          "body": "Live AI Mention Tracker plus a monthly re-audit and running visibility trend."
+        }
+      ],
+      "metrics": [
+        {
+          "value": "3+",
+          "label": "AI engines audited"
+        },
+        {
+          "value": "1 number",
+          "label": "Tracked weekly: were we mentioned"
+        },
+        {
+          "value": "Head to head",
+          "label": "Client vs three rivals"
+        }
+      ],
+      "summary": "Audits whether ChatGPT, Gemini and Perplexity name the client when a customer asks, fixes the reasons they don’t, and tracks the answer month after month."
+    },
+    {
+      "slug": "employcore",
+      "index": "04",
+      "name": "EmployCore",
+      "category": "White-Label AI Workforce",
+      "icon": "team",
+      "quote": "The same AI team running BDS, now working for your business.",
+      "problem": "Most SMEs cannot afford a receptionist, a bookkeeper and a marketer, so the owner does all three badly, at midnight, instead of running the business.",
+      "experience": "EmployCore should be onboarded like a real hire, never switched on like software. The client “meets” their new AI team by name, with a short introduction and a one-page employee handbook describing exactly what each one does and does not do. Every week, the owner receives a one-page manager’s report — the same weekly rhythm BDS already runs on itself — summarising what got done, what’s outstanding, and what needs a decision. The rarest, most premium detail: the client can watch their AI team’s activity log in real time, the same transparency BDS uses internally, which is the one thing no generic chatbot vendor can show.",
+      "capabilities": [
+        "Modular roles the client mixes: Reception, Bookkeeping, Marketing, Sales follow-up",
+        "Reception role built on the same voice/WhatsApp layer as VoiceCore",
+        "Bookkeeping role wired into InvCore for invoices and expense tracking",
+        "Weekly one-page manager’s report to the owner",
+        "Read-only by default on anything sensitive — nothing acts without approval until switched on"
+      ],
+      "signature": [
+        "A named, branded persona per hired role, introduced like a real new employee",
+        "A printed or PDF employee handbook for each role",
+        "A monthly review call styled like a genuine staff performance review"
+      ],
+      "buildNotes": "Productises BDS’s own internal Veronica / Jarvis / Marvin / Mannie operating model as a permissioned, multi-tenant service — reusing the Reception layer from VoiceCore and the Bookkeeping layer from InvCore.",
+      "positioning": "Priced per role hired, like fractional staff rather than software seats — the full team sold as a bundle at a premium to any single role.",
+      "priceModel": [
+        "Priced per role hired, like fractional staff",
+        "Full team bundled at a premium to any single role"
+      ],
+      "idealFor": [
+        "Owner-run SMEs",
+        "Retail & wholesale shops",
+        "Construction & fabrication",
+        "Agencies & consultancies",
+        "Logistics & transport"
+      ],
+      "roles": [
+        {
+          "name": "Reception",
+          "body": "Built on the same voice and WhatsApp layer as VoiceCore — answers, books, captures and hands off."
+        },
+        {
+          "name": "Bookkeeping",
+          "body": "Wired into InvCore for invoices and expense tracking, reconciled and ready for the accountant."
+        },
+        {
+          "name": "Marketing",
+          "body": "Keeps the content rhythm running so the brand does not go quiet the week the owner gets busy."
+        },
+        {
+          "name": "Sales follow-up",
+          "body": "Chases the quotes and enquiries that would otherwise die in an unread inbox."
+        }
+      ],
+      "rollout": [
+        {
+          "title": "Meet the team",
+          "body": "Roles chosen, personas named and branded, and introduced to the owner like a real new hire."
+        },
+        {
+          "title": "Handbook issued",
+          "body": "A one-page employee handbook per role: exactly what it does, and what it does not do."
+        },
+        {
+          "title": "Permissions set",
+          "body": "Read-only by default on anything sensitive; nothing acts without approval until switched on."
+        },
+        {
+          "title": "Weekly rhythm",
+          "body": "One-page manager’s report every week, a live activity log always on, monthly performance review call."
+        }
+      ],
+      "metrics": [
+        {
+          "value": "4",
+          "label": "Modular roles to mix"
+        },
+        {
+          "value": "Weekly",
+          "label": "One-page manager’s report"
+        },
+        {
+          "value": "Live",
+          "label": "Activity log, always visible"
+        }
+      ],
+      "summary": "Reception, Bookkeeping, Marketing and Sales follow-up, hired by the role like real staff — with names, handbooks, a weekly manager’s report and a live activity log."
+    }
+  ]
+}

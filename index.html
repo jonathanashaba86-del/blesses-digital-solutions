@@ -3,330 +3,466 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blessed Digital Solutions</title>
-
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    font-family:'Segoe UI',sans-serif;
-    line-height:1.6;
-    background:#f5f7fa;
-    color:#333;
-}
-
-header{
-    background:linear-gradient(135deg,#0f172a,#1e3a8a);
-    color:white;
-    text-align:center;
-    padding:120px 20px;
-}
-
-header h1{
-    font-size:3rem;
-    margin-bottom:15px;
-}
-
-header p{
-    font-size:1.2rem;
-    margin-bottom:30px;
-}
-
-.btn{
-    display:inline-block;
-    background:#2563eb;
-    color:white;
-    text-decoration:none;
-    padding:12px 30px;
-    border-radius:8px;
-    transition:0.3s;
-}
-
-.btn:hover{
-    background:#1d4ed8;
-}
-
-nav{
-    background:#111827;
-    text-align:center;
-    padding:15px;
-    position:sticky;
-    top:0;
-    z-index:100;
-}
-
-nav a{
-    color:white;
-    text-decoration:none;
-    margin:0 15px;
-    font-weight:600;
-}
-
-nav a:hover{
-    color:#60a5fa;
-}
-
-section{
-    max-width:1100px;
-    margin:auto;
-    padding:80px 20px;
-}
-
-h2{
-    text-align:center;
-    margin-bottom:40px;
-    color:#1e3a8a;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:25px;
-}
-
-.card{
-    background:white;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
-    transition:0.3s;
-}
-
-.card:hover{
-    transform:translateY(-8px);
-}
-
-.card h3{
-    margin-bottom:10px;
-}
-
-.about{
-    text-align:center;
-    font-size:1.1rem;
-}
-
-.testimonial{
-    text-align:center;
-}
-
-form{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-}
-
-input, textarea{
-    padding:12px;
-    border:1px solid #ccc;
-    border-radius:8px;
-    font-size:16px;
-}
-
-button{
-    background:#2563eb;
-    color:white;
-    border:none;
-    padding:14px;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:16px;
-}
-
-button:hover{
-    background:#1d4ed8;
-}
-
-footer{
-    background:#111827;
-    color:white;
-    text-align:center;
-    padding:30px;
-}
-
-.social a{
-    color:white;
-    text-decoration:none;
-    margin:0 10px;
-}
-
-.social a:hover{
-    color:#60a5fa;
-}
-
-@media(max-width:768px){
-    header h1{
-        font-size:2.2rem;
-    }
-
-    nav a{
-        display:block;
-        margin:10px 0;
-    }
-}
-</style>
+<title>Blessed Digital Solutions — Web Development, Brand &amp; AI Products in Uganda</title>
+<meta name="description" content="A Ugandan digital studio building premium websites, brands and AI products for businesses that intend to be the obvious choice in their market.">
+<meta name="theme-color" content="#08122a">
+<meta name="author" content="Blessed Digital Solutions">
+<link rel="canonical" href="https://blesseddigitalsolutions.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Blessed Digital Solutions">
+<meta property="og:title" content="Blessed Digital Solutions — Web Development, Brand &amp; AI Products in Uganda">
+<meta property="og:description" content="A Ugandan digital studio building premium websites, brands and AI products for businesses that intend to be the obvious choice in their market.">
+<meta property="og:url" content="https://blesseddigitalsolutions.com/">
+<meta property="og:locale" content="en_UG">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Blessed Digital Solutions — Web Development, Brand &amp; AI Products in Uganda">
+<meta name="twitter:description" content="A Ugandan digital studio building premium websites, brands and AI products for businesses that intend to be the obvious choice in their market.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Jost:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="assets/css/bds.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "ProfessionalService", "name": "Blessed Digital Solutions", "description": "A Ugandan digital studio building premium websites, brands and AI products for businesses that intend to be the obvious choice in their market.", "url": "https://blesseddigitalsolutions.com/", "email": "hello@blesseddigitalsolutions.com", "telephone": "+256 700 000 000", "areaServed": "UG", "address": {"@type": "PostalAddress", "addressLocality": "Kampala", "addressCountry": "UG"}, "founder": {"@type": "Person", "name": "Jonah", "jobTitle": "Founder & Lead Engineer"}, "makesOffer": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": "VoiceCore", "description": "AI Reception & Call Intelligence"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "ScoreCore", "description": "AI Credit Intelligence for SACCOs"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "RadarCore", "description": "AI Visibility Intelligence"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "EmployCore", "description": "White-Label AI Workforce"}}]}</script>
 </head>
-
 <body>
-
-<header>
-    <h1>Blessed Digital Solutions</h1>
-    <p>Professional Web Development • Digital Marketing • Brand Growth</p>
-    <a href="#contact" class="btn">Get Started</a>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <nav class="nav" data-nav aria-label="Primary">
+      <a class="mark" href="index.html" aria-label="Blessed Digital Solutions — home">
+        <span class="mark__glyph" aria-hidden="true">B</span>
+        <span class="mark__text">
+          <span class="mark__name">Blessed Digital</span>
+          <span class="mark__sub">Product Lab</span>
+        </span>
+      </a>
+      <button class="nav__toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav__links">
+        <a href="products/">Product Lab</a><a href="index.html#services">Services</a><a href="index.html#method">Method</a><a href="index.html#work">Work</a><a href="index.html#company">Company</a>
+        <a class="btn btn--gold btn--sm nav__cta" href="index.html#contact">Book a briefing</a>
+      </div>
+    </nav>
+  </div>
 </header>
 
-<nav>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#testimonials">Testimonials</a>
-    <a href="#contact">Contact</a>
-</nav>
+<main id="main">
 
-<section id="about">
-    <h2>About Us</h2>
-    <div class="about">
-        <p>
-            Blessed Digital Solutions helps businesses establish a strong online
-            presence through professional website development, digital marketing,
-            branding, and content creation. We focus on delivering modern digital
-            solutions that drive growth and increase visibility.
-        </p>
+<section class="hero">
+  <div class="wrap">
+    <div class="hero__layout">
+    <div class="hero__inner">
+      <p class="eyebrow" data-reveal>Blessed Digital Solutions</p>
+      <h1 data-reveal>Built to be <em>the obvious choice</em> in your market.</h1>
+      <p class="hero__lede" data-reveal>A Ugandan digital studio building premium websites, brands and AI products for businesses that intend to be the obvious choice in their market.</p>
+      <div class="btn-row" data-reveal>
+        <a class="btn btn--gold" href="products/">See the four new products <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn--ghost" href="#services">Studio services</a>
+      </div>
+      <div class="hero__meta" data-reveal>
+        <span>Kampala, Uganda</span>
+        <span>A five-person studio</span>
+        <span>Sell Before Build</span>
+      </div>
     </div>
+    <aside class="hero-index" data-reveal aria-label="The four product lines">
+      <div class="hero-index__head"><span>BDS — Product Lab</span><span>04 lines</span></div>
+      <a href="products/voicecore.html">
+        <span class="hero-index__no">01</span>
+        <span class="hero-index__name">VoiceCore</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <span class="hero-index__cat">AI Reception &amp; Call Intelligence</span>
+      </a><a href="products/scorecore.html">
+        <span class="hero-index__no">02</span>
+        <span class="hero-index__name">ScoreCore</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <span class="hero-index__cat">AI Credit Intelligence for SACCOs</span>
+      </a><a href="products/radarcore.html">
+        <span class="hero-index__no">03</span>
+        <span class="hero-index__name">RadarCore</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <span class="hero-index__cat">AI Visibility Intelligence</span>
+      </a><a href="products/employcore.html">
+        <span class="hero-index__no">04</span>
+        <span class="hero-index__name">EmployCore</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <span class="hero-index__cat">White-Label AI Workforce</span>
+      </a>
+    </aside>
+    </div>
+  </div>
 </section>
 
-<section id="services">
-    <h2>Our Services</h2>
-
-    <div class="grid">
-        <div class="card">
-            <h3>Web Development</h3>
-            <p>Responsive business websites, portfolios, landing pages and e-commerce solutions.</p>
-        </div>
-
-        <div class="card">
-            <h3>Digital Marketing</h3>
-            <p>Social media marketing, SEO optimization and online advertising.</p>
-        </div>
-
-        <div class="card">
-            <h3>Graphic Design</h3>
-            <p>Professional logos, posters, company profiles and branding materials.</p>
-        </div>
-
-        <div class="card">
-            <h3>Content Creation</h3>
-            <p>Creative content for TikTok, YouTube, Facebook and Instagram.</p>
-        </div>
+<section class="section section--tight section--ink">
+  <div class="wrap">
+    <div class="metric-strip" data-reveal>
+      <div class="metric"><b>04</b><span>Products in the lab</span></div>
+      <div class="metric"><b>04</b><span>Platforms already running</span></div>
+      <div class="metric"><b>05</b><span>People in the studio</span></div>
+      <div class="metric"><b>24/7</b><span>AI reception, once live</span></div>
     </div>
+  </div>
 </section>
 
-<section id="skills">
-    <h2>Skills</h2>
-
-    <div class="grid">
-        <div class="card">
-            <h3>HTML & CSS</h3>
-            <p>Modern responsive website design.</p>
-        </div>
-
-        <div class="card">
-            <h3>JavaScript</h3>
-            <p>Interactive user experiences and functionality.</p>
-        </div>
-
-        <div class="card">
-            <h3>SEO</h3>
-            <p>Search engine optimization and website ranking.</p>
-        </div>
-
-        <div class="card">
-            <h3>Digital Marketing</h3>
-            <p>Audience growth and lead generation strategies.</p>
-        </div>
+<section class="section" id="products">
+  <div class="wrap">
+    <div class="section-head section-head--center">
+      <p class="eyebrow eyebrow--center" data-reveal>BDS — Product Lab</p>
+      <h2 data-reveal>Four new revenue lines, in build order.</h2>
+      <p class="lede" data-reveal>Concept and design briefs for four new revenue lines — each one sold against a business outcome, never as a software licence.</p>
     </div>
+    <div class="grid grid-2"><article class="pcard" data-reveal>
+  <div class="pcard__top">
+    <span class="card__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.6 3h3.2l1.6 4-2 1.4a12 12 0 0 0 5.2 5.2l1.4-2 4 1.6v3.2A2.6 2.6 0 0 1 17.4 19 14.4 14.4 0 0 1 5 6.6 2.6 2.6 0 0 1 6.6 3Z"/></svg></span>
+    <span class="pcard__index">01 / 04</span>
+  </div>
+  <div>
+    <p class="pcard__cat">AI Reception &amp; Call Intelligence</p>
+    <h3 class="pcard__name">VoiceCore</h3>
+  </div>
+  <p class="pcard__quote">The receptionist who never sleeps, never misses a call, and never forgets a customer.</p>
+  <p>Answers every call, WhatsApp message and web chat around the clock, books the job, logs the lead, and hands a human the full history the moment they step in.</p>
+  <a class="pcard__more stretched" href="products/voicecore.html">Read the full brief <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</article><article class="pcard" data-reveal>
+  <div class="pcard__top">
+    <span class="card__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9m5 11V4m5 16v-7m5 7V7"/></svg></span>
+    <span class="pcard__index">02 / 04</span>
+  </div>
+  <div>
+    <p class="pcard__cat">AI Credit Intelligence for SACCOs</p>
+    <h3 class="pcard__name">ScoreCore</h3>
+  </div>
+  <p class="pcard__quote">Turn every mobile-money transaction into a lending decision a board can defend.</p>
+  <p>Reads a member’s MTN MoMo and Airtel Money history and returns a bank-grade, plain-language credit memo in minutes — with the reasons, not just a number.</p>
+  <a class="pcard__more stretched" href="products/scorecore.html">Read the full brief <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</article><article class="pcard" data-reveal>
+  <div class="pcard__top">
+    <span class="card__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><path d="M12 12 18 6"/></svg></span>
+    <span class="pcard__index">03 / 04</span>
+  </div>
+  <div>
+    <p class="pcard__cat">AI Visibility Intelligence</p>
+    <h3 class="pcard__name">RadarCore</h3>
+  </div>
+  <p class="pcard__quote">Google isn’t where your next customer is asking anymore.</p>
+  <p>Audits whether ChatGPT, Gemini and Perplexity name the client when a customer asks, fixes the reasons they don’t, and tracks the answer month after month.</p>
+  <a class="pcard__more stretched" href="products/radarcore.html">Read the full brief <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</article><article class="pcard" data-reveal>
+  <div class="pcard__top">
+    <span class="card__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"/><path d="M16 5.4a3.2 3.2 0 0 1 0 5.2M17.5 14.4a5.5 5.5 0 0 1 3 5.1"/></svg></span>
+    <span class="pcard__index">04 / 04</span>
+  </div>
+  <div>
+    <p class="pcard__cat">White-Label AI Workforce</p>
+    <h3 class="pcard__name">EmployCore</h3>
+  </div>
+  <p class="pcard__quote">The same AI team running BDS, now working for your business.</p>
+  <p>Reception, Bookkeeping, Marketing and Sales follow-up, hired by the role like real staff — with names, handbooks, a weekly manager’s report and a live activity log.</p>
+  <a class="pcard__more stretched" href="products/employcore.html">Read the full brief <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</article></div>
+    <div class="btn-row btn-row--center" style="margin-top:2.5rem;" data-reveal>
+      <a class="btn btn--outline" href="products/">Open the full specification <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
 </section>
 
-<section id="projects">
-    <h2>Featured Projects</h2>
-
-    <div class="grid">
-        <div class="card">
-            <h3>Corporate Website</h3>
-            <p>Developed a professional website for a local business to improve online visibility.</p>
-        </div>
-
-        <div class="card">
-            <h3>Marketing Campaign</h3>
-            <p>Created a social media campaign that increased engagement and brand awareness.</p>
-        </div>
-
-        <div class="card">
-            <h3>Brand Identity Package</h3>
-            <p>Designed logos, banners and marketing materials for a startup company.</p>
-        </div>
+<section class="section section--dark" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow" data-reveal>Studio services</p>
+      <h2 data-reveal>The work that pays for the lab.</h2>
+      <p class="lede" data-reveal>Websites, brand and marketing delivered to the same standard as the products — because every client we build for is also the warm audience for what comes next.</p>
     </div>
+    <div class="grid grid-4" style="margin-bottom:clamp(2rem,5vw,3.5rem);"><article class="card card--dark" data-reveal>
+      <span class="card__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8.5 8-4 4 4 4M15.5 8l4 4-4 4M13.5 4.5l-3 15"/></svg></span>
+      <h3>Web Development</h3>
+      <p>Responsive business websites, portfolios, landing pages and e-commerce solutions — engineered to load fast and convert.</p>
+    </article><article class="card card--dark" data-reveal>
+      <span class="card__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19h16M7 16V9m5 7V5m5 11v-4"/></svg></span>
+      <h3>Digital Marketing</h3>
+      <p>Social media marketing, SEO optimisation and online advertising, measured against leads rather than likes.</p>
+    </article><article class="card card--dark" data-reveal>
+      <span class="card__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20s3.5.5 5-1 .2-3.6-1-4-3.4.6-3.4 2.6c0 1.4-.6 2.4-.6 2.4Z"/><path d="M9.5 15 19 5.5a2 2 0 0 0-2.8-2.8L6.7 12.2"/></svg></span>
+      <h3>Graphic Design</h3>
+      <p>Professional logos, posters, company profiles and branding materials with one consistent visual system.</p>
+    </article><article class="card card--dark" data-reveal>
+      <span class="card__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M10.4 9.2 15 12l-4.6 2.8V9.2Z"/></svg></span>
+      <h3>Content Creation</h3>
+      <p>Creative content for TikTok, YouTube, Facebook and Instagram, produced on a rhythm the brand can sustain.</p>
+    </article></div>
+    <hr class="rule">
+    <div class="section-head" style="margin-top:clamp(2.5rem,5vw,3.5rem);">
+      <p class="eyebrow" data-reveal>Capability</p>
+      <h2 data-reveal>What we are actually good at.</h2>
+    </div>
+    <div class="grid grid-4"><article class="card card--dark" data-reveal>
+      <h3>HTML &amp; CSS</h3>
+      <p>Modern, responsive, accessible interface engineering.</p>
+    </article><article class="card card--dark" data-reveal>
+      <h3>JavaScript</h3>
+      <p>Interactive user experiences, dashboards and product front-ends.</p>
+    </article><article class="card card--dark" data-reveal>
+      <h3>SEO &amp; AI Visibility</h3>
+      <p>Search ranking plus the newer discipline: being cited by AI answers.</p>
+    </article><article class="card card--dark" data-reveal>
+      <h3>Digital Marketing</h3>
+      <p>Audience growth, lead generation and conversion strategy.</p>
+    </article></div>
+  </div>
 </section>
 
-<section id="testimonials">
-    <h2>Client Testimonials</h2>
-
-    <div class="grid">
-        <div class="card testimonial">
-            <p>
-                "Excellent website design and outstanding support throughout the project."
-            </p>
-            <strong>- Client A</strong>
-        </div>
-
-        <div class="card testimonial">
-            <p>
-                "Our social media engagement improved significantly after working with Blessed Digital Solutions."
-            </p>
-            <strong>- Client B</strong>
-        </div>
-
-        <div class="card testimonial">
-            <p>
-                "Professional, reliable and highly recommended."
-            </p>
-            <strong>- Client C</strong>
-        </div>
+<section class="section" id="method">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow" data-reveal>How we work</p>
+      <h2 data-reveal>Four steps, one weekly rhythm.</h2>
+      <p class="lede" data-reveal>The same operating model we run on ourselves is the one we sell — which is why our reports look like reports and our products ship.</p>
     </div>
+    <div class="steps" data-reveal><div class="step">
+      <h4>Discover</h4>
+      <p>We sit with the owner, map how the business actually earns, and agree the one number the work has to move.</p>
+    </div><div class="step">
+      <h4>Design</h4>
+      <p>Navy-and-gold discipline: every screen, document and report is designed to be handed to a board without apology.</p>
+    </div><div class="step">
+      <h4>Build</h4>
+      <p>Shipped in short cycles on infrastructure we already run, so the first useful version arrives in weeks, not quarters.</p>
+    </div><div class="step">
+      <h4>Grow</h4>
+      <p>A weekly rhythm of reporting and tuning. What got done, what is outstanding, and what needs a decision.</p>
+    </div></div>
+  </div>
 </section>
 
-<section id="contact">
-    <h2>Contact Us</h2>
-
-    <form>
-        <input type="text" placeholder="Your Name" required>
-
-        <input type="email" placeholder="Your Email" required>
-
-        <textarea rows="5" placeholder="Your Message"></textarea>
-
-        <button type="submit">Send Message</button>
-    </form>
+<section class="section section--ink" id="platforms">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow" data-reveal>Infrastructure in production</p>
+      <h2 data-reveal>The four products are not starting from zero.</h2>
+      <p class="lede" data-reveal>Each new line extends something BDS already runs. That is why the first version arrives in weeks and why the economics work.</p>
+    </div>
+    <div class="grid grid-4"><article class="card card--dark" data-reveal>
+      <span class="card__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 8.5 4.5L12 12 3.5 7.5 12 3Z"/><path d="m3.5 12 8.5 4.5L20.5 12M3.5 16.5 12 21l8.5-4.5"/></svg></span>
+      <h3>Bulk-SMS Dashboard</h3>
+      <p>Campaign SMS at scale on the Africa’s Talking network — the delivery layer VoiceCore extends.</p>
+    </article><article class="card card--dark" data-reveal>
+      <span class="card__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 8.5 4.5L12 12 3.5 7.5 12 3Z"/><path d="m3.5 12 8.5 4.5L20.5 12M3.5 16.5 12 21l8.5-4.5"/></svg></span>
+      <h3>InvCore</h3>
+      <p>Invoicing and expense tracking. Booking events and bookkeeping roles write straight into it.</p>
+    </article><article class="card card--dark" data-reveal>
+      <span class="card__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 8.5 4.5L12 12 3.5 7.5 12 3Z"/><path d="m3.5 12 8.5 4.5L20.5 12M3.5 16.5 12 21l8.5-4.5"/></svg></span>
+      <h3>ComplyCore UG</h3>
+      <p>Compliance tooling built for SACCOs — the trust framing that makes ScoreCore possible.</p>
+    </article><article class="card card--dark" data-reveal>
+      <span class="card__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 8.5 4.5L12 12 3.5 7.5 12 3Z"/><path d="m3.5 12 8.5 4.5L20.5 12M3.5 16.5 12 21l8.5-4.5"/></svg></span>
+      <h3>PayCore UG</h3>
+      <p>Payment and repayment tracking, where ScoreCore’s lending decisions are followed through.</p>
+    </article></div>
+  </div>
 </section>
 
-<footer>
-    <h3>Blessed Digital Solutions</h3>
-
-    <div class="social">
-        <a href="#">Facebook</a>
-        <a href="#">LinkedIn</a>
-        <a href="#">GitHub</a>
-        <a href="#">Instagram</a>
+<section class="section" id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow" data-reveal>Selected work</p>
+      <h2 data-reveal>Featured projects.</h2>
     </div>
+    <div class="grid grid-3"><article class="card" data-reveal>
+      <span class="chip chip--gold" style="justify-self:start;">Web build</span>
+      <h3>Corporate Website</h3>
+      <p>A professional website for a local business, rebuilt to improve online visibility and inbound enquiries.</p>
+    </article><article class="card" data-reveal>
+      <span class="chip chip--gold" style="justify-self:start;">Growth</span>
+      <h3>Marketing Campaign</h3>
+      <p>A social media campaign that measurably increased engagement and brand awareness.</p>
+    </article><article class="card" data-reveal>
+      <span class="chip chip--gold" style="justify-self:start;">Brand</span>
+      <h3>Brand Identity Package</h3>
+      <p>Logos, banners and marketing materials designed as one system for a startup company.</p>
+    </article></div>
+  </div>
+</section>
 
-    <p style="margin-top:15px;">
-        © 2026 Blessed Digital Solutions. All Rights Reserved.
-    </p>
+<section class="section section--tight" id="testimonials" style="background:#fffdf8;">
+  <div class="wrap">
+    <div class="section-head section-head--center">
+      <p class="eyebrow eyebrow--center" data-reveal>Client testimonials</p>
+      <h2 data-reveal>What clients say.</h2>
+    </div>
+    <div class="grid grid-3"><figure class="card" data-reveal>
+      <div style="color:var(--gold-500);letter-spacing:.2em;">★★★★★</div>
+      <blockquote class="serif-quote" style="font-size:var(--step-1);color:var(--navy-800);">“Excellent website design and outstanding support throughout the project.”</blockquote>
+      <figcaption class="muted" style="font-weight:600;">— Client A</figcaption>
+    </figure><figure class="card" data-reveal>
+      <div style="color:var(--gold-500);letter-spacing:.2em;">★★★★★</div>
+      <blockquote class="serif-quote" style="font-size:var(--step-1);color:var(--navy-800);">“Our social media engagement improved significantly after working with Blessed Digital Solutions.”</blockquote>
+      <figcaption class="muted" style="font-weight:600;">— Client B</figcaption>
+    </figure><figure class="card" data-reveal>
+      <div style="color:var(--gold-500);letter-spacing:.2em;">★★★★★</div>
+      <blockquote class="serif-quote" style="font-size:var(--step-1);color:var(--navy-800);">“Professional, reliable and highly recommended.”</blockquote>
+      <figcaption class="muted" style="font-weight:600;">— Client C</figcaption>
+    </figure></div>
+  </div>
+</section>
+
+<section class="section" id="company">
+  <div class="wrap">
+    <div class="editorial">
+      <div class="editorial__block" data-reveal>
+        <p class="eyebrow">The company</p>
+        <h2>Blessed Digital Solutions</h2>
+        <p>Blessed Digital Solutions helps businesses establish a strong online presence through professional website development, digital marketing, branding, and content creation. We focus on delivering modern digital solutions that drive growth and increase visibility.</p>
+        <p>A five-person studio based in Kampala, Uganda, led by Jonah, founder &amp; lead engineer. We build on infrastructure we run ourselves, we report weekly, and we sell before we build — so nothing here is a prototype waiting for a customer.</p>
+        <div class="chips" style="margin-top:.5rem;">
+          <span class="chip">Web engineering</span>
+          <span class="chip">Brand systems</span>
+          <span class="chip">Growth marketing</span>
+          <span class="chip">AI products</span>
+        </div>
+      </div>
+      <div class="panel panel--gold" data-reveal>
+        <p class="panel__title">Operating principle</p>
+        <p class="serif-quote">“Build it once, sell it to five existing clients before opening the next line.”</p>
+        <hr class="rule">
+        <ul class="feature-list">
+          <li>Every product extends infrastructure already in production</li>
+          <li>Every document is designed to be handed to a board</li>
+          <li>Every client relationship is measured weekly, not annually</li>
+          <li>Every price is anchored to an outcome, never to a licence</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq" style="background:#fffdf8;">
+  <div class="wrap-narrow">
+    <div class="section-head section-head--center">
+      <p class="eyebrow eyebrow--center" data-reveal>Questions</p>
+      <h2 data-reveal>Frequently asked.</h2>
+    </div>
+    <div class="faq" data-reveal><details>
+      <summary>Are these four products available today?</summary>
+      <p>They are concept and design briefs from the BDS Product Lab, released in build order. VoiceCore ships first because it rides infrastructure we already run; ScoreCore, RadarCore and EmployCore open as new lines behind it. Founding clients are onboarded during the build, not after.</p>
+    </details><details>
+      <summary>Why does BDS sell before it builds?</summary>
+      <p>Because a product nobody has paid for is a hobby. We prove demand with a small number of founding clients, build against their real workflow, and only then open the line. It is the single reason our products ship finished rather than theoretical.</p>
+    </details><details>
+      <summary>What does a founding client get?</summary>
+      <p>Direct influence over the roadmap, a persona and reporting designed around their business, and pricing held for the length of the founding term. In exchange we ask for honest weekly feedback during the build.</p>
+    </details><details>
+      <summary>How is pricing structured?</summary>
+      <p>Never as a software licence. Each product is priced against the business outcome it protects — one missed customer, one bad loan, one invisible listing, one role you cannot yet afford to hire. Exact figures are quoted after a briefing call, because they depend on volume and scope.</p>
+    </details><details>
+      <summary>Is our data safe?</summary>
+      <p>Sensitive integrations are read-only by default, nothing acts without approval until you switch it on, and every product keeps a full audit trail. ScoreCore in particular is framed under ComplyCore UG so that data handling stands up to UMRA and internal compliance review.</p>
+    </details><details>
+      <summary>Do you work with businesses outside Uganda?</summary>
+      <p>Yes for web, brand and marketing work. The four Product Lab lines are tuned to Ugandan financial and communication behaviour first — MTN MoMo and Airtel Money, WhatsApp-led enquiries, English, Luganda and Swahili — and travel to comparable markets from there.</p>
+    </details></div>
+  </div>
+</section>
+
+<section class="section section--dark" id="contact">
+  <div class="wrap">
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(2rem,5vw,4rem);align-items:start;">
+      <div class="stack" data-reveal>
+        <p class="eyebrow">Book a briefing</p>
+        <h2>Tell us the number you need moved.</h2>
+        <p class="lede">A briefing is a real conversation, not a demo. We look at how your business earns today, where it leaks customers, and which of the four lines — if any — is worth your money first. If none of them is, we will say so.</p>
+        <hr class="rule">
+        <ul class="feature-list" style="gap:.75rem;">
+          <li>Reply within one working day</li>
+          <li>Founding-client terms while each line is in build</li>
+          <li>No obligation, and no sales script</li>
+        </ul>
+        <div class="stack" style="gap:.35rem;margin-top:.5rem;">
+          <p><strong style="color:#fff;">hello@blesseddigitalsolutions.com</strong></p>
+          <p class="muted" style="color:#93a2bb;">+256 700 000 000 &nbsp;·&nbsp; WhatsApp +256 700 000 000</p>
+          <p class="muted" style="color:#93a2bb;">Kampala, Uganda &nbsp;·&nbsp; Mon – Sat, 08:00 – 18:00 EAT</p>
+        </div>
+      </div>
+      <form class="form panel panel--dark" data-enquiry-form="hello@blesseddigitalsolutions.com" data-reveal>
+        <div class="form__row">
+          <div class="field">
+            <label for="f-name">Your name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Full name" required>
+          </div>
+          <div class="field">
+            <label for="f-company">Business</label>
+            <input id="f-company" name="company" type="text" autocomplete="organization" placeholder="Company name">
+          </div>
+        </div>
+        <div class="form__row">
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@business.com" required>
+          </div>
+          <div class="field">
+            <label for="f-phone">Phone / WhatsApp</label>
+            <input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+256 ...">
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-product">Interested in</label>
+          <select id="f-product" name="product"><option value="">Select a product or service</option><option>VoiceCore — AI Reception &amp; Call Intelligence</option><option>ScoreCore — AI Credit Intelligence for SACCOs</option><option>RadarCore — AI Visibility Intelligence</option><option>EmployCore — White-Label AI Workforce</option><option>Web Development</option><option>Digital Marketing</option><option>Graphic Design</option><option>Content Creation</option><option>Something else</option></select>
+        </div>
+        <div class="field">
+          <label for="f-message">What are you trying to fix?</label>
+          <textarea id="f-message" name="message" rows="5" placeholder="Missed calls, slow loan decisions, invisible in AI search, no receptionist — tell us plainly."></textarea>
+        </div>
+        <button class="btn btn--gold" type="submit">Send the brief <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <p class="form__status" data-form-status role="status"></p>
+        <p class="form__note">This site is hosted statically, so the form opens your email client with the brief prefilled — nothing is stored on a third-party server.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="mark" href="index.html" aria-label="Blessed Digital Solutions — home">
+        <span class="mark__glyph" aria-hidden="true">B</span>
+        <span class="mark__text">
+          <span class="mark__name">Blessed Digital</span>
+          <span class="mark__sub">Kampala, Uganda</span>
+        </span>
+      </a>
+        <p class="footer-note" style="margin-top:1rem;">A Ugandan digital studio building premium websites, brands and AI products for businesses that intend to be the obvious choice in their market.</p>
+      </div>
+      <div>
+        <h4>Product Lab</h4>
+        <ul><li><a href="products/voicecore.html">VoiceCore</a></li><li><a href="products/scorecore.html">ScoreCore</a></li><li><a href="products/radarcore.html">RadarCore</a></li><li><a href="products/employcore.html">EmployCore</a></li><li><a href="products/">All four briefs</a></li></ul>
+      </div>
+      <div>
+        <h4>Studio</h4>
+        <ul>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#method">How we work</a></li>
+          <li><a href="index.html#work">Selected work</a></li>
+          <li><a href="index.html#company">Company</a></li>
+          <li><a href="index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@blesseddigitalsolutions.com">hello@blesseddigitalsolutions.com</a></li>
+          <li><a href="tel:+256700000000">+256 700 000 000</a></li>
+          <li>Mon – Sat, 08:00 – 18:00 EAT</li>
+        </ul>
+        <h4 style="margin-top:1.5rem;">Follow</h4>
+        <ul><li><a href="#" rel="noopener">Facebook</a></li><li><a href="#" rel="noopener">LinkedIn</a></li><li><a href="#" rel="noopener">Instagram</a></li><li><a href="#" rel="noopener">TikTok</a></li><li><a href="https://github.com/jonathanashaba86-del" rel="noopener">GitHub</a></li></ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <span data-year>2026</span> Blessed Digital Solutions. All rights reserved.</p>
+      <p>Navy &amp; Gold &nbsp;·&nbsp; Sell Before Build &nbsp;·&nbsp; Kampala, Uganda</p>
+    </div>
+  </div>
 </footer>
-
+<script src="assets/js/bds.js" defer></script>
 </body>
 </html>
