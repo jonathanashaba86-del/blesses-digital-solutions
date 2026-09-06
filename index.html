@@ -19,6 +19,11 @@
 <meta name="twitter:description" content="Turn any piece a full 360° before you buy it.">
 <meta name="twitter:image" content="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=1200&q=75">
 <link rel="canonical" href="https://mannie.ug/">
+<link rel="manifest" href="site.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MANNIE">
+<meta name="format-detection" content="telephone=no">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2314151A'/%3E%3Ccircle cx='16' cy='16' r='8' fill='none' stroke='%235B3FD6' stroke-width='2.4'/%3E%3Ccircle cx='16' cy='16' r='2.2' fill='%23F4F2EC'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&family=Jost:wght@200;300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -53,10 +58,10 @@
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip}
 body{
   background:var(--paper);color:var(--body);font-family:var(--u);
-  font-weight:300;line-height:1.6;overflow-x:hidden;
+  font-weight:300;line-height:1.6;overflow-x:clip;
   -webkit-font-smoothing:antialiased;
 }
 body.lock{overflow:hidden}
@@ -487,6 +492,204 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,7vw,88px) var(--pad) 
 .look-fig figcaption b{color:var(--ink);font-weight:500}
 .look-note{padding:0 var(--pad);font-family:var(--m);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
 
+/* ══════════════════════════════════════════════════════════
+   MANNIE+ — commerce, care and polish layered on the storefront
+   ══════════════════════════════════════════════════════════ */
+.mz-skip{position:fixed;left:-999px;top:10px;z-index:9999;background:var(--ink);color:#fff;
+  padding:12px 20px;border-radius:100px;font-family:var(--u);font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+.mz-skip:focus{left:12px}
+.mz-prog{position:fixed;top:0;left:0;height:2px;width:0;z-index:400;background:var(--irid);background-size:300% 100%;
+  animation:shift 6s linear infinite;transition:width .12s linear;pointer-events:none}
+
+/* header controls ───────────────────────────────────────── */
+.iconbtn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;
+  color:var(--ink);transition:border-color .25s,background .25s;position:relative;flex:none}
+.iconbtn:hover{border-color:var(--iris);background:rgba(91,63,214,.06)}
+.iconbtn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.iconbtn b{position:absolute;top:-3px;right:-3px;min-width:15px;height:15px;border-radius:8px;background:var(--iris);
+  color:#fff;font-size:9px;font-weight:700;display:none;place-items:center;padding:0 3px}
+.iconbtn.has b{display:grid}
+
+/* search overlay ────────────────────────────────────────── */
+.mz-search{position:fixed;inset:0;z-index:340;background:rgba(20,21,26,.45);backdrop-filter:blur(12px);
+  opacity:0;visibility:hidden;transition:.32s;display:grid;align-content:start;justify-items:center;padding:12vh 16px 16px}
+.mz-search.open{opacity:1;visibility:visible}
+.mz-search-in{width:min(720px,100%);min-width:0;background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:0 40px 90px rgba(20,21,26,.3);transform:translateY(-12px);transition:.4s cubic-bezier(.16,1,.3,1);overflow:hidden}
+.mz-search.open .mz-search-in{transform:none}
+.mz-search-f{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.mz-search-f input{flex:1;border:none;background:none;font-family:var(--d);font-size:clamp(19px,3vw,26px);color:var(--ink);outline:none}
+.mz-search-f input::placeholder{color:var(--faint)}
+.mz-hits{max-height:min(52vh,460px);overflow:auto}
+.mz-hit{display:grid;grid-template-columns:46px 1fr auto;gap:13px;align-items:center;padding:11px 18px;
+  border-bottom:1px solid var(--line);cursor:pointer;transition:background .2s;width:100%;text-align:left}
+.mz-hit:hover,.mz-hit.on{background:var(--sink)}
+.mz-hit-img{display:block;width:46px;height:58px;border-radius:2px;overflow:hidden;background:var(--sink);flex:none}
+.mz-hit-img img{display:block;width:100%;height:100%;object-fit:cover}
+.mz-hit-txt{display:block;min-width:0}
+.mz-hit h5{font-family:var(--u);font-size:13.5px;font-weight:500;color:var(--ink);letter-spacing:-.005em;
+  text-transform:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mz-hit-cap{display:block;font-family:var(--m);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+#mzQ::-webkit-search-cancel-button,#mzQ::-webkit-search-decoration{-webkit-appearance:none;appearance:none}
+.mz-hit b{font-family:var(--m);font-size:11px;color:var(--ink);white-space:nowrap}
+.mz-search-foot{display:flex;justify-content:space-between;gap:10px;padding:11px 18px;
+  font-family:var(--m);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.mz-none{padding:30px 18px;text-align:center;color:var(--muted);font-size:13.5px}
+
+/* card heart + image shimmer ────────────────────────────── */
+.card{position:relative}
+.mz-heart{position:absolute;top:12px;left:12px;z-index:4;width:28px;height:28px;border-radius:50%;
+  background:rgba(252,251,248,.86);backdrop-filter:blur(6px);border:1px solid var(--line);
+  display:grid;place-items:center;opacity:0;transform:scale(.85);transition:.28s}
+.card:hover .mz-heart,.mz-heart.on,.card:focus-within .mz-heart{opacity:1;transform:none}
+@media(hover:none){.mz-heart{opacity:1;transform:none}}   /* a finger cannot hover */
+.mz-heart svg{width:13px;height:13px;fill:none;stroke:var(--ink);stroke-width:1.5}
+.mz-heart.on{background:var(--ink);border-color:var(--ink)}
+.mz-heart.on svg{fill:#fff;stroke:#fff}
+.tt.has-photo::before{content:'';position:absolute;inset:6% 4%;border-radius:3px;background:
+  linear-gradient(100deg,var(--sink) 20%,#F3F0E8 38%,var(--sink) 56%);background-size:280% 100%;
+  animation:shim 1.5s linear infinite;z-index:-1}
+@keyframes shim{to{background-position:-180% 0}}
+
+/* trust bar ─────────────────────────────────────────────── */
+.mz-trust{border-bottom:1px solid var(--line);background:var(--card)}
+.mz-trust-in{max-width:1500px;margin:0 auto;padding:22px var(--pad);display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,208px),1fr));gap:20px}
+.mz-trust div{display:flex;gap:12px;align-items:flex-start}
+.mz-trust svg{width:19px;height:19px;flex:none;margin-top:2px;fill:none;stroke:var(--iris);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.mz-trust b{display:block;font-size:12.5px;font-weight:500;color:var(--ink);letter-spacing:-.004em}
+.mz-trust span{font-size:11.5px;color:var(--muted);line-height:1.6}
+
+/* rails: recently viewed + related ──────────────────────── */
+.mz-rail-h{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:14px 0 12px}
+.mz-rail-h h4{font-family:var(--u);font-weight:500;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.mz-rail-h button{font-family:var(--m);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--iris)}
+.mz-rail{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x proximity}
+.mz-rail::-webkit-scrollbar{height:3px}
+.mz-rail::-webkit-scrollbar-thumb{background:var(--line)}
+.mz-mini{flex:none;width:132px;scroll-snap-align:start;text-align:left}
+.mz-mini .f{aspect-ratio:4/5;border-radius:2px;overflow:hidden;background:var(--sink);margin-bottom:8px}
+.mz-mini img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.3,1)}
+.mz-mini:hover img{transform:scale(1.06)}
+.mz-mini h6{font-size:12px;font-weight:500;color:var(--ink);line-height:1.35;margin-bottom:3px}
+.mz-mini span{font-family:var(--m);font-size:10px;color:var(--muted)}
+#mzSeen{padding:0 0 6px;margin-top:44px;border-top:1px solid var(--line)}
+
+/* studio extras ─────────────────────────────────────────── */
+.mz-stbar{display:flex;gap:8px;margin-top:14px}
+.mz-stbar button{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;
+  border:1px solid var(--line);border-radius:100px;font-family:var(--u);font-weight:500;font-size:9.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ink);transition:.25s}
+.mz-stbar button:hover{border-color:var(--iris);color:var(--iris)}
+.mz-stbar button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.mz-stbar svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.5}
+.mz-stbar button.on svg{fill:currentColor}
+.mz-sizelink{font-family:var(--m);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--iris);
+  text-decoration:underline;text-underline-offset:3px}
+.mz-related{margin-top:26px;border-top:1px solid var(--line);padding-top:16px}
+
+/* sheets: care pages + checkout ─────────────────────────── */
+.mz-sheet{position:fixed;inset:0;z-index:360;display:grid;place-items:center;padding:14px;
+  grid-template-columns:minmax(0,1fr);opacity:0;visibility:hidden;transition:.4s;pointer-events:none}
+.mz-sheet.open{opacity:1;visibility:visible;pointer-events:auto}
+.mz-sheet-in{width:min(760px,100%);min-width:0;max-height:92vh;overflow:auto;justify-self:center;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--r);box-shadow:0 50px 110px rgba(20,21,26,.34);transform:translateY(18px) scale(.985);
+  transition:.5s cubic-bezier(.16,1,.3,1);position:relative}
+.mz-sheet.open .mz-sheet-in{transform:none}
+.mz-sheet-h{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:20px clamp(20px,4vw,38px);background:var(--card);border-bottom:1px solid var(--line)}
+.mz-sheet-h h3{font-family:var(--d);font-weight:500;font-size:clamp(21px,3.4vw,30px);color:var(--ink);letter-spacing:-.015em}
+.mz-sheet-b{padding:clamp(20px,4vw,38px);font-size:14px;line-height:1.78;color:var(--body)}
+.mz-sheet-b h4{font-family:var(--u);font-weight:500;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--iris);margin:26px 0 10px}
+.mz-sheet-b h4:first-child{margin-top:0}
+.mz-sheet-b p{margin-bottom:12px;max-width:66ch}
+.mz-sheet-b ul{margin:0 0 14px 18px}
+.mz-sheet-b li{margin-bottom:7px}
+.mz-sheet-b strong{color:var(--ink);font-weight:500}
+.mz-tablewrap{overflow-x:auto;max-width:100%;margin:0 0 18px;-webkit-overflow-scrolling:touch}
+.mz-sheet-b table{border-collapse:collapse;width:100%;min-width:460px;font-family:var(--m);font-size:11.5px}
+.mz-sheet-b th,.mz-sheet-b td{border:1px solid var(--line);padding:9px 11px;text-align:left;white-space:nowrap}
+.mz-sheet-b th{background:var(--sink);color:var(--ink);font-weight:500;letter-spacing:.06em;text-transform:uppercase;font-size:10px}
+.mz-note{border-left:2px solid var(--iris);padding:2px 0 2px 14px;color:var(--muted);font-size:13px;margin:16px 0}
+
+/* forms ─────────────────────────────────────────────────── */
+.mz-field{margin-bottom:15px}
+.mz-field label{display:block;font-family:var(--u);font-weight:500;font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.mz-field input,.mz-field select,.mz-field textarea{width:100%;padding:13px 14px;border:1px solid var(--line);
+  border-radius:var(--r);background:var(--paper);font-family:var(--u);font-size:14px;color:var(--ink);transition:border-color .25s}
+.mz-field input:focus,.mz-field select:focus,.mz-field textarea:focus{outline:none;border-color:var(--iris)}
+.mz-field textarea{min-height:78px;resize:vertical}
+.mz-field.bad input,.mz-field.bad select{border-color:var(--flare)}
+.mz-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.mz-2{grid-template-columns:1fr}}
+.mz-pick{display:grid;gap:8px}
+.mz-pick label{display:flex;align-items:flex-start;gap:11px;padding:13px 14px;border:1px solid var(--line);
+  border-radius:var(--r);cursor:pointer;transition:.22s;font-family:var(--u);letter-spacing:0;text-transform:none;
+  font-size:13.5px;color:var(--ink);margin:0}
+.mz-pick label:hover{border-color:var(--iris)}
+.mz-pick input{appearance:none;width:15px;height:15px;border:1px solid var(--muted);border-radius:50%;margin-top:2px;flex:none;transition:.2s}
+.mz-pick input:checked{border:4.5px solid var(--iris)}
+.mz-pick label:has(input:checked){border-color:var(--iris);background:rgba(91,63,214,.045)}
+.mz-pick u{display:block;text-decoration:none;font-size:11.5px;color:var(--muted);margin-top:2px}
+.mz-sum{border:1px solid var(--line);border-radius:var(--r);padding:15px;background:var(--paper);margin-bottom:16px}
+.mz-sum-row{display:flex;justify-content:space-between;gap:12px;font-size:13px;padding:5px 0;color:var(--body)}
+.mz-sum-row.tot{border-top:1px solid var(--line);margin-top:7px;padding-top:11px;font-size:15px;color:var(--ink)}
+.mz-sum-row.tot b{font-family:var(--m)}
+.mz-pay{display:flex;flex-wrap:wrap;gap:7px;margin-top:5px}
+.mz-pay span{font-family:var(--m);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  border:1px solid var(--line);border-radius:100px;padding:5px 11px}
+
+/* reviews + list capture ────────────────────────────────── */
+.mz-voice{padding:clamp(52px,8vw,96px) var(--pad);border-top:1px solid var(--line);background:var(--card)}
+.mz-voice-in{max-width:1500px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(30px,6vw,74px)}
+.mz-voice h2{font-family:var(--d);font-weight:500;font-size:clamp(28px,5vw,54px);line-height:.96;
+  letter-spacing:-.022em;color:var(--ink);margin-top:14px}
+.mz-voice h2 em{font-style:italic;color:var(--iris)}
+.mz-revs{display:grid;gap:12px;margin-top:24px}
+.mz-rev{border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;background:var(--paper)}
+.mz-rev-t{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:9px}
+.mz-rev-t b{font-size:13px;font-weight:500;color:var(--ink)}
+.mz-stars{font-family:var(--m);font-size:12px;color:var(--amber);letter-spacing:.1em}
+.mz-rev p{font-size:13.5px;line-height:1.7;color:var(--body)}
+.mz-rev span{display:block;margin-top:8px;font-family:var(--m);font-size:9.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--faint)}
+.mz-empty{border:1px dashed var(--line);border-radius:var(--r);padding:26px 20px;text-align:center}
+.mz-empty p{font-size:13.5px;color:var(--muted);line-height:1.7;max-width:44ch;margin:0 auto 16px}
+.mz-list{border:1px solid var(--line);border-radius:var(--r);padding:clamp(20px,3.4vw,30px);background:var(--paper)}
+.mz-list h3{font-family:var(--d);font-weight:500;font-size:clamp(21px,3vw,29px);color:var(--ink);
+  letter-spacing:-.015em;margin-bottom:9px}
+.mz-list p{font-size:13.5px;color:var(--body);line-height:1.72;margin-bottom:18px;max-width:46ch}
+.mz-ok{display:none;align-items:center;gap:9px;font-size:13px;color:var(--teal);margin-top:12px}
+.mz-ok.show{display:flex}
+
+/* saved drawer reuses the bag drawer's language ─────────── */
+.mz-saved-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+@media(max-width:720px){.mz-saved-grid{grid-template-columns:1fr 1fr}}
+.mz-sv{position:relative;text-align:left}
+.mz-sv .f{aspect-ratio:4/5;border-radius:2px;overflow:hidden;background:rgba(255,255,255,.06);margin-bottom:8px}
+.mz-sv img{width:100%;height:100%;object-fit:cover}
+.mz-sv h6{font-size:12px;font-weight:500;line-height:1.35}
+.mz-sv span{font-family:var(--m);font-size:10px;opacity:.62}
+.mz-sv-x{position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;
+  background:rgba(20,21,26,.6);color:#fff;display:grid;place-items:center;font-size:13px}
+
+/* ══════════════ MOBILE MENU ══════════════ */
+.mz-menu{position:fixed;inset:0;z-index:330;background:var(--paper);padding:84px var(--pad) 32px;
+  overflow:auto;opacity:0;visibility:hidden;transform:translateY(-8px);transition:.38s cubic-bezier(.16,1,.3,1)}
+.mz-menu.open{opacity:1;visibility:visible;transform:none}
+.mz-menu a,.mz-menu button{display:block;width:100%;text-align:left}
+.mz-menu .big a{font-family:var(--d);font-weight:500;font-size:clamp(30px,9vw,46px);line-height:1.14;
+  color:var(--ink);letter-spacing:-.02em;padding:7px 0;border-bottom:1px solid var(--line)}
+.mz-menu .big a em{font-style:italic;color:var(--iris)}
+.mz-menu h5{font-family:var(--u);font-weight:500;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--muted);margin:30px 0 12px}
+.mz-menu .small a,.mz-menu .small button{font-size:14px;color:var(--body);padding:8px 0}
+.mz-menu .mz-menu-cta{margin-top:26px}
+.mz-menu-x{position:absolute;top:20px;right:var(--pad);width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--line);display:grid;place-items:center;font-size:19px;color:var(--ink)}
+
 /* ══════════════ RESPONSIVE ══════════════ */
 @media(max-width:1000px){
   .hero{grid-template-columns:1fr;text-align:left;padding-top:96px;min-height:auto}
@@ -496,6 +699,10 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,7vw,88px) var(--pad) 
   .studio-in{grid-template-columns:1fr}
   .st-left{border-right:none;border-bottom:1px solid var(--line)}
   .f-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:960px){
+  nav.links{display:none}
+  .burger{display:grid}
 }
 @media(max-width:720px){
   nav.links{display:none}
@@ -525,6 +732,8 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,7vw,88px) var(--pad) 
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "ClothingStore", "name": "MANNIE", "description": "A fashion house built for rotation. Every piece turns a full 360° before you buy it.", "image": "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=1200&q=75", "address": {"@type": "PostalAddress", "addressLocality": "Kampala", "addressCountry": "UG"}, "telephone": "+256777691011", "email": "jonathanashaba86@gmail.com", "currenciesAccepted": "UGX", "priceRange": "UGX 35,000 – 1,900,000", "areaServed": "Worldwide", "sameAs": ["https://wa.me/256777691011"]}</script>
 </head>
 <body>
+<a class="mz-skip" href="#collection">Skip to the collection</a>
+<div class="mz-prog" id="mzProg" aria-hidden="true"></div>
 
 <!-- ══════════ BOOT ══════════ -->
 <div id="boot">
@@ -544,6 +753,11 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,7vw,88px) var(--pad) 
     <a href="#contact">Contact</a>
   </nav>
   <div class="navr">
+    <button class="iconbtn" id="mzSearchBtn" aria-label="Search the collection" title="Search  /">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+    <button class="iconbtn" id="mzSavedBtn" aria-label="Saved pieces" title="Saved">
+      <svg viewBox="0 0 24 24"><path d="M12 20s-7-4.6-7-9.4A3.9 3.9 0 0 1 12 7.6a3.9 3.9 0 0 1 7 3C19 15.4 12 20 12 20z"/></svg>
+      <b id="mzSavedCount">0</b></button>
     <button class="cartbtn" id="openCart"><span>Bag</span><b id="cartCount">0</b></button>
     <button class="burger" aria-label="Menu"><span></span></button>
   </div>
@@ -581,6 +795,20 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,7vw,88px) var(--pad) 
   <div id="tick1"></div><div id="tick2"></div>
 </div>
 
+<!-- ══════════ TRUST BAR ══════════ -->
+<section class="mz-trust" aria-label="How ordering works">
+  <div class="mz-trust-in">
+    <div><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+      <div><b>48-hour Kampala delivery</b><span>Free inside the city. Countrywide courier quoted at checkout.</span></div></div>
+    <div><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 1 2.3 5.6"/><path d="M4 20v-5h5"/></svg>
+      <div><b>30-day returns</b><span>Unworn, tags on. Exchanges are free within Kampala.</span></div></div>
+    <div><svg viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2"/><path d="M2.5 10h19"/></svg>
+      <div><b>Pay how you like</b><span>MTN MoMo, Airtel Money, card or cash on delivery.</span></div></div>
+    <div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg>
+      <div><b>360° on every piece</b><span>Front and back photographed. Nothing hidden from you.</span></div></div>
+  </div>
+</section>
+
 <!-- ══════════ COLLECTION ══════════ -->
 <section id="collection">
   <div class="shead rv">
@@ -592,6 +820,10 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,7vw,88px) var(--pad) 
   </div>
 <div class="rail" id="rail"></div>
   <div class="grid" id="grid"></div>
+  <div id="mzSeen" hidden>
+    <div class="mz-rail-h"><h4>Recently viewed</h4><button id="mzSeenClear">Clear</button></div>
+    <div class="mz-rail" id="mzSeenRail"></div>
+  </div>
 </section>
 
 <!-- ══════════ EDITORIAL / METHOD ══════════ -->
@@ -681,6 +913,33 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,7vw,88px) var(--pad) 
   <p class="look-note">Photography licensed under the Unsplash licence · swap in your own shoot from the Photo Studio</p>
 </section>
 
+<!-- ══════════ VOICES + LIST ══════════ -->
+<section class="mz-voice" id="voices">
+  <div class="mz-voice-in">
+    <div class="rv">
+      <div class="eyebrow">In their words</div>
+      <h2>Worn, and <em>reported back</em>.</h2>
+      <div class="mz-revs" id="mzRevs"></div>
+    </div>
+    <div class="rv">
+      <div class="eyebrow">The list</div>
+      <h2 style="margin-bottom:26px">First look, <em>first size</em>.</h2>
+      <div class="mz-list">
+        <h3>Join the studio list</h3>
+        <p>New pieces go to the list before the grid, and your size is held for 24 hours. One message a fortnight — never more.</p>
+        <form id="mzListForm" novalidate>
+          <div class="mz-field"><label for="mzLn">Your name</label>
+            <input id="mzLn" name="name" autocomplete="name" placeholder="Nakato Sarah"></div>
+          <div class="mz-field"><label for="mzLc">WhatsApp number or email</label>
+            <input id="mzLc" name="contact" autocomplete="tel" placeholder="0777 691011  ·  you@email.com"></div>
+          <button class="btn solid" type="submit" style="width:100%;justify-content:center"><span>Join the list</span></button>
+          <div class="mz-ok" id="mzListOk">✓ &nbsp;Sent — we will confirm on WhatsApp.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ══════════ FOOTER ══════════ -->
 <footer id="contact">
   <div class="f-top">
@@ -690,19 +949,23 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,7vw,88px) var(--pad) 
     </div>
     <div class="f-col">
       <h5>Shop</h5>
-      <a href="#collection">New arrivals</a><a href="#collection">Outerwear</a>
-      <a href="#collection">Footwear</a><a href="#collection">Accessories</a><a href="#collection">Heritage</a>
+      <a href="#collection" data-cat="new">New arrivals</a><a href="#collection" data-cat="outerwear">Outerwear</a>
+      <a href="#collection" data-cat="shoes">Footwear</a><a href="#collection" data-cat="acc">Accessories</a>
+      <a href="#collection" data-cat="heritage">Heritage</a>
     </div>
     <div class="f-col">
       <h5>Care</h5>
-      <a href="#">Size &amp; fit guide</a><a href="#">Shipping</a>
-      <a href="#">Returns &amp; exchanges</a><a href="#">Repairs</a><a href="#">Track an order</a>
+      <a href="#/care/size-fit" data-help="size">Size &amp; fit guide</a>
+      <a href="#/care/shipping" data-help="shipping">Shipping &amp; delivery</a>
+      <a href="#/care/returns" data-help="returns">Returns &amp; exchanges</a>
+      <a href="#/care/repairs" data-help="repairs">Repairs &amp; care</a>
+      <a href="#/care/track" data-help="track">Track an order</a>
     </div>
     <div class="f-col">
       <h5>Reach us</h5>
       <a href="https://wa.me/256777691011">WhatsApp 0777 691011</a>
       <a href="mailto:jonathanashaba86@gmail.com">Email the studio</a>
-      <a href="#">Instagram</a><a href="#">TikTok</a>
+      <a href="#" data-social="instagram">Instagram</a><a href="#" data-social="tiktok">TikTok</a>
     </div>
   </div>
   <div class="f-bot">
@@ -2029,5 +2292,787 @@ psTally(); psLoad();
 paintDiag();
 
 </script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════════
+   MANNIE+  ·  the commerce layer
+   ──────────────────────────────────────────────────────────────────────────
+   Everything a storefront needs once the pieces themselves look right:
+   a bag that survives a refresh, links you can send on WhatsApp, search,
+   saved pieces, a checkout that captures the delivery, the care pages, and
+   the search-engine and analytics plumbing.
+
+   ▓▓ SET THESE FIRST ▓▓ — the four lines below are the only ones you must
+   touch to make the site yours.
+   ══════════════════════════════════════════════════════════════════════════ */
+const CFG = {
+  wa        : '256777691011',                 // WhatsApp, international format, no +
+  email     : 'jonathanashaba86@gmail.com',
+  site      : 'https://mannie.ug',            // your live domain, no trailing slash
+  ga        : '',                             // GA4 id (G-XXXXXXX) — blank = no tracking loaded
+  payLink   : '',                             // Flutterwave / Pesapal payment link, when you have one
+  instagram : '',                             // e.g. https://instagram.com/yourhandle
+  tiktok    : ''                              // e.g. https://tiktok.com/@yourhandle
+};
+
+/* Real reviews only. Add them here as customers send them in — name, stars,
+   what they bought, what they said. An empty list shows an honest invitation
+   rather than invented praise.
+   { n:'Aisha K.', stars:5, piece:'Bellwether Blazer', when:'March 2026',
+     t:'The shoulder sits exactly where the photos said it would.' }            */
+const REVIEWS = [];
+
+(function(){
+'use strict';
+
+/* ── storage that never throws ────────────────────────────────────────── */
+const store={
+  get(k,d){ try{ const v=localStorage.getItem('mannie.'+k); return v?JSON.parse(v):d }catch(e){ return d } },
+  set(k,v){ try{ localStorage.setItem('mannie.'+k,JSON.stringify(v)) }catch(e){} }
+};
+const slug=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')
+  .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+const SLUGS={}, IDX={};
+P.forEach((p,i)=>{ const s=slug(p.n); SLUGS[i]=s; IDX[s]=i });
+const catLabel=c=>(CATS.find(x=>x[0]===c)||[,c])[1];
+const stock=p=>p.z.reduce((a,b)=>a+b.q,0);
+const shot=(p,w)=>{ const ph=PHOTOS[p.n]||SHOTS[p.n]; const u=ph&&(ph.front||(ph.frames||[])[0]); return u?shotURL(u,w||320):'' };
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ── analytics: silent unless a GA4 id is set, events fire either way ──── */
+window.dataLayer=window.dataLayer||[];
+function track(name,params){
+  try{
+    window.dataLayer.push(Object.assign({event:name},params||{}));
+    if(window.gtag) window.gtag('event',name,params||{});
+  }catch(e){}
+}
+if(CFG.ga){
+  const s=document.createElement('script'); s.async=true;
+  s.src='https://www.googletagmanager.com/gtag/js?id='+CFG.ga;
+  document.head.appendChild(s);
+  window.gtag=function(){window.dataLayer.push(arguments)};
+  window.gtag('js',new Date()); window.gtag('config',CFG.ga);
+}
+
+/* ── extra styling the layer needs ────────────────────────────────────── */
+document.head.insertAdjacentHTML('beforeend',`<style>
+.ci-img img{width:100%;height:100%;object-fit:cover;border-radius:2px}
+.tt.has-photo.ready::before{display:none}
+.mz-installed{display:none}
+</style>`);
+
+/* ══════════════════════════════════════════════════════════════════════
+   1 · A BAG THAT SURVIVES A REFRESH
+   ══════════════════════════════════════════════════════════════════════ */
+function saveBag(){ store.set('bag.v1',bag.map(b=>({n:b.n,size:b.size,col:b.col,q:b.q}))) }
+function restoreBag(){
+  const raw=store.get('bag.v1',[]);
+  if(!Array.isArray(raw)||!raw.length) return;
+  raw.forEach(r=>{
+    const p=P.find(x=>x.n===r.n); if(!p) return;
+    const z=p.z.find(s=>s.s===r.size), c=p.col.find(x=>x[0]===r.col);
+    if(!z||!c||z.q<1) return;                       // sold out or discontinued since
+    bag.push({key:p.n+'|'+z.s+'|'+c[0],n:p.n,s:p.s,m:p.m,size:z.s,cap:z.q,
+              col:c[0],hex:c[1],p:p.p,q:Math.max(1,Math.min(+r.q||1,z.q))});
+  });
+}
+const _drawBag=window.drawBag;
+window.drawBag=function(){
+  _drawBag();
+  saveBag();
+  // the bag shows the real photograph, not a stand-in
+  $$('#cartBody .ci').forEach((row,i)=>{
+    const b=bag[i]; if(!b) return;
+    const p=P.find(x=>x.n===b.n), src=p&&shot(p,220);
+    if(src) row.querySelector('.ci-img').innerHTML=`<img src="${src}" alt="${esc(b.n)}" loading="lazy" decoding="async">`;
+  });
+};
+
+/* ══════════════════════════════════════════════════════════════════════
+   2 · SAVED PIECES
+   ══════════════════════════════════════════════════════════════════════ */
+let saved=store.get('saved.v1',[]).filter(n=>P.some(p=>p.n===n));
+document.body.insertAdjacentHTML('beforeend',`
+<aside class="cart" id="mzSaved" aria-label="Saved pieces" aria-modal="true" role="dialog">
+  <div class="cart-h"><h3>Saved pieces</h3>
+    <button id="mzSavedClose" style="font-size:20px" aria-label="Close saved">×</button></div>
+  <div class="cart-body" id="mzSavedBody"></div>
+</aside>`);
+function saveCount(){
+  const b=$('#mzSavedBtn'); if(!b) return;
+  $('#mzSavedCount').textContent=saved.length;
+  b.classList.toggle('has',saved.length>0);
+}
+function isSaved(n){ return saved.indexOf(n)>-1 }
+function toggleSave(n){
+  const i=saved.indexOf(n);
+  if(i>-1){ saved.splice(i,1); toast('Removed from saved') }
+  else { saved.push(n); toast(n+' saved'); track('add_to_wishlist',{item_name:n}) }
+  store.set('saved.v1',saved); saveCount(); paintSaved(); markHearts();
+}
+function paintSaved(){
+  const body=$('#mzSavedBody'); if(!body) return;
+  if(!saved.length){
+    body.innerHTML=`<div class="cart-empty"><div style="font-size:34px;opacity:.3">♡</div>
+      <p>Nothing saved yet.<br>Tap the heart on any piece to keep it here.</p></div>`;
+    return;
+  }
+  body.innerHTML=`<div class="mz-saved-grid">`+saved.map(n=>{
+    const p=P.find(x=>x.n===n); if(!p) return '';
+    return `<div class="mz-sv"><button class="mz-sv-x" data-unsave="${esc(n)}" aria-label="Remove ${esc(n)}">×</button>
+      <button data-open="${SLUGS[P.indexOf(p)]}" style="width:100%;text-align:left">
+        <div class="f"><img src="${shot(p,300)}" alt="${esc(n)}" loading="lazy" decoding="async"></div>
+        <h6>${esc(n)}</h6><span>UGX ${ugx(p.p)}</span></button></div>`;
+  }).join('')+`</div>`;
+}
+$('#mzSavedBody').addEventListener('click',e=>{
+  const un=e.target.closest('[data-unsave]'), op=e.target.closest('[data-open]');
+  if(un) return toggleSave(un.dataset.unsave);
+  if(op){ closeSaved(); go('#/piece/'+op.dataset.open) }
+});
+function openSaved(){ $('#mzSaved').classList.add('open'); $('#scrim').classList.add('open'); paintSaved(); trapIn($('#mzSaved')) }
+function closeSaved(){ $('#mzSaved').classList.remove('open'); if(!anyOverlay()) $('#scrim').classList.remove('open') }
+$('#mzSavedBtn').onclick=openSaved; $('#mzSavedClose').onclick=closeSaved;
+function markHearts(){
+  $$('.card').forEach(c=>{
+    const p=P[+c.dataset.i], h=c.querySelector('.mz-heart');
+    if(p&&h) h.classList.toggle('on',isSaved(p.n));
+  });
+  const sb=$('#mzStSave');
+  if(sb&&typeof cur!=='undefined'&&cur) sb.classList.toggle('on',isSaved(cur.n));
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   3 · THE GRID: hearts, shimmer, recently viewed
+   ══════════════════════════════════════════════════════════════════════ */
+const HEART=`<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.6-7-9.4A3.9 3.9 0 0 1 12 7.6a3.9 3.9 0 0 1 7 3C19 15.4 12 20 12 20z"/></svg>`;
+function addHearts(){
+  $$('.card').forEach(c=>{
+    if(c.querySelector('.mz-heart')) return;          // the grid may already carry one
+    const p=P[+c.dataset.i]; if(!p) return;
+    c.insertAdjacentHTML('afterbegin',
+      `<button class="mz-heart" data-save="${esc(p.n)}" aria-label="Save ${esc(p.n)}" title="Save">${HEART}</button>`);
+  });
+  markHearts();
+}
+const _paint=window.paint;
+window.paint=function(){ _paint(); addHearts() };
+$('#grid').addEventListener('click',e=>{
+  const h=e.target.closest('[data-save]');
+  if(h){ e.stopPropagation(); toggleSave(h.dataset.save) }
+},true);
+// drop the shimmer the moment a photograph lands
+document.addEventListener('load',e=>{
+  if(e.target.classList&&e.target.classList.contains('ph-img'))
+    e.target.closest('.tt')?.classList.add('ready');
+},true);
+
+let seen=store.get('seen.v1',[]).filter(n=>P.some(p=>p.n===n));
+function pushSeen(p){
+  seen=[p.n].concat(seen.filter(n=>n!==p.n)).slice(0,12);
+  store.set('seen.v1',seen); paintSeen();
+}
+function paintSeen(){
+  const wrap=$('#mzSeen'), rail=$('#mzSeenRail'); if(!wrap) return;
+  const list=seen.filter(n=>P.some(p=>p.n===n));
+  wrap.hidden=list.length<2;
+  rail.innerHTML=list.map(n=>{
+    const p=P.find(x=>x.n===n);
+    return `<button class="mz-mini" data-open="${SLUGS[P.indexOf(p)]}">
+      <div class="f"><img src="${shot(p,260)}" alt="${esc(n)}" loading="lazy" decoding="async"></div>
+      <h6>${esc(n)}</h6><span>UGX ${ugx(p.p)}</span></button>`;
+  }).join('');
+}
+$('#mzSeenRail').addEventListener('click',e=>{
+  const b=e.target.closest('[data-open]'); if(b) go('#/piece/'+b.dataset.open);
+});
+$('#mzSeenClear').onclick=()=>{ seen=[]; store.set('seen.v1',seen); paintSeen(); toast('History cleared') };
+
+/* ══════════════════════════════════════════════════════════════════════
+   4 · THE STUDIO: share, save, size guide, what it wears with
+   ══════════════════════════════════════════════════════════════════════ */
+const _drawPanel=window.drawPanel;
+window.drawPanel=function(){
+  _drawPanel();
+  const p=cur, right=$('#stRight'); if(!p||!right) return;
+  const cta=right.querySelector('.st-cta');
+  cta.insertAdjacentHTML('afterend',`
+    <div class="mz-stbar">
+      <button id="mzStSave" class="${isSaved(p.n)?'on':''}">${HEART}<span>${isSaved(p.n)?'Saved':'Save'}</span></button>
+      <button id="mzStShare"><svg viewBox="0 0 24 24"><path d="M12 3v13M12 3l-4 4M12 3l4 4"/><path d="M5 14v5h14v-5"/></svg><span>Share</span></button>
+    </div>`);
+  const sizeBlk=[...right.querySelectorAll('.blk-h')].find(b=>b.textContent.trim().startsWith('Size'));
+  if(sizeBlk) sizeBlk.insertAdjacentHTML('beforeend',
+    `<button class="mz-sizelink" data-help="size" style="margin-left:10px">Size guide</button>`);
+  const near=P.filter(x=>x!==p&&x.c===p.c&&stock(x)>0).slice(0,3);
+  const more=near.length?near:P.filter(x=>x!==p&&stock(x)>0).slice(0,3);
+  right.insertAdjacentHTML('beforeend',`
+    <div class="mz-related">
+      <div class="mz-rail-h"><h4>Wears well with</h4></div>
+      <div class="mz-rail">${more.map(x=>`
+        <button class="mz-mini" data-open="${SLUGS[P.indexOf(x)]}">
+          <div class="f"><img src="${shot(x,240)}" alt="${esc(x.n)}" loading="lazy" decoding="async"></div>
+          <h6>${esc(x.n)}</h6><span>UGX ${ugx(x.p)}</span></button>`).join('')}</div>
+    </div>`);
+  $('#mzStSave').onclick=()=>{
+    toggleSave(p.n);
+    const on=isSaved(p.n);
+    $('#mzStSave').classList.toggle('on',on);
+    $('#mzStSave').querySelector('span').textContent=on?'Saved':'Save';
+  };
+  $('#mzStShare').onclick=()=>sharePiece(p);
+  right.querySelectorAll('.mz-related [data-open]').forEach(b=>
+    b.onclick=()=>go('#/piece/'+b.dataset.open));
+};
+function pieceURL(p){ return CFG.site+'/#/piece/'+slug(p.n) }
+async function sharePiece(p){
+  const data={title:'MANNIE — '+p.n,
+    text:`${p.n} — UGX ${ugx(p.p)}. Turn it a full 360° before you buy.`, url:pieceURL(p)};
+  track('share',{item_name:p.n});
+  try{ if(navigator.share){ await navigator.share(data); return } }catch(e){ if(e.name==='AbortError') return }
+  try{ await navigator.clipboard.writeText(data.url); toast('Link copied — paste it into WhatsApp') }
+  catch(e){ window.open('https://wa.me/?text='+encodeURIComponent(data.text+' '+data.url),'_blank') }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   5 · LINKS YOU CAN SEND  (#/piece/… , #/care/…)
+   ══════════════════════════════════════════════════════════════════════ */
+let routing=false, openPiece=null;
+const META={t:document.title,d:$('meta[name="description"]')?.content||''};
+function setMeta(p){
+  if(p){
+    document.title=p.n+' — MANNIE';
+    $('meta[name="description"]').content=p.d.slice(0,155);
+    $('link[rel="canonical"]').href=pieceURL(p);
+  }else{
+    document.title=META.t;
+    $('meta[name="description"]').content=META.d;
+    $('link[rel="canonical"]').href=CFG.site+'/';
+  }
+}
+function go(hash){ if(location.hash===hash) route(); else location.hash=hash }
+const _openStudio=window.openStudio;
+window.openStudio=function(i){
+  const p=P[i];
+  _openStudio(i);
+  openPiece=i; pushSeen(p); setMeta(p); markHearts();
+  trapIn($('#studio'));
+  track('view_item',{item_name:p.n,item_category:catLabel(p.c),value:p.p,currency:'UGX'});
+  if(!routing){ routing=true; location.hash='#/piece/'+SLUGS[i]; setTimeout(()=>routing=false,0) }
+};
+const _closeStudio=window.closeStudio;
+window.closeStudio=function(){
+  _closeStudio(); openPiece=null; setMeta(null); releaseTrap();
+  if(!routing && location.hash.indexOf('#/piece/')===0){
+    routing=true; history.replaceState(null,'','#'); setTimeout(()=>routing=false,0);
+  }
+};
+function route(){
+  if(routing) return;
+  const hz=location.hash;
+  if(hz.indexOf('#/piece/')===0){
+    const i=IDX[hz.slice(8)];
+    if(i!=null && openPiece!==i){ routing=true; window.openStudio(i); routing=false }
+    return;
+  }
+  if(hz.indexOf('#/care/')===0){ openCare(hz.slice(7)); return }
+  if(hz==='#/saved'){ openSaved(); return }
+  closeCare();
+  if(openPiece!==null){ routing=true; window.closeStudio(); routing=false }
+}
+addEventListener('hashchange',route);
+
+/* ══════════════════════════════════════════════════════════════════════
+   6 · SEARCH
+   ══════════════════════════════════════════════════════════════════════ */
+document.body.insertAdjacentHTML('beforeend',`
+<div class="mz-search" id="mzSearch" role="dialog" aria-modal="true" aria-label="Search the collection">
+  <div class="mz-search-in">
+    <div class="mz-search-f">
+      <svg viewBox="0 0 24 24" style="width:19px;height:19px;fill:none;stroke:var(--muted);stroke-width:1.6">
+        <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="mzQ" type="search" placeholder="Search 57 pieces — trench, kitenge, leather, size 42…"
+             autocomplete="off" spellcheck="false" aria-label="Search">
+      <button id="mzSearchClose" style="font-size:20px;color:var(--muted)" aria-label="Close search">×</button>
+    </div>
+    <div class="mz-hits" id="mzHits"></div>
+    <div class="mz-search-foot"><span>↑↓ to move · ↵ to open · esc to close</span><span id="mzCount"></span></div>
+  </div>
+</div>`);
+const searchable=P.map((p,i)=>({i,p,hay:[p.n,catLabel(p.c),p.m,p.fit,p.o,p.d,p.col.map(c=>c[0]).join(' '),
+  p.z.map(z=>z.s).join(' '),p.t].join(' ').toLowerCase()}));
+let hitList=[], hitAt=0;
+function runSearch(q){
+  q=q.trim().toLowerCase();
+  const box=$('#mzHits');
+  if(!q){
+    hitList=searchable.filter(s=>s.p.t==='NEW').slice(0,6);
+    $('#mzCount').textContent='New in';
+  }else{
+    const terms=q.split(/\s+/);
+    hitList=searchable.map(s=>{
+      let sc=0;
+      terms.forEach(t=>{
+        if(s.p.n.toLowerCase().startsWith(t)) sc+=6;
+        else if(s.p.n.toLowerCase().indexOf(t)>-1) sc+=4;
+        else if(s.hay.indexOf(t)>-1) sc+=1;
+      });
+      return {s,sc};
+    }).filter(x=>x.sc>0).sort((a,b)=>b.sc-a.sc).slice(0,8).map(x=>x.s);
+    $('#mzCount').textContent=hitList.length?hitList.length+' found':'';
+    track('search',{search_term:q});
+  }
+  hitAt=0;
+  box.innerHTML=hitList.length?hitList.map((s,n)=>`
+    <button class="mz-hit${n===0?' on':''}" data-i="${s.i}">
+      <span class="mz-hit-img"><img src="${shot(s.p,160)}" alt="" decoding="async"></span>
+      <span class="mz-hit-txt"><h5>${esc(s.p.n)}</h5>
+        <span class="mz-hit-cap">${esc(catLabel(s.p.c))} · ${stock(s.p)?stock(s.p)+' in stock':'Sold out'}</span></span>
+      <b>UGX ${ugx(s.p.p)}</b></button>`).join('')
+    : `<div class="mz-none">Nothing matches that. Try “leather”, “kitenge”, “42” or a colour.</div>`;
+}
+function openSearch(){
+  $('#mzSearch').classList.add('open'); runSearch(''); setTimeout(()=>$('#mzQ').focus(),80); trapIn($('#mzSearch'));
+}
+function closeSearch(){ $('#mzSearch').classList.remove('open'); releaseTrap() }
+$('#mzSearchBtn').onclick=openSearch;
+$('#mzSearchClose').onclick=closeSearch;
+$('#mzQ').addEventListener('input',e=>runSearch(e.target.value));
+$('#mzHits').addEventListener('click',e=>{
+  const b=e.target.closest('.mz-hit'); if(!b) return;
+  closeSearch(); go('#/piece/'+SLUGS[+b.dataset.i]);
+});
+$('#mzSearch').addEventListener('click',e=>{ if(e.target===$('#mzSearch')) closeSearch() });
+$('#mzQ').addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+    e.preventDefault(); if(!hitList.length) return;
+    hitAt=(hitAt+(e.key==='ArrowDown'?1:-1)+hitList.length)%hitList.length;
+    $$('.mz-hit').forEach((el,n)=>el.classList.toggle('on',n===hitAt));
+    $$('.mz-hit')[hitAt]?.scrollIntoView({block:'nearest'});
+  }
+  if(e.key==='Enter'&&hitList[hitAt]){ closeSearch(); go('#/piece/'+SLUGS[hitList[hitAt].i]) }
+});
+addEventListener('keydown',e=>{
+  const typing=/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName);
+  if(e.key==='/'&&!typing){ e.preventDefault(); openSearch() }
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){ e.preventDefault(); openSearch() }
+  if(e.key==='Escape'){ closeSearch(); closeSaved(); closeCare(); }
+});
+
+/* ══════════════════════════════════════════════════════════════════════
+   7 · CARE PAGES  — the links that used to go nowhere
+   ══════════════════════════════════════════════════════════════════════ */
+const SIZE_TOPS=[['XS','86–90','71–75','66'],['S','91–96','76–81','68'],['M','97–102','82–87','70'],
+  ['L','103–108','88–94','72'],['XL','109–116','95–102','74'],['2XL','117–124','103–110','76'],['3XL','125–132','111–118','78']];
+const SIZE_BOTTOMS=[['XS','71–74','89–92','76'],['S','75–79','93–97','77'],['M','80–85','98–103','78'],
+  ['L','86–92','104–110','79'],['XL','93–100','111–118','80'],['2XL','101–108','119–126','81']];
+const SIZE_SHOES=[['38','5','6','24.5'],['39','6','7','25.0'],['40','6.5','7.5','25.5'],['41','7.5','8.5','26.5'],
+  ['42','8','9','27.0'],['43','9','10','28.0'],['44','9.5','10.5','28.5'],['45','10.5','11.5','29.5']];
+const tbl=(head,rows)=>`<div class="mz-tablewrap"><table><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+  <tbody>${rows.map(r=>`<tr>${r.map((c,i)=>i===0?`<th>${c}</th>`:`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+
+const CARE={
+ size:{t:'Size &amp; fit guide',h:`
+  <p>Every MANNIE cut is graded on fit models rather than scaled from a single sample, so the numbers
+  below are the <strong>body</strong> measurements each size is built for — not the garment flat.
+  Measure in centimetres, over a t-shirt, and keep the tape level.</p>
+  <h4>Tops, knitwear and outerwear</h4>
+  ${tbl(['Size','Chest (cm)','Waist (cm)','Back length (cm)'],SIZE_TOPS)}
+  <h4>Trousers, jeans, skirts and shorts</h4>
+  ${tbl(['Size','Waist (cm)','Hip (cm)','Inseam (cm)'],SIZE_BOTTOMS)}
+  <h4>Footwear</h4>
+  ${tbl(['EU','UK','US','Foot length (cm)'],SIZE_SHOES)}
+  <h4>How to measure</h4>
+  <ul>
+    <li><strong>Chest</strong> — around the fullest part, under the arms, arms down.</li>
+    <li><strong>Waist</strong> — the narrowest point, usually just above the navel.</li>
+    <li><strong>Hip</strong> — around the fullest part, feet together.</li>
+    <li><strong>Inseam</strong> — from the crotch seam to the floor, barefoot.</li>
+    <li><strong>Foot</strong> — stand on paper, mark heel and longest toe, measure at the end of the day.</li>
+  </ul>
+  <h4>Between two sizes?</h4>
+  <p>Take the larger one for outerwear and knitwear, the smaller one for shirts and dresses.
+  Each piece also states its own fit — boxy, relaxed, roomy — on its page.</p>
+  <div class="mz-note">Still unsure? Send your measurements on WhatsApp and we will tell you which size
+  we would cut for you. It costs nothing and it saves a return.</div>`},
+
+ shipping:{t:'Shipping &amp; delivery',h:`
+  <h4>Kampala</h4>
+  <p>Free, delivered within <strong>48 hours</strong> of the order being confirmed. Orders confirmed before
+  4pm usually arrive the next day. You get a WhatsApp message when the rider leaves the studio.</p>
+  <h4>Entebbe &amp; Greater Kampala</h4>
+  <p><strong>UGX 15,000</strong>, 48–72 hours.</p>
+  <h4>Upcountry</h4>
+  <p>By bus courier to your nearest stage or courier office, <strong>quoted per order</strong> — usually
+  UGX 20,000–35,000 depending on the town. We send the quote before anything is dispatched.</p>
+  <h4>International</h4>
+  <p>We ship worldwide by DHL, quoted per order and per weight. East Africa typically 3–5 working days,
+  the rest of the world 5–10.</p>
+  <h4>Studio pickup</h4>
+  <p>Free. Collect from the studio in Kampala once we confirm your piece is boxed and ready.</p>
+  <div class="mz-note">Every order carries a reference like <strong>MN-260906-4K2</strong>. Keep it —
+  it is how we find your order in one message.</div>`},
+
+ returns:{t:'Returns &amp; exchanges',h:`
+  <h4>Thirty days</h4>
+  <p>If a piece is not right, tell us within <strong>30 days</strong> of delivery. It must be unworn,
+  unwashed and with its tags on, in the packaging it arrived in.</p>
+  <h4>Exchanges</h4>
+  <p>Free inside Kampala — the rider brings the new size and takes the old one back on the same trip.
+  Outside Kampala you cover the return courier and we cover the send-out.</p>
+  <h4>Refunds</h4>
+  <p>Back to the same mobile money number or card within <strong>5 working days</strong> of the piece
+  reaching the studio.</p>
+  <h4>What we cannot take back</h4>
+  <ul>
+    <li>Swimwear and intimates, once the hygiene seal is broken.</li>
+    <li>Pieces altered by a tailor other than ours.</li>
+    <li>Anything damaged by wear rather than by us.</li>
+  </ul>
+  <h4>Something arrived wrong</h4>
+  <p>Send a photo on WhatsApp the day it arrives. A fault that is ours is always ours to fix —
+  we collect, replace or refund, and you pay nothing.</p>`},
+
+ repairs:{t:'Repairs &amp; care',h:`
+  <h4>The first year</h4>
+  <p>Seams, buttons, zips and hardware are repaired <strong>free for twelve months</strong> from delivery.
+  Bring the piece to the studio or send it with your order reference.</p>
+  <h4>After that</h4>
+  <p>We keep repairing — at cost, quoted before we start. A pair of boots resoled beats a pair replaced.</p>
+  <h4>Looking after it</h4>
+  <ul>
+    <li><strong>Cotton and denim</strong> — cold wash, inside out, line dry in shade. Denim: wash rarely.</li>
+    <li><strong>Knitwear</strong> — hand wash cold, dry flat. Never on a hanger, it will grow shoulders.</li>
+    <li><strong>Silk and viscose</strong> — dry clean, or hand wash cold with a pH-neutral soap.</li>
+    <li><strong>Leather</strong> — wipe with a damp cloth, condition twice a year, dry away from direct sun.</li>
+    <li><strong>Wax print</strong> — first wash alone and cold; the colour settles after that.</li>
+  </ul>
+  <div class="mz-note">Every piece carries its own care line on its page — that one wins over this list.</div>`},
+
+ track:{t:'Track an order',h:`
+  <p>Every confirmed order gets a reference like <strong>MN-260906-4K2</strong> in the WhatsApp thread
+  where you placed it. Send that reference back to us and you get the current status straight away.</p>
+  <h4>What the statuses mean</h4>
+  <ul>
+    <li><strong>Confirmed</strong> — payment agreed, your sizes are held.</li>
+    <li><strong>In the studio</strong> — being pulled, checked and boxed.</li>
+    <li><strong>With the rider</strong> — out for delivery in Kampala, usually within the day.</li>
+    <li><strong>With the courier</strong> — upcountry or international, tracking number sent to you.</li>
+    <li><strong>Delivered</strong> — your 30-day return window starts here.</li>
+  </ul>
+  <p style="margin-top:22px"><a class="btn solid" id="mzTrackWa" href="#"><span>Ask about my order</span></a></p>`}
+};
+document.body.insertAdjacentHTML('beforeend',`
+<div class="mz-sheet" id="mzSheet" role="dialog" aria-modal="true" aria-labelledby="mzSheetT">
+  <div class="mz-sheet-in">
+    <div class="mz-sheet-h"><h3 id="mzSheetT"></h3>
+      <button id="mzSheetX" style="font-size:22px;color:var(--muted)" aria-label="Close">×</button></div>
+    <div class="mz-sheet-b" id="mzSheetB"></div>
+  </div>
+</div>`);
+let sheetOpen=null;
+function openCare(key){
+  const c=CARE[key]; if(!c) return;
+  sheetOpen=key;
+  $('#mzSheetT').innerHTML=c.t; $('#mzSheetB').innerHTML=c.h;
+  $('#mzSheet').classList.add('open'); $('#scrim').classList.add('open');
+  trapIn($('#mzSheet'));
+  const w=$('#mzTrackWa');
+  if(w) w.href='https://wa.me/'+CFG.wa+'?text='+encodeURIComponent('Hello MANNIE, I would like an update on my order. My reference is: ');
+  track('view_care_page',{page:key});
+}
+function closeCare(){
+  if(!sheetOpen&&!$('#mzSheet').classList.contains('open')) return;
+  sheetOpen=null; $('#mzSheet').classList.remove('open');
+  if(!anyOverlay()) $('#scrim').classList.remove('open');
+  releaseTrap();
+  if(location.hash.indexOf('#/care/')===0){ routing=true; history.replaceState(null,'','#'); setTimeout(()=>routing=false,0) }
+}
+$('#mzSheetX').onclick=closeCare;
+$('#mzSheet').addEventListener('click',e=>{ if(e.target===$('#mzSheet')) closeCare() });
+document.addEventListener('click',e=>{
+  const h=e.target.closest('[data-help]');
+  if(h){ e.preventDefault(); go('#/care/'+({size:'size',shipping:'shipping',returns:'returns',repairs:'repairs',track:'track'}[h.dataset.help]||'size')) }
+  const s=e.target.closest('[data-social]');
+  if(s){
+    const url=CFG[s.dataset.social];
+    if(url){ window.open(url,'_blank','noopener') }
+    else { e.preventDefault(); toast('Social channels launching soon — message the studio on WhatsApp') }
+  }
+  const c=e.target.closest('[data-cat]');
+  if(c){ const chip=$(`.chip[data-c="${c.dataset.cat}"]`); if(chip) setTimeout(()=>chip.click(),120) }
+});
+
+/* ══════════════════════════════════════════════════════════════════════
+   8 · CHECKOUT — the order arrives ready to dispatch
+   ══════════════════════════════════════════════════════════════════════ */
+const DELIVERY=[
+  {k:'kampala', l:'Kampala delivery',      d:'Free · within 48 hours',            f:0},
+  {k:'greater', l:'Entebbe & Greater Kampala', d:'UGX 15,000 · 48–72 hours',      f:15000},
+  {k:'upcountry',l:'Upcountry courier',    d:'Quoted per town before dispatch',   f:null},
+  {k:'intl',    l:'International (DHL)',   d:'Quoted per weight before dispatch', f:null},
+  {k:'pickup',  l:'Studio pickup, Kampala',d:'Free · collect when we confirm',    f:0}
+];
+const PAYMENTS=['MTN Mobile Money','Airtel Money','Card','Cash on delivery','Bank transfer'];
+function orderRef(){
+  const d=new Date(), p=n=>String(n).padStart(2,'0');
+  const r=Math.random().toString(36).toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,3);
+  return 'MN-'+String(d.getFullYear()).slice(2)+p(d.getMonth()+1)+p(d.getDate())+'-'+r;
+}
+function openCheckout(){
+  if(!bag.length) return toast('Your bag is empty');
+  const me=store.get('customer.v1',{});
+  const sub=bag.reduce((a,b)=>a+b.p*b.q,0);
+  sheetOpen='checkout';
+  $('#mzSheetT').textContent='Checkout';
+  $('#mzSheetB').innerHTML=`
+    <div class="mz-sum">
+      ${bag.map(b=>`<div class="mz-sum-row"><span>${esc(b.n)} — ${esc(b.col)}, ${esc(b.size)} ×${b.q}</span><b>UGX ${ugx(b.p*b.q)}</b></div>`).join('')}
+      <div class="mz-sum-row"><span>Subtotal</span><b>UGX ${ugx(sub)}</b></div>
+      <div class="mz-sum-row"><span>Delivery</span><b id="mzFee">Free</b></div>
+      <div class="mz-sum-row tot"><span>Total</span><b id="mzTot">UGX ${ugx(sub)}</b></div>
+    </div>
+    <form id="mzOrder" novalidate>
+      <div class="mz-2">
+        <div class="mz-field"><label for="mzName">Full name *</label>
+          <input id="mzName" autocomplete="name" value="${esc(me.name||'')}" placeholder="Nakato Sarah"></div>
+        <div class="mz-field"><label for="mzPhone">WhatsApp number *</label>
+          <input id="mzPhone" autocomplete="tel" inputmode="tel" value="${esc(me.phone||'')}" placeholder="0777 691011"></div>
+      </div>
+      <h4>Where it goes</h4>
+      <div class="mz-pick" id="mzDel">
+        ${DELIVERY.map((d,i)=>`<label><input type="radio" name="del" value="${d.k}" ${(me.del||'kampala')===d.k?'checked':''}>
+          <span>${d.l}<u>${d.d}</u></span></label>`).join('')}
+      </div>
+      <div class="mz-field" style="margin-top:15px" id="mzAddrWrap"><label for="mzAddr">Delivery address or landmark *</label>
+        <input id="mzAddr" autocomplete="street-address" value="${esc(me.addr||'')}" placeholder="Ntinda, opposite Capital Shoppers"></div>
+      <h4>How you would like to pay</h4>
+      <div class="mz-field"><label for="mzPay">Payment method</label>
+        <select id="mzPay">${PAYMENTS.map(p=>`<option ${me.pay===p?'selected':''}>${p}</option>`).join('')}</select></div>
+      <div class="mz-pay">${PAYMENTS.map(p=>`<span>${p}</span>`).join('')}</div>
+      <div class="mz-field" style="margin-top:18px"><label for="mzNote">Anything we should know</label>
+        <textarea id="mzNote" placeholder="Gift wrap, a delivery window, a size question…"></textarea></div>
+      <button class="btn solid" type="submit" style="width:100%;justify-content:center;margin-top:6px">
+        <span>Send order on WhatsApp</span></button>
+      <button class="btn" type="button" id="mzCopy" style="width:100%;justify-content:center;margin-top:9px">
+        <span>Copy the order instead</span></button>
+      ${CFG.payLink?`<a class="btn" href="${CFG.payLink}" target="_blank" rel="noopener"
+         style="width:100%;justify-content:center;margin-top:9px"><span>Pay online now</span></a>`:''}
+      <p style="font-family:var(--m);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+         color:var(--faint);text-align:center;margin-top:14px">
+        Your details stay on this device until you send them</p>
+    </form>`;
+  $('#mzSheet').classList.add('open'); $('#scrim').classList.add('open'); trapIn($('#mzSheet'));
+  track('begin_checkout',{value:sub,currency:'UGX',items:bag.length});
+
+  const feeOf=k=>(DELIVERY.find(d=>d.k===k)||{}).f;
+  function refresh(){
+    const k=$('#mzDel input:checked').value, f=feeOf(k);
+    $('#mzFee').textContent = f===null?'Quoted':f?'UGX '+ugx(f):'Free';
+    $('#mzTot').textContent = 'UGX '+ugx(sub+(f||0))+(f===null?' + courier':'');
+    $('#mzAddrWrap').style.display = k==='pickup'?'none':'';
+  }
+  $('#mzDel').addEventListener('change',refresh); refresh();
+
+  function collect(){
+    const name=$('#mzName').value.trim(), phone=$('#mzPhone').value.trim();
+    const k=$('#mzDel input:checked').value, addr=$('#mzAddr').value.trim();
+    let bad=false;
+    [['mzName',!name],['mzPhone',phone.replace(/\D/g,'').length<9],['mzAddr',k!=='pickup'&&!addr]]
+      .forEach(([id,isBad])=>{ const f=$('#'+id).closest('.mz-field'); f.classList.toggle('bad',isBad); if(isBad) bad=true });
+    if(bad){ toast('Name, WhatsApp number and address, please'); return null }
+    const pay=$('#mzPay').value, note=$('#mzNote').value.trim(), f=feeOf(k);
+    store.set('customer.v1',{name,phone,addr,del:k,pay});
+    const d=DELIVERY.find(x=>x.k===k);
+    const ref=orderRef();
+    const lines=bag.map(b=>`• ${b.n} — ${b.col}, size ${b.size} ×${b.q} — UGX ${ugx(b.p*b.q)}`).join('\n');
+    const msg=
+`Hello MANNIE, I would like to place this order.
+
+ORDER ${ref}
+${lines}
+
+Subtotal: UGX ${ugx(sub)}
+Delivery: ${d.l} — ${f===null?'to be quoted':f?'UGX '+ugx(f):'free'}
+Total: UGX ${ugx(sub+(f||0))}${f===null?' + courier':''}
+
+Name: ${name}
+WhatsApp: ${phone}
+${k==='pickup'?'Collecting from the studio':'Address: '+addr}
+Paying by: ${pay}${note?'\nNote: '+note:''}`;
+    return {msg,ref,total:sub+(f||0)};
+  }
+  $('#mzOrder').onsubmit=e=>{
+    e.preventDefault();
+    const o=collect(); if(!o) return;
+    track('purchase_intent',{transaction_id:o.ref,value:o.total,currency:'UGX'});
+    window.open('https://wa.me/'+CFG.wa+'?text='+encodeURIComponent(o.msg),'_blank');
+    toast('Order '+o.ref+' — finish it in WhatsApp');
+  };
+  $('#mzCopy').onclick=async()=>{
+    const o=collect(); if(!o) return;
+    try{ await navigator.clipboard.writeText(o.msg); toast('Order '+o.ref+' copied') }
+    catch(e){ toast('Press and hold to copy from WhatsApp instead') }
+  };
+}
+$('#checkout').onclick=openCheckout;
+
+/* ══════════════════════════════════════════════════════════════════════
+   9 · VOICES + THE LIST
+   ══════════════════════════════════════════════════════════════════════ */
+(function reviews(){
+  const box=$('#mzRevs'); if(!box) return;
+  if(REVIEWS.length){
+    box.innerHTML=REVIEWS.map(r=>`<article class="mz-rev">
+      <div class="mz-rev-t"><b>${esc(r.n)}</b><span class="mz-stars">${'★'.repeat(r.stars||5)}${'☆'.repeat(5-(r.stars||5))}</span></div>
+      <p>${esc(r.t)}</p><span>${esc(r.piece||'')}${r.when?' · '+esc(r.when):''}</span></article>`).join('');
+  }else{
+    box.innerHTML=`<div class="mz-empty">
+      <p>No reviews yet — and we would rather show none than invent one.
+      If you have worn a MANNIE piece, tell us how it held up and it goes here with your name on it.</p>
+      <a class="btn" href="https://wa.me/${CFG.wa}?text=${encodeURIComponent('Hello MANNIE, I would like to leave a review:')}"
+         target="_blank" rel="noopener"><span>Write the first one</span></a></div>`;
+  }
+})();
+$('#mzListForm').onsubmit=e=>{
+  e.preventDefault();
+  const n=$('#mzLn').value.trim(), c=$('#mzLc').value.trim();
+  if(!n||!c) return toast('Your name and a way to reach you, please');
+  store.set('list.v1',{n,c,at:Date.now()});
+  track('join_list',{});
+  $('#mzListOk').classList.add('show');
+  const to=c.indexOf('@')>-1
+    ? 'mailto:'+CFG.email+'?subject='+encodeURIComponent('Join the MANNIE list')+'&body='+encodeURIComponent(`Name: ${n}\nEmail: ${c}`)
+    : 'https://wa.me/'+CFG.wa+'?text='+encodeURIComponent(`Hello MANNIE, please add me to the studio list.\nName: ${n}\nNumber: ${c}`);
+  window.open(to,'_blank');
+};
+
+/* ══════════════════════════════════════════════════════════════════════
+   10 · FOCUS, PROGRESS, STRUCTURED DATA, INSTALL
+   ══════════════════════════════════════════════════════════════════════ */
+let trapped=null, lastFocus=null;
+function anyOverlay(){
+  return ['#studio','#cart','#mzSaved','#mzSheet'].some(s=>$(s)?.classList.contains('open'));
+}
+function trapIn(el){
+  lastFocus=document.activeElement; trapped=el;
+  setTimeout(()=>{ (el.querySelector('input,select,textarea,button,a[href]')||el).focus?.() },120);
+}
+function releaseTrap(){
+  trapped=null;
+  if(lastFocus&&document.contains(lastFocus)){ try{ lastFocus.focus() }catch(e){} }
+}
+addEventListener('keydown',e=>{
+  if(e.key!=='Tab'||!trapped||!trapped.classList.contains('open')) return;
+  const f=[...trapped.querySelectorAll('a[href],button:not([disabled]),input,select,textarea')]
+    .filter(x=>x.offsetParent!==null);
+  if(!f.length) return;
+  const first=f[0], last=f[f.length-1];
+  if(e.shiftKey&&document.activeElement===first){ e.preventDefault(); last.focus() }
+  else if(!e.shiftKey&&document.activeElement===last){ e.preventDefault(); first.focus() }
+});
+$('#toast')?.setAttribute('role','status');
+$('#toast')?.setAttribute('aria-live','polite');
+$('#studio')?.setAttribute('aria-modal','true');
+$('#studio')?.setAttribute('role','dialog');
+$('#cart')?.setAttribute('aria-modal','true');
+$('#cart')?.setAttribute('role','dialog');
+const _openCart=window.openCart;
+window.openCart=function(){ _openCart(); trapIn($('#cart')) };
+
+addEventListener('scroll',()=>{
+  const d=document.documentElement;
+  const pct=d.scrollTop/Math.max(1,d.scrollHeight-d.clientHeight)*100;
+  $('#mzProg').style.width=pct+'%';
+},{passive:true});
+
+/* every piece, described for search engines */
+(function productSchema(){
+  const items=P.map((p,i)=>({
+    "@type":"Product","name":p.n,"description":p.d,"sku":slug(p.n),
+    "image":shot(p,1000)||undefined,"material":p.m,"category":catLabel(p.c),
+    "brand":{"@type":"Brand","name":"MANNIE"},
+    "offers":{"@type":"Offer","url":pieceURL(p),"priceCurrency":"UGX","price":p.p,
+      "availability":stock(p)?"https://schema.org/InStock":"https://schema.org/OutOfStock",
+      "itemCondition":"https://schema.org/NewCondition"}
+  }));
+  const ld={"@context":"https://schema.org","@type":"ItemList","name":"The MANNIE collection",
+    "numberOfItems":items.length,
+    "itemListElement":items.map((it,i)=>({"@type":"ListItem","position":i+1,"item":it}))};
+  const s=document.createElement('script'); s.type='application/ld+json';
+  s.textContent=JSON.stringify(ld); document.head.appendChild(s);
+})();
+
+/* installable, and it opens offline once seen */
+if('serviceWorker' in navigator && location.protocol.indexOf('http')===0){
+  addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
+let installEvt=null;
+addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault(); installEvt=e;
+  const f=$('.f-bot p');
+  if(f&&!$('#mzInstall')) f.insertAdjacentHTML('beforeend',
+    ` · <button id="mzInstall" style="text-decoration:underline;text-underline-offset:3px">Install the app</button>`);
+  const b=$('#mzInstall');
+  if(b) b.onclick=async()=>{ installEvt.prompt(); await installEvt.userChoice; track('install_prompt',{}); };
+});
+
+/* ── boot the layer ───────────────────────────────────────────────────── */
+restoreBag();
+window.drawBag();
+saveCount(); paintSaved(); paintSeen(); addHearts();   // the first grid was painted before this layer loaded
+route();
+
+/* ══════════════════════════════════════════════════════════════════════
+   11 · THE MENU  — the burger used to do nothing at all
+   ══════════════════════════════════════════════════════════════════════ */
+document.body.insertAdjacentHTML('beforeend',`
+<nav class="mz-menu" id="mzMenu" aria-label="Menu" aria-hidden="true">
+  <button class="mz-menu-x" id="mzMenuX" aria-label="Close menu">&times;</button>
+  <div class="big">
+    <a href="#collection" data-close>Collection</a>
+    <a href="#lookbook" data-close>Lookbook</a>
+    <a href="#atelier" data-close>Atelier</a>
+    <a href="#method" data-close>Method</a>
+    <a href="#contact" data-close><em>Contact</em></a>
+  </div>
+  <h5>Care</h5>
+  <div class="small">
+    <button data-help="size" data-close>Size &amp; fit guide</button>
+    <button data-help="shipping" data-close>Shipping &amp; delivery</button>
+    <button data-help="returns" data-close>Returns &amp; exchanges</button>
+    <button data-help="repairs" data-close>Repairs &amp; care</button>
+    <button data-help="track" data-close>Track an order</button>
+  </div>
+  <h5>Reach the studio</h5>
+  <div class="small">
+    <a href="https://wa.me/${CFG.wa}" target="_blank" rel="noopener">WhatsApp 0777 691011</a>
+    <a href="mailto:${CFG.email}">Email the studio</a>
+  </div>
+  <div class="mz-menu-cta">
+    <button class="btn solid" id="mzMenuSearch" style="width:100%;justify-content:center">
+      <span>Search the collection</span></button>
+  </div>
+</nav>`);
+const menu=$('#mzMenu');
+function openMenu(){ menu.classList.add('open'); menu.setAttribute('aria-hidden','false');
+  document.body.classList.add('lock'); trapIn(menu) }
+function closeMenu(){ menu.classList.remove('open'); menu.setAttribute('aria-hidden','true');
+  document.body.classList.remove('lock'); releaseTrap() }
+$('.burger').setAttribute('aria-controls','mzMenu');
+$('.burger').onclick=()=>menu.classList.contains('open')?closeMenu():openMenu();
+$('#mzMenuX').onclick=closeMenu;
+menu.addEventListener('click',e=>{ if(e.target.closest('[data-close]')) closeMenu() });
+$('#mzMenuSearch').onclick=()=>{ closeMenu(); setTimeout(openSearch,220) };
+addEventListener('keydown',e=>{ if(e.key==='Escape') closeMenu() });
+
+/* the scrim closes everything the layer opened, too */
+$('#scrim').addEventListener('click',()=>{ closeSaved(); closeCare() });
+
+})();
+
+</script>
+
 </body>
 </html>

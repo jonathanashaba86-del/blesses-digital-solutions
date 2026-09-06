@@ -22,6 +22,39 @@ the piece live, every size shows its real stock count, and the bag checks out ov
 | **Photo Studio** | A built-in panel (⧉, bottom left) to swap any product's photography without opening the code |
 | **Zero dependencies** | Two Google Fonts and the image CDN. Everything else is hand-written HTML, CSS and JS |
 
+## The commerce layer
+
+| | |
+|---|---|
+| **A bag that survives** | Bag, saved pieces, recently viewed and the customer's delivery details persist in the browser. Closing the tab no longer empties the trolley |
+| **Sendable links** | Every piece has its own URL (`/#/piece/bellwether-blazer`). Share opens the phone's share sheet, or copies the link. Back and forward work |
+| **Search** | Press `/` or `⌘K`. Matches name, category, material, fit, colourway and size, with arrow-key navigation |
+| **Saved pieces** | A heart on every card and in the studio, with its own drawer |
+| **Real checkout** | Name, WhatsApp number, delivery method, address, payment preference and notes — composed into one WhatsApp message with an order reference like `MN-260906-4K2`, so an order arrives ready to dispatch |
+| **Care pages** | Size &amp; fit guide with real measurement tables, shipping, returns, repairs and order tracking. The footer links go somewhere now |
+| **The menu** | The burger opens a real menu — it used to do nothing at all |
+| **Installable** | Manifest, icons and a service worker: add to home screen, and the shop opens offline |
+| **Findable** | `Product` structured data for all 57 pieces, `sitemap.xml`, `robots.txt`, per-piece titles, canonical and Open Graph |
+| **Measurable** | Drop a GA4 id into `CFG.ga` and view-item, add-to-cart, search, share and checkout events start flowing. Blank means nothing loads |
+
+### The four lines to make it yours
+
+Near the bottom of `index.html`, in the `MANNIE+` block:
+
+```js
+const CFG = {
+  wa        : '256777691011',   // WhatsApp, international format, no +
+  email     : 'jonathanashaba86@gmail.com',
+  site      : 'https://mannie.ug',
+  ga        : '',               // GA4 id — blank means no tracking loads
+  payLink   : '',               // Flutterwave / Pesapal link, when you have one
+  instagram : '', tiktok : ''   // paste the handles and the footer links go live
+};
+```
+
+Reviews live in the `REVIEWS` array beside it. It ships empty on purpose — the page shows an
+honest invitation rather than invented praise. Add real ones as customers send them.
+
 ## Photography
 
 The site ships with real photography served from the Unsplash CDN — free for commercial use,
@@ -59,6 +92,8 @@ before going live.
 
 - `index.html` — the MANNIE storefront (this project)
 - `blessed-digital-solutions.html` — the earlier Blessed Digital Solutions agency page, kept intact
+- `sw.js`, `site.webmanifest`, `icon-*.png` — the installable/offline layer
+- `sitemap.xml`, `robots.txt` — for search engines
 - `README.md` — you are here
 
 ## Built by
