@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mannie.ug/sitemap.xml
+Sitemap: https://jonathanashaba86-del.github.io/blesses-digital-solutions/sitemap.xml

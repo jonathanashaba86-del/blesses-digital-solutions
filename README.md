@@ -6,7 +6,8 @@ Every garment, bag, shoe and accessory on the site sits on a turntable: drag it 
 full 360°, front to back, so a customer reads the stitching before they commit. Colourways recolour
 the piece live, every size shows its real stock count, and the bag checks out over WhatsApp.
 
-**Live file:** [`index.html`](index.html) — open it in a browser. No build step, no server, no npm.
+**Live:** <https://jonathanashaba86-del.github.io/blesses-digital-solutions/mannie/>
+**Source:** [`mannie/index.html`](mannie/index.html) — one file, no build step, no server, no npm.
 
 ---
 
@@ -80,21 +81,32 @@ Never move the phone.
 The whole site is one file, so anything that serves static files works:
 
 ```bash
-# GitHub Pages — Settings → Pages → deploy from branch → root
-# Netlify / Vercel — drag the folder in, no build command
-# Any cPanel host — upload index.html to public_html
+# Netlify / Vercel — drag the mannie folder in, no build command
+# Any cPanel host — upload the mannie folder to public_html
 ```
-
-Set the canonical domain in the `<link rel="canonical">` tag and the Open Graph URLs in `<head>`
-before going live.
 
 ## Repository contents
 
-- `index.html` — the MANNIE storefront (this project)
-- `blessed-digital-solutions.html` — the earlier Blessed Digital Solutions agency page, kept intact
-- `sw.js`, `site.webmanifest`, `icon-*.png` — the installable/offline layer
-- `sitemap.xml`, `robots.txt` — for search engines
-- `README.md` — you are here
+This repository publishes two sites through GitHub Pages, from `main`:
+
+| Path | What it is |
+|---|---|
+| `index.html` | **Blessed Digital Solutions** — the agency front door, at `/blesses-digital-solutions/` |
+| `mannie/index.html` | **MANNIE** — the client storefront, at `/blesses-digital-solutions/mannie/` |
+| `mannie/sw.js`, `site.webmanifest`, `icon-*.png` | the installable / offline layer, scoped to `/mannie/` |
+| `sitemap.xml`, `robots.txt` | both sites, for search engines |
+
+Adding the next client demo is the same shape: a new folder, a new card on the
+agency page. The root link never changes.
+
+## Deploying
+
+Pages serves `main` from the repository root, so **merging to `main` publishes**.
+Nothing to build, nothing to configure.
+
+To move MANNIE onto its own domain later: point the domain at Pages, add a
+`CNAME` file, and set `CFG.site` in `mannie/index.html` to the new address — the
+share links follow whatever address the page is served from until you do.
 
 ## Built by
 
