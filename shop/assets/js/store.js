@@ -492,8 +492,19 @@ function wireGlobal() {
 }
 
 /* ---------------------------------------------------------------- boot */
+function aisleImage(slug) {
+  // photographs take over the moment they exist; until then the drawing stands in
+  return SHOP.photos ? "assets/img/photos/aisle-" + slug + ".jpg"
+                     : "assets/img/aisles/" + slug + ".svg";
+}
+
 function boot() {
   document.documentElement.setAttribute("data-theme", SHOP.theme || "superstore");
+  if (SHOP.photos) {
+    document.documentElement.setAttribute("data-photos", "on");
+    document.documentElement.style.setProperty(
+      "--hero-photo", 'url("assets/img/photos/hero.jpg")');
+  }
   load();
   var page = document.body.dataset.page || "index";
   var head = byId("siteHeader"), foot = byId("siteFooter"), over = byId("siteOverlays");
@@ -522,6 +533,7 @@ window.RC = {
   S: S, SHOP: SHOP, CATALOG: CATALOG, AISLES: AISLES,
   $: $, $$: $$, byId: byId, esc: esc, money: money, num: num,
   weighed: weighed, product: product, productById: productById, aisleOf: aisleOf,
+  aisleImage: aisleImage,
   card: card, shelfLabel: shelfLabel, stockLabel: stockLabel, qtyLabel: qtyLabel,
   comparePrice: comparePrice, lineTotal: lineTotal, subtotal: subtotal, fee: fee,
   total: total, vat: vat, savings: savings, items: items, unitCount: unitCount,

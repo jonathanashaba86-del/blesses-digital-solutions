@@ -158,6 +158,22 @@ input,select,textarea{font:inherit;color:inherit}
 .hero{background:var(--ink);color:#fff;position:relative;overflow:hidden}
 .hero::after{content:"";position:absolute;right:-10%;top:-40%;width:56%;height:190%;
   background:radial-gradient(closest-side,color-mix(in srgb,var(--accent) 55%,transparent),transparent 72%);pointer-events:none}
+
+/* Once real photographs are in place the hero becomes a full-bleed picture with
+   the type sitting on a scrim. Before then the block above stands on its own, so
+   the page never requests an image that is not there yet. */
+[data-photos="on"] .hero{
+  background-image:
+    linear-gradient(100deg, rgba(10,26,47,.94) 0%, rgba(10,26,47,.82) 42%, rgba(10,26,47,.35) 100%),
+    var(--hero-photo);
+  background-size:cover;background-position:center 42%;
+}
+[data-photos="on"] .hero::after{opacity:.55}
+[data-photos="on"] .hero-in{grid-template-columns:1fr}
+@media(min-width:940px){[data-photos="on"] .hero-in{grid-template-columns:minmax(0,1fr) minmax(0,.72fr)}}
+[data-photos="on"] .hero-art{display:none}
+[data-photos="on"] .hero h1{max-width:15ch}
+[data-photos="on"] .hero-p{color:#CBD8E6}
 .hero-in{position:relative;z-index:2;display:grid;gap:30px;padding-block:clamp(34px,5vw,64px);grid-template-columns:1fr;align-items:center}
 @media(min-width:940px){.hero-in{grid-template-columns:1.05fr .95fr;gap:48px}}
 .kicker{display:inline-flex;align-items:center;gap:9px;background:var(--flash);color:var(--flash-ink);
@@ -212,7 +228,8 @@ input,select,textarea{font:inherit;color:inherit}
 .prod:hover{border-color:var(--accent);box-shadow:var(--sh);transform:translateY(-2px)}
 .tile{position:relative;aspect-ratio:4/3;background:var(--panel-2);overflow:hidden;display:block;width:100%;
   cursor:pointer;border-bottom:1px solid var(--line)}
-.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .45s cubic-bezier(.2,.7,.3,1)}
+.prod:hover .tile img{transform:scale(1.045)}
 .tile.sold img{filter:grayscale(.85) opacity(.55)}
 .flag{position:absolute;top:0;left:0;z-index:3;background:var(--flash);color:var(--flash-ink);
   font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.08em;padding:5px 9px;text-transform:uppercase}
@@ -301,10 +318,19 @@ input,select,textarea{font:inherit;color:inherit}
 .acard{background:var(--panel);border:1.5px solid var(--line);border-radius:var(--r);overflow:hidden;
   display:flex;flex-direction:column;transition:.18s}
 .acard:hover{border-color:var(--accent);box-shadow:var(--sh);transform:translateY(-2px)}
-.acard img{aspect-ratio:5/2;object-fit:cover;width:100%;height:auto}
-.acard-b{padding:13px 14px 15px}
-.acard-n{font-family:var(--display);font-weight:700;font-size:15.5px;text-transform:uppercase;letter-spacing:-.02em;margin:0}
-.acard-m{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.08em;margin-top:5px}
+.acard img{aspect-ratio:5/2;object-fit:cover;width:100%;height:auto;
+  transition:transform .45s cubic-bezier(.2,.7,.3,1)}
+.acard:hover img{transform:scale(1.04)}
+.acard .shot{position:relative;overflow:hidden}
+[data-photos="on"] .acard img{aspect-ratio:4/3}
+[data-photos="on"] .acard .shot::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(10,26,47,.78) 0%,rgba(10,26,47,.12) 52%,transparent 100%)}
+[data-photos="on"] .acard-b{position:absolute;left:0;right:0;bottom:0;z-index:2;color:#fff}
+[data-photos="on"] .acard-n{color:#fff}
+[data-photos="on"] .acard-m{color:rgba(255,255,255,.75)}
+.acard-b{display:block;padding:13px 14px 15px}
+.acard-n{display:block;font-family:var(--display);font-weight:700;font-size:15.5px;text-transform:uppercase;letter-spacing:-.02em;margin:0}
+.acard-m{display:block;font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.08em;margin-top:5px}
 
 /* reviews */
 .review{background:var(--panel);border:1.5px solid var(--line);border-radius:var(--r);padding:22px 20px}

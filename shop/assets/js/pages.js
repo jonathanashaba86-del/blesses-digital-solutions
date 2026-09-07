@@ -92,9 +92,10 @@ function home() {
   R.byId("aisleCards").innerHTML = R.AISLES.map(function (a) {
     var n = R.CATALOG.filter(function (p) { return p.c === a.c; }).length;
     return '<a class="acard" href="shop.html?aisle=' + encodeURIComponent(a.c) + '">' +
-      '<img src="' + assetURL("assets/img/aisles/" + a.slug + ".svg") + '" alt="" loading="lazy" width="1200" height="480">' +
-      '<div class="acard-b"><h3 class="acard-n">' + R.esc(a.c) + '</h3>' +
-      '<div class="acard-m">AISLE ' + a.n + ' · ' + n + ' LINES</div></div></a>';
+      '<span class="shot"><img src="' + assetURL(R.aisleImage(a.slug)) + '" alt="" loading="lazy" ' +
+        'width="1200" height="480">' +
+      '<span class="acard-b"><span class="acard-n">' + R.esc(a.c) + '</span>' +
+      '<span class="acard-m">AISLE ' + a.n + ' · ' + n + ' LINES</span></span></span></a>';
   }).join("");
 
   R.byId("dealGrid").innerHTML = '<div class="grid">' + deals.slice(0, 6).map(R.card).join("") + '</div>';
