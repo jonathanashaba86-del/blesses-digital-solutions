@@ -4,11 +4,15 @@
    ============================================================================ */
 window.PAGES = (function () {
 "use strict";
+function assetURL(p) { return (window.__IMG && window.__IMG[p]) || p; }
+
 var R;   // filled on first call — store.js publishes window.RC before dispatch
 
 function init() { R = window.RC; }
 
 /* ---------------------------------------------------------------- shared bits */
+var SHOP_CTX = null, CO_CTX = null;
+
 function sortItems(list, how) {
   var l = list.slice();
   if (how === "price-asc")  l.sort(function (a, b) { return a.price - b.price; });
@@ -88,7 +92,7 @@ function home() {
   R.byId("aisleCards").innerHTML = R.AISLES.map(function (a) {
     var n = R.CATALOG.filter(function (p) { return p.c === a.c; }).length;
     return '<a class="acard" href="shop.html?aisle=' + encodeURIComponent(a.c) + '">' +
-      '<img src="assets/img/aisles/' + a.slug + '.svg" alt="" loading="lazy" width="1200" height="480">' +
+      '<img src="' + assetURL("assets/img/aisles/" + a.slug + ".svg") + '" alt="" loading="lazy" width="1200" height="480">' +
       '<div class="acard-b"><h3 class="acard-n">' + R.esc(a.c) + '</h3>' +
       '<div class="acard-m">AISLE ' + a.n + ' · ' + n + ' LINES</div></div></a>';
   }).join("");
@@ -155,17 +159,29 @@ function shop() {
 
   window.__onSearch = function (v) { state.q = v; draw(); };
 
-  document.addEventListener("click", function (e) {
-    var a = e.target.closest("[data-aisle]");
-    if (a) { state.aisle = a.dataset.aisle; draw(); window.scrollTo({ top: R.byId("results").offsetTop - 130, behavior: "smooth" }); return; }
-    var o = e.target.closest("[data-only]");
-    if (o) { state.only = o.dataset.only; draw(); return; }
-    if (e.target.closest("[data-reset]")) {
-      state.aisle = "All"; state.only = ""; state.q = "";
-      if (qInput) qInput.value = "";
-      draw();
-    }
-  });
+  // The handler is attached once and reads the live context, so the controller
+  // is safe to run again when a single-file build routes back to this page.
+  SHOP_CTX = { state: state, draw: draw, qInput: qInput };
+  if (!shop._wired) {
+    shop._wired = true;
+    document.addEventListener("click", function (e) {
+      if (!SHOP_CTX || document.body.dataset.page !== "shop") return;
+      var c = SHOP_CTX;
+      var a = e.target.closest("[data-aisle]");
+      if (a) {
+        c.state.aisle = a.dataset.aisle; c.draw();
+        window.scrollTo({ top: R.byId("results").offsetTop - 130, behavior: "smooth" });
+        return;
+      }
+      var o = e.target.closest("[data-only]");
+      if (o) { c.state.only = o.dataset.only; c.draw(); return; }
+      if (e.target.closest("[data-reset]")) {
+        c.state.aisle = "All"; c.state.only = ""; c.state.q = "";
+        if (c.qInput) c.qInput.value = "";
+        c.draw();
+      }
+    });
+  }
   R.byId("sort").addEventListener("change", function (e) { state.sort = e.target.value; draw(); });
   draw();
 }
@@ -438,31 +454,41 @@ function checkout() {
     return ok;
   }
 
-  document.addEventListener("click", function (e) {
-    var pay = e.target.closest("[data-pay]");
-    if (pay) { R.S.pay = pay.dataset.pay; R.save(); view(); return; }
-    var id = e.target.id;
-    if (id === "next") { if (saveStep()) { step++; view(); } }
-    else if (id === "back") { step--; view(); }
-    else if (id === "pay") {
-      var sel = R.SHOP.payments.filter(function (x) { return x.id === R.S.pay; })[0];
-      if (sel.needsNumber) {
-        var el = R.byId("fPay");
-        if (el) R.S.form.phone = (el.value || R.S.form.phone).trim();
-        step = 4; view();
-        setTimeout(function () {
-          window.__lastOrder = R.placeOrder({ status: "paid" });
-          step = 5; view();
-        }, 2600);
-      } else {
-        window.__lastOrder = R.placeOrder({ status: R.S.pay === "cod" ? "placed" : "paid" });
-        step = 5; view();
+  CO_CTX = {
+    get step() { return step; }, set step(v) { step = v; },
+    view: view, saveStep: saveStep
+  };
+  if (!checkout._wired) {
+    checkout._wired = true;
+    document.addEventListener("click", function (e) {
+      if (!CO_CTX || document.body.dataset.page !== "checkout") return;
+      var view = CO_CTX.view, saveStep = CO_CTX.saveStep;
+      var pay = e.target.closest("[data-pay]");
+      if (pay) { R.S.pay = pay.dataset.pay; R.save(); view(); return; }
+      var id = e.target.id;
+      if (id === "next") { if (saveStep()) { CO_CTX.step++; view(); } }
+      else if (id === "back") { CO_CTX.step--; view(); }
+      else if (id === "pay") {
+        var sel = R.SHOP.payments.filter(function (x) { return x.id === R.S.pay; })[0];
+        if (sel.needsNumber) {
+          var el = R.byId("fPay");
+          if (el) R.S.form.phone = (el.value || R.S.form.phone).trim();
+          CO_CTX.step = 4; view();
+          setTimeout(function () {
+            window.__lastOrder = R.placeOrder({ status: "paid" });
+            CO_CTX.step = 5; CO_CTX.view();
+          }, 2600);
+        } else {
+          window.__lastOrder = R.placeOrder({ status: R.S.pay === "cod" ? "placed" : "paid" });
+          CO_CTX.step = 5; view();
+        }
       }
-    }
-  });
-  document.addEventListener("change", function (e) {
-    if (e.target.id === "fZone") { R.setZone(e.target.value); view(); }
-  });
+    });
+    document.addEventListener("change", function (e) {
+      if (!CO_CTX || document.body.dataset.page !== "checkout") return;
+      if (e.target.id === "fZone") { R.setZone(e.target.value); CO_CTX.view(); }
+    });
+  }
   window.__onZoneChange = function () { if (step < 4) view(); };
   view();
 }
@@ -574,8 +600,10 @@ function account() {
       '<div class="zones">' + zoneList() + '</div></div></div>' +
   '</aside></div>';
 
+  if (account._wired) return;
+  account._wired = true;
   document.addEventListener("click", function (e) {
-    if (e.target.id !== "saveMe") return;
+    if (e.target.id !== "saveMe" || document.body.dataset.page !== "account") return;
     R.S.form.name = R.byId("aName").value.trim();
     R.S.form.phone = R.byId("aPhone").value.trim();
     R.S.form.area = R.byId("aArea").value.trim();

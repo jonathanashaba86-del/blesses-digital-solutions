@@ -36,7 +36,11 @@ function maxFor(p) { return weighed(p) ? 20 : 40; }
 function product(slug) { for (var i = 0; i < CATALOG.length; i++) if (CATALOG[i].slug === slug) return CATALOG[i]; return null; }
 function productById(id) { for (var i = 0; i < CATALOG.length; i++) if (CATALOG[i].id === +id) return CATALOG[i]; return null; }
 function aisleOf(name) { for (var i = 0; i < AISLES.length; i++) if (AISLES[i].c === name) return AISLES[i]; return { n: "00", c: name, slug: "" }; }
-function qs(k) { return new URLSearchParams(location.search).get(k); }
+function qs(k) {
+  // __QUERY lets a single-file build route without touching location
+  var sp = window.__QUERY || new URLSearchParams(location.search);
+  return sp.get(k);
+}
 function daysTo(expiry) {
   if (!expiry) return null;
   if (/^\+\d+$/.test(expiry)) return parseInt(expiry.slice(1), 10);
@@ -105,6 +109,11 @@ function icon(name) {
     cart:   '<path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.5a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="10" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/>'
   }[name] || "";
   return '<svg viewBox="0 0 24 24" aria-hidden="true">' + d + '</svg>';
+}
+
+function renderChrome(page) {
+  var head = byId("siteHeader");
+  if (head) head.innerHTML = header(page === "index" ? "index.html" : page + ".html");
 }
 
 function header(active) {
@@ -519,7 +528,7 @@ window.RC = {
   belowMin: belowMin, anyWeighed: anyWeighed, freeBar: freeBar, cartLine: cartLine,
   addToCart: addToCart, removeFromCart: removeFromCart, renderCart: renderCart,
   refreshCards: refreshCards, setZone: setZone, openModal: openModal, closeAll: closeAll,
-  toast: toast, save: save, qs: qs, daysTo: daysTo, placeOrder: placeOrder,
+  toast: toast, save: save, qs: qs, daysTo: daysTo, placeOrder: placeOrder, renderChrome: renderChrome,
   whatsappHref: whatsappHref, icon: icon, stepFor: stepFor, startQty: startQty, makeRef: makeRef
 };
 

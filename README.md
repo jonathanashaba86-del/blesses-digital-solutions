@@ -195,3 +195,29 @@ meeting:
 - **Seeded:** the back office ships with six demo orders, suppliers, staff and
   customers so the screens are not empty in a demo. Storefront orders placed in the
   same browser are added to that queue live.
+
+---
+
+## One-file builds (`dist/`)
+
+A static multi-page site cannot be handed to a client as a single link or an
+email attachment. `tools/bundle.py` inlines every stylesheet, script and image
+into one self-contained HTML file per app, and gives the storefront a small
+client-side router so all twelve pages work from that one file.
+
+```bash
+python3 tools/bundle.py
+# optionally bake live demo URLs into the company site:
+python3 tools/bundle.py <shop-url> <back-office-url>
+```
+
+| File | Size | What it is |
+|---|---|---|
+| `dist/shop-demo.html` | ~1.8 MB | The whole storefront, all twelve pages, one file |
+| `dist/back-office.html` | ~580 KB | The back office, one file |
+| `dist/company-site.html` | ~215 KB | The agency site, one file |
+
+These are a distribution format, not the source — edit the real files under
+`shop/` and rebuild. Each one opens straight from a phone, a USB stick or an
+email attachment with no server at all, which is what makes them useful in a
+client meeting.
