@@ -1,0 +1,2060 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VoiceCore Reception — a live demonstration</title>
+<meta name="theme-color" content="#08122a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Jost:wght@300;400;500;600&display=swap">
+<style>
+:root{
+  --ink:#12202e;--ink-soft:#4a5a6b;--muted:#7b8a99;
+  --paper:#ffffff;--wash:#f4f7f9;--line:#e2e9ee;
+  --teal:#0f6f7a;--teal-dark:#0a545d;--teal-wash:#e6f2f3;
+  --navy:#08122a;--gold:#c9a227;--gold-3:#ecd48b;
+  --display:'Jost','Segoe UI',system-ui,sans-serif;
+  --body:'Inter','Segoe UI',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;}
+*{margin:0;}
+body{font-family:var(--body);color:var(--ink);background:var(--paper);line-height:1.65;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+ul{list-style:none;padding:0;}
+img,svg{display:block;max-width:100%;}
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:5px;}
+h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.12;letter-spacing:-.02em;text-wrap:balance;}
+.wrap{max-width:1080px;margin-inline:auto;padding-inline:clamp(1.1rem,4vw,2rem);}
+
+/* BDS demo bar — the only navy on the page, so the client's brand stays theirs */
+.bds-bar{background:var(--navy);color:#cfd9ea;font-size:.83rem;}
+.bds-bar .wrap{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;padding-block:.6rem;}
+.bds-bar b{color:var(--gold-3);font-family:var(--display);font-weight:500;letter-spacing:.02em;}
+.bds-bar .sp{margin-left:auto;display:flex;gap:.5rem;flex-wrap:wrap;}
+.bds-bar a{border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:.28rem .8rem;font-size:.8rem;transition:all .2s;}
+.bds-bar a:hover{border-color:var(--gold);color:var(--gold-3);}
+.bds-bar a.solid{background:linear-gradient(140deg,#dcbb4e,#a8811a);color:var(--navy);border-color:transparent;font-weight:600;}
+
+/* Client site */
+.nav{border-bottom:1px solid var(--line);position:relative;background:#fff;z-index:4;}
+.nav .wrap{display:flex;align-items:center;gap:1.25rem;min-height:68px;}
+.logo{display:flex;align-items:center;gap:.6rem;font-family:var(--display);font-weight:600;font-size:1.08rem;letter-spacing:-.01em;}
+.logo i{width:32px;height:32px;border-radius:8px;background:var(--teal);color:#fff;display:grid;place-items:center;font-style:normal;font-size:.95rem;}
+.nav ul{display:none;gap:1.5rem;margin-left:auto;font-size:.93rem;color:var(--ink-soft);}
+@media (min-width:820px){.nav ul{display:flex;}}
+.nav .call{margin-left:auto;font-family:var(--display);font-weight:600;color:var(--teal);font-size:.95rem;}
+@media (min-width:820px){.nav .call{margin-left:1.5rem;}}
+
+.hero{background:linear-gradient(160deg,var(--teal-wash),#fff 62%);border-bottom:1px solid var(--line);}
+.hero .wrap{padding-block:clamp(3rem,7vw,5rem);display:grid;gap:2.5rem;}
+@media (min-width:900px){.hero .wrap{grid-template-columns:1.15fr .85fr;align-items:center;}}
+.eyebrow{font-family:var(--display);font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:var(--teal);font-weight:600;margin-bottom:.9rem;}
+.hero h1{font-size:clamp(2.1rem,5vw,3.3rem);margin-bottom:1rem;max-width:16ch;}
+.hero p{font-size:1.08rem;color:var(--ink-soft);max-width:46ch;margin-bottom:1.6rem;}
+.cta-row{display:flex;gap:.75rem;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:.5rem;border-radius:999px;padding:.8rem 1.5rem;font-family:var(--display);font-weight:600;font-size:.95rem;cursor:pointer;border:1px solid transparent;transition:transform .2s,background .2s;}
+.btn:hover{transform:translateY(-2px);}
+.btn.primary{background:var(--teal);color:#fff;}
+.btn.primary:hover{background:var(--teal-dark);}
+.btn.ghost{border-color:var(--line);color:var(--ink);background:#fff;}
+.btn.ghost:hover{border-color:var(--teal);color:var(--teal);}
+
+.hours-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1.5rem;box-shadow:0 20px 50px -30px rgba(18,32,46,.4);}
+.hours-card h3{font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;font-weight:600;}
+.hours-card li{display:flex;justify-content:space-between;gap:1rem;padding:.5rem 0;border-bottom:1px solid var(--line);font-size:.93rem;}
+.hours-card li:last-child{border-bottom:0;}
+.hours-card li span:last-child{color:var(--ink-soft);font-variant-numeric:tabular-nums;}
+.hours-card .closed{color:var(--muted);}
+.hours-card .now{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--line);display:flex;align-items:center;gap:.5rem;font-size:.88rem;}
+.hours-card .now i{width:8px;height:8px;border-radius:50%;background:#37b579;}
+.hours-card .now i.off{background:var(--gold);}
+
+section.band{padding-block:clamp(3rem,6vw,4.5rem);}
+section.band.wash{background:var(--wash);border-block:1px solid var(--line);}
+.head{max-width:56ch;margin-bottom:2.25rem;}
+.head h2{font-size:clamp(1.7rem,3.6vw,2.4rem);margin-bottom:.75rem;}
+.head p{color:var(--ink-soft);}
+.grid{display:grid;gap:1.15rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));}
+.svc{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.4rem;display:grid;gap:.45rem;align-content:start;}
+.svc b{font-family:var(--display);font-size:1.12rem;font-weight:500;}
+.svc .price{color:var(--teal);font-weight:600;font-size:.95rem;}
+.svc span{font-size:.88rem;color:var(--muted);}
+.team{display:grid;gap:1.15rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));}
+.person{text-align:center;display:grid;gap:.35rem;justify-items:center;}
+.person i{width:76px;height:76px;border-radius:50%;background:var(--teal-wash);color:var(--teal);display:grid;place-items:center;font-family:var(--display);font-size:1.6rem;font-style:normal;font-weight:500;}
+.person b{font-family:var(--display);font-weight:500;font-size:1.05rem;}
+.person span{font-size:.85rem;color:var(--muted);}
+
+.foot{background:var(--ink);color:#a7b6c4;padding-block:2.5rem 2rem;font-size:.9rem;}
+.foot .wrap{display:grid;gap:1.25rem;}
+.foot b{color:#fff;font-family:var(--display);font-weight:500;}
+.foot .bot{border-top:1px solid rgba(255,255,255,.12);padding-top:1.2rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-size:.83rem;}
+
+/* Try-this prompt strip */
+.try{background:#fffdf6;border:1px solid #f0e3bc;border-radius:14px;padding:1.35rem 1.5rem;display:grid;gap:.85rem;}
+.try h3{font-size:1.05rem;}
+.try p{font-size:.92rem;color:var(--ink-soft);}
+.try-list{display:flex;flex-wrap:wrap;gap:.5rem;}
+.try-list button{background:#fff;border:1px solid #e6d6a8;color:#8a6d16;border-radius:999px;padding:.42rem .9rem;font-size:.86rem;cursor:pointer;transition:all .2s;}
+.try-list button:hover{background:#c9a227;color:#fff;border-color:#c9a227;}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+
+
+.vc-intro{background:#050b1a;color:#93a2bb;border-top:1px solid rgba(255,255,255,.12);
+  padding:clamp(2.5rem,6vw,4rem) clamp(1.1rem,4vw,2rem) 0;}
+.vc-intro-inner{max-width:1240px;margin-inline:auto;}
+.vc-intro-eyebrow{font-family:'Jost',sans-serif;font-size:.72rem;letter-spacing:.26em;
+  text-transform:uppercase;color:#c9a227;font-weight:600;margin-bottom:.6rem;}
+.vc-intro h2{font-family:'Jost',sans-serif;font-weight:400;color:#fff;
+  font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:-.02em;margin-bottom:.6rem;}
+.vc-intro p{max-width:60ch;}
+.vc-dash{display:block;background:#050b1a;padding-top:1.5rem;padding-bottom:1px;}
+.vc-dash .top{border-radius:14px;margin-inline:clamp(1.1rem,4vw,2rem);
+  border:1px solid rgba(255,255,255,.12);}
+
+
+.vc-dash{
+  --navy-950:#050b1a;--navy-900:#08122a;--navy-800:#0b1b3a;--navy-700:#122a55;
+  --gold-600:#a8811a;--gold-500:#c9a227;--gold-400:#dcbb4e;--gold-300:#ecd48b;
+  --ivory:#f2f5fb;--slate:#93a2bb;--slate-dim:#71809c;
+  --line:rgba(255,255,255,.12);--line-soft:rgba(255,255,255,.07);
+  --ok:#37b579;--warn:#dcbb4e;--alert:#e0654f;
+  --display:'Jost','Segoe UI',system-ui,sans-serif;
+  --body:'Inter','Segoe UI',system-ui,sans-serif;
+}
+.vc-dash *,
+.vc-dash *::before,
+.vc-dash *::after{box-sizing:border-box;}
+.vc-dash *{margin:0;}
+.vc-dash body{background:var(--navy-950);color:var(--ivory);font-family:var(--body);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+.vc-dash a{color:inherit;text-decoration:none;}
+.vc-dash ul{list-style:none;padding:0;}
+.vc-dash button,
+.vc-dash input,
+.vc-dash select,
+.vc-dash textarea{font:inherit;color:inherit;}
+.vc-dash :focus-visible{outline:2px solid var(--gold-400);outline-offset:2px;border-radius:5px;}
+.vc-dash h1,
+.vc-dash h2,
+.vc-dash h3,
+.vc-dash h4{font-family:var(--display);font-weight:500;line-height:1.15;letter-spacing:-.02em;}
+.vc-dash .wrap{max-width:1240px;margin-inline:auto;padding-inline:clamp(1rem,3vw,2rem);}
+.vc-dash /* Header */
+.top{border-bottom:1px solid var(--line);background:linear-gradient(140deg,var(--navy-800),var(--navy-950));position:relative;z-index:5;}
+.vc-dash .top .wrap{display:flex;align-items:center;gap:1rem;min-height:66px;flex-wrap:wrap;}
+.vc-dash .brand{display:flex;align-items:center;gap:.7rem;}
+.vc-dash .brand i{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-style:normal;
+  background:linear-gradient(150deg,var(--gold-400),var(--gold-600));color:var(--navy-950);font-family:var(--display);font-weight:600;}
+.vc-dash .brand b{font-family:var(--display);font-weight:500;font-size:1rem;display:block;line-height:1.2;}
+.vc-dash .brand span{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-400);}
+.vc-dash .status{margin-left:auto;display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--slate);}
+.vc-dash .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px rgba(55,181,121,.22);}
+.vc-dash .dot.off{background:var(--gold-500);box-shadow:0 0 0 3px rgba(201,162,39,.22);}
+.vc-dash .top a.btn{margin-left:.5rem;}
+.vc-dash .btn{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--line);background:rgba(255,255,255,.05);
+  border-radius:999px;padding:.5rem 1.05rem;font-family:var(--display);font-weight:500;font-size:.86rem;cursor:pointer;transition:all .2s;}
+.vc-dash .btn:hover{border-color:var(--gold-500);color:var(--gold-300);}
+.vc-dash .btn.gold{background:linear-gradient(140deg,var(--gold-400),var(--gold-600));color:var(--navy-950);border-color:transparent;font-weight:600;}
+.vc-dash .btn.gold:hover{color:var(--navy-950);filter:brightness(1.06);}
+.vc-dash .btn.sm{padding:.35rem .8rem;font-size:.78rem;}
+.vc-dash /* Tabs */
+.tabs{display:flex;gap:.25rem;border-bottom:1px solid var(--line);margin-top:0;overflow-x:auto;}
+.vc-dash .tabs button{background:none;border:0;border-bottom:2px solid transparent;cursor:pointer;padding:.85rem 1rem;
+  color:var(--slate);font-family:var(--display);font-size:.9rem;white-space:nowrap;}
+.vc-dash .tabs button[aria-selected="true"]{color:var(--gold-300);border-bottom-color:var(--gold-500);}
+.vc-dash .panel{display:none;padding-block:1.75rem 3.5rem;}
+.vc-dash .panel[data-active="1"]{display:block;}
+.vc-dash /* KPI */
+.kpis{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,175px),1fr));margin-bottom:1.75rem;}
+.vc-dash .kpi{background:var(--navy-900);padding:1.1rem 1.25rem;display:grid;gap:.2rem;}
+.vc-dash .kpi b{font-family:var(--display);font-size:1.85rem;font-weight:500;color:var(--gold-300);line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
+.vc-dash .kpi span{font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:var(--slate-dim);}
+.vc-dash /* Layout */
+.cols{display:grid;gap:1.5rem;}
+@media (min-width:1000px){
+.vc-dash .cols{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);align-items:start;}}
+.vc-dash .card{background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+.vc-dash .card h3{font-size:1.05rem;}
+.vc-dash .card-head{padding:.95rem 1.15rem;border-bottom:1px solid var(--line-soft);display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;}
+.vc-dash .card-head .label{font-family:var(--display);font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--slate-dim);}
+.vc-dash .card-body{padding:1.15rem;}
+.vc-dash .card-body.flush{padding:0;}
+.vc-dash /* Conversation feed */
+.feed{max-height:640px;overflow-y:auto;}
+.vc-dash .conv{border-bottom:1px solid var(--line-soft);padding:1rem 1.15rem;display:grid;gap:.55rem;cursor:pointer;transition:background .18s;}
+.vc-dash .conv:last-child{border-bottom:0;}
+.vc-dash .conv:hover{background:rgba(255,255,255,.04);}
+.vc-dash .conv-top{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;}
+.vc-dash .conv-who{font-family:var(--display);font-size:1rem;font-weight:500;}
+.vc-dash .conv-meta{margin-left:auto;font-size:.74rem;color:var(--slate-dim);letter-spacing:.06em;}
+.vc-dash .tag{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding:.22rem .6rem;border-radius:999px;border:1px solid;font-weight:600;}
+.vc-dash .tag.booking{color:var(--ok);border-color:rgba(55,181,121,.45);background:rgba(55,181,121,.12);}
+.vc-dash .tag.lead{color:var(--gold-300);border-color:rgba(201,162,39,.45);background:rgba(201,162,39,.12);}
+.vc-dash .tag.complaint{color:var(--alert);border-color:rgba(224,101,79,.5);background:rgba(224,101,79,.13);}
+.vc-dash .tag.question{color:var(--slate);border-color:var(--line);background:rgba(255,255,255,.05);}
+.vc-dash .chan-pill{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-dim);border:1px solid var(--line);border-radius:999px;padding:.2rem .55rem;}
+.vc-dash .conv-last{font-size:.9rem;color:var(--slate);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.vc-dash .conv-thread{display:none;grid-gap:.5rem;padding-top:.35rem;border-top:1px dashed var(--line-soft);margin-top:.35rem;}
+.vc-dash .conv[data-open="1"] .conv-thread{display:grid;}
+.vc-dash .turn{font-size:.87rem;line-height:1.55;padding:.45rem .7rem;border-radius:9px;max-width:88%;}
+.vc-dash .turn.agent{background:rgba(255,255,255,.05);border:1px solid var(--line-soft);justify-self:start;}
+.vc-dash .turn.customer{background:rgba(201,162,39,.14);border:1px solid rgba(201,162,39,.3);justify-self:end;}
+.vc-dash .turn small{display:block;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-dim);margin-bottom:.15rem;}
+.vc-dash /* Booking list */
+.row{display:grid;gap:.15rem;padding:.85rem 1.15rem;border-bottom:1px solid var(--line-soft);}
+.vc-dash .row:last-child{border-bottom:0;}
+.vc-dash .row b{font-family:var(--display);font-weight:500;font-size:.98rem;}
+.vc-dash .row span{font-size:.82rem;color:var(--slate);}
+.vc-dash .row .when{font-size:.78rem;color:var(--gold-300);letter-spacing:.06em;font-variant-numeric:tabular-nums;}
+.vc-dash .empty{padding:2.25rem 1.15rem;text-align:center;color:var(--slate-dim);font-size:.9rem;}
+.vc-dash /* Brief */
+.brief-doc{background:#fff;color:#101828;border-radius:14px;padding:clamp(1.5rem,4vw,2.75rem);}
+.vc-dash .brief-doc h2{color:#0b1b3a;font-size:clamp(1.5rem,3vw,2rem);}
+.vc-dash .brief-head{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:flex-end;border-bottom:2px solid #0b1b3a;padding-bottom:1rem;margin-bottom:1.5rem;}
+.vc-dash .brief-eyebrow{font-family:var(--display);font-size:.7rem;letter-spacing:.26em;text-transform:uppercase;color:#a8811a;font-weight:600;}
+.vc-dash .brief-grid{display:grid;gap:1px;background:#e4e0d6;border:1px solid #e4e0d6;border-radius:10px;overflow:hidden;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));margin-bottom:1.5rem;}
+.vc-dash .brief-grid div{background:#fff;padding:.9rem 1rem;}
+.vc-dash .brief-grid b{display:block;font-family:var(--display);font-size:1.6rem;color:#0b1b3a;line-height:1.1;font-variant-numeric:tabular-nums;}
+.vc-dash .brief-grid span{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:#6a7387;}
+.vc-dash .brief-doc h4{color:#0b1b3a;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;margin:1.5rem 0 .6rem;}
+.vc-dash .brief-doc p,
+.vc-dash .brief-doc li{color:#3d475c;font-size:.95rem;line-height:1.7;}
+.vc-dash .brief-doc li{padding:.4rem 0;border-bottom:1px solid #eee;display:flex;justify-content:space-between;gap:1rem;}
+.vc-dash .brief-doc li:last-child{border-bottom:0;}
+.vc-dash .brief-doc li b{color:#0b1b3a;font-variant-numeric:tabular-nums;}
+.vc-dash .brief-foot{margin-top:2rem;padding-top:1rem;border-top:1px solid #e4e0d6;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#6a7387;}
+.vc-dash /* Settings */
+.form-grid{display:grid;gap:1.1rem;}
+@media (min-width:700px){
+.vc-dash .form-grid.two{grid-template-columns:1fr 1fr;}}
+.vc-dash .field{display:grid;gap:.35rem;}
+.vc-dash .field label{font-family:var(--display);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--slate);font-weight:500;}
+.vc-dash .field input,
+.vc-dash .field textarea{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:10px;padding:.65rem .85rem;font-size:.93rem;width:100%;}
+.vc-dash .field input:focus,
+.vc-dash .field textarea:focus{outline:none;border-color:var(--gold-500);}
+.vc-dash .hint{font-size:.78rem;color:var(--slate-dim);}
+.vc-dash .svc-row{display:grid;grid-template-columns:1fr 80px 130px 34px;gap:.5rem;align-items:center;}
+.vc-dash .svc-row input{padding:.5rem .7rem;font-size:.88rem;}
+.vc-dash .svc-del{background:none;border:1px solid var(--line);border-radius:8px;color:var(--slate);cursor:pointer;height:34px;}
+.vc-dash .svc-del:hover{border-color:var(--alert);color:var(--alert);}
+.vc-dash code.embed{display:block;background:var(--navy-950);border:1px solid var(--line);border-radius:10px;padding:1rem;
+  font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:.8rem;color:var(--gold-300);overflow-x:auto;white-space:pre;line-height:1.7;}
+.vc-dash .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120%);background:var(--gold-500);color:var(--navy-950);
+  padding:.7rem 1.3rem;border-radius:999px;font-weight:600;font-family:var(--display);font-size:.9rem;transition:transform .3s cubic-bezier(.2,.7,.25,1);z-index:100;}
+.vc-dash .toast[data-show="1"]{transform:translateX(-50%) translateY(0);}
+@media print{
+.vc-dash .top,
+.vc-dash .tabs,
+.vc-dash .btn,
+.vc-dash .kpis{display:none!important;}
+.vc-dash body{background:#fff;}
+.vc-dash .panel{display:none!important;}
+.vc-dash .panel[data-active="1"]{display:block!important;}
+.vc-dash .brief-doc{border:0;padding:0;}
+}
+@media (prefers-reduced-motion:reduce){
+.vc-dash *{transition:none!important;animation:none!important;}}
+</style>
+</head><body>
+<div id="top"></div>
+
+
+<div class="bds-bar">
+  <div class="wrap">
+    <span><b>VoiceCore</b> live demo — this is a client's site, answered by an AI receptionist</span>
+    <span class="sp">
+      <a href="#owner" class="solid">Jump to the owner dashboard</a>
+      
+    </span>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="logo" href="#"><i>N</i><span id="bizLogo">Nakawa Dental Clinic</span></a>
+    <ul>
+      <li>Services</li><li>Our team</li><li>Visiting us</li>
+    </ul>
+    <a class="call" href="#" id="navPhone">+256 700 123 456</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Kampala · Since 2011</p>
+      <h1>Dentistry that treats you like a neighbour.</h1>
+      <p>Gentle, unhurried care from a team that remembers your name — and a reception desk that answers, even at 11pm on a Sunday.</p>
+      <div class="cta-row">
+        <button class="btn primary" type="button" id="bookNow">Book an appointment</button>
+        <a class="btn ghost" href="#services">See our services</a>
+      </div>
+    </div>
+    <div class="hours-card">
+      <h3>Opening hours</h3>
+      <ul id="hoursList"></ul>
+      <div class="now"><i id="nowDot"></i><span id="nowText">Open now</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="band" id="services">
+  <div class="wrap">
+    <div class="head">
+      <h2>Our services</h2>
+      <p>Straightforward pricing, published up front. Ask the receptionist about any of them — she quotes from this same list, never a guess.</p>
+    </div>
+    <div class="grid" id="svcGrid"></div>
+  </div>
+</section>
+
+<section class="band wash">
+  <div class="wrap">
+    <div class="head">
+      <h2>Try the receptionist</h2>
+      <p>She is answering in the corner of this page right now. Tap a line below and she will handle it — booking, pricing, hours, or a complaint that needs a human.</p>
+    </div>
+    <div class="try">
+      <h3>Say one of these</h3>
+      <p>Or type your own, or tap the microphone and speak. She replies in English, Luganda or Kiswahili, following whichever you use.</p>
+      <div class="try-list" id="tryList"></div>
+      <p style="font-size:.85rem;color:var(--muted);">Everything she captures appears in the owner's dashboard immediately — bookings, leads, complaints, and the transcript a human needs on hand-off.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <div class="head"><h2>Our team</h2></div>
+    <div class="team">
+      <div class="person"><i>SN</i><b>Dr. Sarah Nabirye</b><span>Principal dentist</span></div>
+      <div class="person"><i>MO</i><b>Dr. Moses Opio</b><span>Oral surgeon</span></div>
+      <div class="person"><i>AK</i><b>Agnes Kirabo</b><span>Dental hygienist</span></div>
+      <div class="person" id="personaCard"><i>M</i><b>Maria</b><span>Reception · VoiceCore</span></div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div>
+      <b id="footBiz">Nakawa Dental Clinic</b>
+      <p id="footLoc">Plot 14, Jinja Road, Kampala</p>
+      <p id="footPhone">+256 700 123 456</p>
+    </div>
+    <div class="bot">
+      <span>&copy; <span id="yr">2026</span> Nakawa Dental Clinic. A demonstration site.</span>
+      <span>Reception by VoiceCore — Blessed Digital Solutions</span>
+    </div>
+  </div>
+</footer>
+
+
+
+
+
+
+<section class="vc-intro" id="owner">
+  <div class="vc-intro-inner">
+    <p class="vc-intro-eyebrow">The other half of the product</p>
+    <h2>What reception captured</h2>
+    <p>Everything the receptionist just handled is below, in the owner's dashboard —
+      tagged, transcribed and counted. Talk to her above, then watch this fill in.</p>
+  </div>
+</section>
+
+<div class="vc-dash">
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <i>B</i>
+      <span><b id="bizName">VoiceCore</b><span>Reception dashboard</span></span>
+    </a>
+    <div class="status"><i class="dot" id="statusDot"></i><span id="statusText">Answering now</span></div>
+    <a class="btn sm" href="#top">Back to the client site</a>
+    <button class="btn sm gold" type="button" id="seedBtn">Load sample day</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-tab="live">Live feed</button>
+    <button role="tab" aria-selected="false" data-tab="bookings">Bookings &amp; leads</button>
+    <button role="tab" aria-selected="false" data-tab="brief">Voice of the Customer</button>
+    <button role="tab" aria-selected="false" data-tab="setup">Setup &amp; embed</button>
+  </div>
+
+  <!-- LIVE -->
+  <section class="panel" data-panel="live" data-active="1" role="tabpanel">
+    <div class="kpis" id="kpis"></div>
+    <div class="cols">
+      <div class="card">
+        <div class="card-head">
+          <h3>Conversation feed</h3>
+          <span class="label" id="feedCount"></span>
+          <button class="btn sm" type="button" id="clearBtn" style="margin-left:auto;">Clear all data</button>
+        </div>
+        <div class="card-body flush feed" id="feed"></div>
+      </div>
+      <div style="display:grid;gap:1.5rem;">
+        <div class="card">
+          <div class="card-head"><h3>Needs the owner</h3></div>
+          <div class="card-body flush" id="urgent"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Next bookings</h3></div>
+          <div class="card-body flush" id="nextBookings"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKINGS -->
+  <section class="panel" data-panel="bookings" role="tabpanel">
+    <div class="cols">
+      <div class="card">
+        <div class="card-head"><h3>All bookings</h3><span class="label" id="bookCount"></span></div>
+        <div class="card-body flush" id="allBookings"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>Captured leads</h3><span class="label" id="leadCount"></span></div>
+        <div class="card-body flush" id="allLeads"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRIEF -->
+  <section class="panel" data-panel="brief" role="tabpanel">
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.25rem;">
+      <button class="btn gold" type="button" onclick="window.print()">Print / save as PDF</button>
+      <span class="hint" style="align-self:center;">Generated from the real conversations below — the monthly one-pager the spec promises.</span>
+    </div>
+    <div class="brief-doc" id="briefDoc"></div>
+  </section>
+
+  <!-- SETUP -->
+  <section class="panel" data-panel="setup" role="tabpanel">
+    <div class="cols">
+      <div class="card">
+        <div class="card-head"><h3>Business profile</h3><span class="label">White-label per client</span></div>
+        <div class="card-body">
+          <div class="form-grid two">
+            <div class="field"><label for="fBiz">Business name</label><input id="fBiz" type="text"></div>
+            <div class="field"><label for="fPersona">Receptionist name</label><input id="fPersona" type="text"></div>
+            <div class="field"><label for="fPhone">Hand-off number</label><input id="fPhone" type="text"></div>
+            <div class="field"><label for="fLoc">Location</label><input id="fLoc" type="text"></div>
+          </div>
+          <div class="field" style="margin-top:1.1rem;">
+            <label for="fPromise">After-hours promise</label>
+            <input id="fPromise" type="text">
+          </div>
+          <h4 style="font-family:var(--display);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--slate);margin:1.6rem 0 .7rem;">Services &amp; prices</h4>
+          <div id="svcList" style="display:grid;gap:.5rem;"></div>
+          <button class="btn sm" type="button" id="addSvc" style="margin-top:.7rem;">+ Add service</button>
+          <div style="display:flex;gap:.7rem;margin-top:1.5rem;flex-wrap:wrap;">
+            <button class="btn gold" type="button" id="saveCfg">Save profile</button>
+            <button class="btn" type="button" id="resetCfg">Reset to sample</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>Put it on a client's site</h3></div>
+        <div class="card-body">
+          <p class="hint" style="margin-bottom:.9rem;">Two script tags. No build step, no backend, no keys. Paste before <code>&lt;/body&gt;</code>.</p>
+          <code class="embed" id="embedCode"></code>
+          <button class="btn sm" type="button" id="copyEmbed" style="margin-top:.9rem;">Copy embed code</button>
+          <h4 style="font-family:var(--display);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--slate);margin:1.75rem 0 .6rem;">What ships today</h4>
+          <ul style="display:grid;gap:.55rem;font-size:.9rem;color:var(--slate);">
+            <li>✦ Web chat + browser voice, 24/7, in English, Luganda and Swahili</li>
+            <li>✦ Booking against real opening hours, with closed-day rescheduling</li>
+            <li>✦ Auto-tagging: booking, lead, complaint, question</li>
+            <li>✦ One memory across web, WhatsApp and phone channels</li>
+            <li>✦ Human hand-off carrying the full transcript</li>
+            <li>✦ Monthly Voice of the Customer brief, print-ready</li>
+          </ul>
+          <h4 style="font-family:var(--display);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--slate);margin:1.5rem 0 .6rem;">Next, when you are ready</h4>
+          <ul style="display:grid;gap:.55rem;font-size:.9rem;color:var(--slate-dim);">
+            <li>· Real phone lines via the Africa's Talking integration you already run</li>
+            <li>· Claude API behind the unknown-intent fallback, for open questions</li>
+            <li>· Shared server storage so the team sees one feed, not one per browser</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="toast" id="toast"></div>
+
+
+
+</div>
+<script>/* =========================================================================
+   VoiceCore — conversation engine
+   Blessed Digital Solutions
+
+   Runs entirely in the browser. No backend, no API keys. Every business is
+   configured through VoiceCore.config, so one build white-labels per client.
+
+   The intent layer is deterministic on purpose: it is auditable, it works
+   offline, and it never invents a price or a booking slot. When an LLM is
+   wired in later it plugs into Brain.reply() as a fallback for `unknown`,
+   leaving booking, pricing and hours answered from the config as they are.
+   ========================================================================= */
+(function (global) {
+  'use strict';
+
+  var VoiceCore = {};
+
+  /* ---------------------------------------------------------------------
+     1. Business configuration
+     --------------------------------------------------------------------- */
+  VoiceCore.defaultConfig = {
+    business: 'Nakawa Dental Clinic',
+    persona: 'Maria',
+    tagline: 'Reception',
+    location: 'Plot 14, Jinja Road, Kampala',
+    phone: '+256 700 123 456',
+    languages: ['en', 'lg', 'sw'],
+    hours: {
+      mon: [8, 18], tue: [8, 18], wed: [8, 18], thu: [8, 18],
+      fri: [8, 18], sat: [9, 14], sun: null
+    },
+    services: [
+      { name: 'Consultation', minutes: 30, price: 'UGX 30,000' },
+      { name: 'Teeth cleaning', minutes: 45, price: 'UGX 80,000' },
+      { name: 'Filling', minutes: 60, price: 'UGX 150,000' },
+      { name: 'Extraction', minutes: 45, price: 'UGX 120,000' }
+    ],
+    handoffNumber: '+256 700 123 456',
+    afterHoursPromise: 'The team calls back the next working morning.'
+  };
+
+  VoiceCore.config = JSON.parse(JSON.stringify(VoiceCore.defaultConfig));
+
+  VoiceCore.configure = function (patch) {
+    Object.keys(patch || {}).forEach(function (k) { VoiceCore.config[k] = patch[k]; });
+    return VoiceCore.config;
+  };
+
+  /* ---------------------------------------------------------------------
+     2. Language
+     --------------------------------------------------------------------- */
+  var DAY_KEYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+  var DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  var LANG = {
+    en: {
+      label: 'English',
+      speech: 'en-GB',
+      greet: function (c) {
+        return 'Hello, you have reached ' + c.business + '. This is ' + c.persona +
+          '. How can I help you today?';
+      },
+      askService: 'Certainly. Which service do you need?',
+      askDay: 'Which day suits you?',
+      askTime: 'What time works best?',
+      askName: 'May I have your name for the booking?',
+      askPhone: 'And a phone number we can confirm on?',
+      closed: 'We are closed then. ',
+      offer: 'The nearest open time is ',
+      confirmed: 'Booked. ',
+      summarySent: 'I have sent the confirmation by SMS.',
+      handoff: 'Let me put you through to the team on ',
+      handoffCtx: ' They will have this whole conversation in front of them, so you will not repeat yourself.',
+      complaint: 'I am sorry that happened, and thank you for telling us. I am flagging this for the owner now, marked urgent.',
+      thanks: 'My pleasure. Anything else?',
+      bye: 'Thank you for calling ' + '', 
+      unknown: 'I want to get this right rather than guess. I am passing you to a colleague — one moment.',
+      hoursIntro: 'Our hours are: ',
+      priceIntro: 'Here is what those cost: ',
+      locationIntro: 'We are at ',
+      servicesIntro: 'We offer: '
+    },
+    lg: {
+      label: 'Luganda',
+      speech: 'en-GB',
+      greet: function (c) {
+        return 'Oli otya, otutuuseeko ku ' + c.business + '. Nze ' + c.persona +
+          '. Nnyinza ntya okukuyamba leero?';
+      },
+      askService: 'Kale. Mpulira oyagala mukolo ki?',
+      askDay: 'Oyagala lunaku ki?',
+      askTime: 'Ssaawa mmeka esinga okukugwanira?',
+      askName: 'Erinnya lyo ge ani?',
+      askPhone: 'Ne namba ya ssimu gy’oyinza okukakasibwako?',
+      closed: 'Ku ssaawa ezo tuba tuggaddewo. ',
+      offer: 'Ekiseera ekisinga okumpi kye ',
+      confirmed: 'Kikwatiddwa. ',
+      summarySent: 'Nkuweerezza obubaka bwa SMS okukakasa.',
+      handoff: 'Ka nkuwe omukozi ku ',
+      handoffCtx: ' Ajja kuba n’emboozi eno yonna, tojja kuddamu kwogera byonna.',
+      complaint: 'Nsonyiwa nnyo olw’ekyo, era webale okutubuulira. Nkitwala eri nnannyini bizinensi kati, nga kya bwangu.',
+      thanks: 'Kirungi. Waliwo ekirala?',
+      bye: 'Webale nnyo.',
+      unknown: 'Njagala nkuwe eky’amazima so si kuteebereza. Ka nkuwe munnange — lindako katono.',
+      hoursIntro: 'Essaawa zaffe: ',
+      priceIntro: 'Bino bye bibalirwa: ',
+      locationIntro: 'Tuli ku ',
+      servicesIntro: 'Tuwa: '
+    },
+    sw: {
+      label: 'Kiswahili',
+      speech: 'sw-KE',
+      greet: function (c) {
+        return 'Habari, umefika ' + c.business + '. Mimi ni ' + c.persona +
+          '. Nikusaidieje leo?';
+      },
+      askService: 'Sawa. Unahitaji huduma gani?',
+      askDay: 'Siku gani inakufaa?',
+      askTime: 'Saa ngapi inakufaa zaidi?',
+      askName: 'Naomba jina lako kwa ajili ya miadi.',
+      askPhone: 'Na namba ya simu tutakayothibitisha nayo?',
+      closed: 'Tumefungwa wakati huo. ',
+      offer: 'Muda wa karibu zaidi ni ',
+      confirmed: 'Imehifadhiwa. ',
+      summarySent: 'Nimetuma uthibitisho kwa SMS.',
+      handoff: 'Nitakuunganisha na timu kwa ',
+      handoffCtx: ' Watakuwa na mazungumzo haya yote, hutarudia chochote.',
+      complaint: 'Samahani sana kwa hilo, na asante kwa kutuambia. Ninapeleka hili kwa mmiliki sasa, kama la haraka.',
+      thanks: 'Karibu sana. Kuna kingine?',
+      bye: 'Asante kwa kupiga simu.',
+      unknown: 'Nataka kukupa jibu sahihi badala ya kubahatisha. Nitakuunganisha na mwenzangu — subiri kidogo.',
+      hoursIntro: 'Saa zetu za kazi: ',
+      priceIntro: 'Gharama ni hizi: ',
+      locationIntro: 'Tupo ',
+      servicesIntro: 'Tunatoa: '
+    }
+  };
+
+  VoiceCore.languages = LANG;
+
+  /* Language hints — short, high-signal words only, so a single Luganda or
+     Swahili word in an English sentence does not flip the whole conversation. */
+  var LANG_HINTS = {
+    lg: ['oli otya', 'webale', 'nkwagala', 'nsonyiwa', 'ssaawa', 'olunaku', 'nnyabo',
+         'ssebo', 'bambi', 'njagala', 'kale', 'nedda', 'ye ani', 'mmeka', 'wano'],
+    sw: ['habari', 'asante', 'samahani', 'karibu', 'ninahitaji', 'nataka', 'saa ngapi',
+         'lini', 'wapi', 'bei gani', 'tafadhali', 'ndiyo', 'hapana', 'sawa']
+  };
+
+  function detectLanguage(text, current) {
+    var t = ' ' + text.toLowerCase() + ' ';
+    var best = null, bestScore = 0;
+    Object.keys(LANG_HINTS).forEach(function (code) {
+      var score = 0;
+      LANG_HINTS[code].forEach(function (w) {
+        if (t.indexOf(' ' + w) !== -1 || t.indexOf(w + ' ') !== -1) score += w.indexOf(' ') !== -1 ? 2 : 1;
+      });
+      if (score > bestScore) { bestScore = score; best = code; }
+    });
+    return bestScore >= 2 ? best : (current || 'en');
+  }
+
+  /* ---------------------------------------------------------------------
+     3. Intent detection
+     --------------------------------------------------------------------- */
+  var INTENTS = [
+    { name: 'complaint', weight: 3, patterns: [
+      'complain', 'complaint', 'terrible', 'awful', 'rude', 'angry', 'unhappy',
+      'disappointed', 'refund', 'wasted', 'never came', 'still waiting', 'poor service',
+      'bad service', 'kibi', 'tekirungi', 'mbi', 'malalamiko', 'nsonyiwa naye'
+    ] },
+    { name: 'human', weight: 3, patterns: [
+      'speak to someone', 'talk to a person', 'real person', 'human', 'manager',
+      'owner', 'put me through', 'transfer me', 'someone else', 'muntu', 'mtu halisi'
+    ] },
+    { name: 'booking', weight: 2, patterns: [
+      'book', 'booking', 'appointment', 'reserve', 'reservation', 'schedule',
+      'slot', 'come in', 'see the doctor', 'available', 'availability', 'fit me in',
+      'njagala okulagaana', 'okulagaana', 'miadi', 'nataka kuweka'
+    ] },
+    { name: 'price', weight: 2, patterns: [
+      'how much', 'price', 'cost', 'charge', 'fee', 'rate', 'expensive',
+      'ssente', 'bbeeyi', 'mmeka', 'bei', 'gharama', 'pesa ngapi'
+    ] },
+    { name: 'hours', weight: 2, patterns: [
+      'open', 'opening', 'close', 'closing', 'hours', 'what time do you',
+      'are you open', 'weekend', 'sunday', 'ssaawa ki', 'muggula', 'saa ngapi mnafungua'
+    ] },
+    { name: 'location', weight: 2, patterns: [
+      'where are you', 'location', 'address', 'directions', 'how do i get',
+      'find you', 'wa muli', 'mpali', 'mko wapi', 'mahali'
+    ] },
+    { name: 'services', weight: 1, patterns: [
+      'what do you do', 'services', 'offer', 'treatments', 'what can you',
+      'do you do', 'mukola ki', 'huduma'
+    ] },
+    { name: 'greeting', weight: 1, patterns: [
+      'hello', 'hi ', 'hey', 'good morning', 'good afternoon', 'good evening',
+      'oli otya', 'habari', 'wasuze'
+    ] },
+    { name: 'thanks', weight: 1, patterns: [
+      'thank', 'thanks', 'appreciate', 'webale', 'asante'
+    ] },
+    { name: 'bye', weight: 1, patterns: [
+      'bye', 'goodbye', 'that is all', 'thats all', 'nothing else', 'weeraba', 'kwaheri'
+    ] },
+    { name: 'affirm', weight: 1, patterns: [
+      'yes', 'yeah', 'yep', 'sure', 'ok', 'okay', 'correct', 'right', 'please do',
+      'ye', 'kale', 'ndiyo', 'sawa'
+    ] },
+    { name: 'deny', weight: 1, patterns: [
+      'no', 'nope', 'not really', 'cancel', 'nedda', 'hapana'
+    ] }
+  ];
+
+  function detectIntent(text) {
+    var t = ' ' + text.toLowerCase().replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ') + ' ';
+    var scores = {};
+    INTENTS.forEach(function (intent) {
+      intent.patterns.forEach(function (p) {
+        if (t.indexOf(' ' + p) !== -1 || t.indexOf(p) !== -1) {
+          scores[intent.name] = (scores[intent.name] || 0) + intent.weight;
+        }
+      });
+    });
+    var best = 'unknown', bestScore = 0;
+    Object.keys(scores).forEach(function (k) {
+      if (scores[k] > bestScore) { bestScore = scores[k]; best = k; }
+    });
+    return { name: best, score: bestScore, all: scores };
+  }
+
+  /* ---------------------------------------------------------------------
+     4. Slot extraction — day, time, service, name, phone
+     --------------------------------------------------------------------- */
+  function extractPhone(text) {
+    var m = text.replace(/[\s\-()]/g, '').match(/(\+?256\d{9}|0\d{9}|\+\d{9,14})/);
+    return m ? m[0] : null;
+  }
+
+  function extractDay(text) {
+    var t = text.toLowerCase();
+    var now = new Date();
+    if (/\btoday\b|\bleero\b|\bleo\b/.test(t)) return startOfDay(now);
+    if (/\btomorrow\b|\benkya\b|\bkesho\b/.test(t)) {
+      var d = startOfDay(now); d.setDate(d.getDate() + 1); return d;
+    }
+    var names = {
+      sunday: 0, sun: 0, monday: 1, mon: 1, tuesday: 2, tue: 2, tues: 2,
+      wednesday: 3, wed: 3, thursday: 4, thu: 4, thur: 4, thurs: 4,
+      friday: 5, fri: 5, saturday: 6, sat: 6
+    };
+    var found = null;
+    Object.keys(names).forEach(function (n) {
+      if (found === null && new RegExp('\\b' + n + '\\b').test(t)) found = names[n];
+    });
+    if (found !== null) {
+      var target = startOfDay(now);
+      var delta = (found - target.getDay() + 7) % 7;
+      target.setDate(target.getDate() + (delta === 0 ? 7 : delta));
+      return target;
+    }
+    var dm = t.match(/\b(\d{1,2})\s*[\/\-]\s*(\d{1,2})\b/);
+    if (dm) {
+      var d2 = new Date(now.getFullYear(), parseInt(dm[2], 10) - 1, parseInt(dm[1], 10));
+      if (d2 < startOfDay(now)) d2.setFullYear(d2.getFullYear() + 1);
+      return d2;
+    }
+    return null;
+  }
+
+  function extractTime(text) {
+    var t = text.toLowerCase();
+    var m = t.match(/\b(\d{1,2})[:.](\d{2})\s*(am|pm)?/);
+    if (m) {
+      var h = parseInt(m[1], 10), min = parseInt(m[2], 10);
+      if (m[3] === 'pm' && h < 12) h += 12;
+      if (m[3] === 'am' && h === 12) h = 0;
+      return { h: h, m: min };
+    }
+    m = t.match(/\b(\d{1,2})\s*(am|pm)\b/);
+    if (m) {
+      var h2 = parseInt(m[1], 10);
+      if (m[2] === 'pm' && h2 < 12) h2 += 12;
+      if (m[2] === 'am' && h2 === 12) h2 = 0;
+      return { h: h2, m: 0 };
+    }
+    m = t.match(/\b(?:at|by|around|ssaawa|saa)\s+(\d{1,2})\b/);
+    if (m) {
+      var h3 = parseInt(m[1], 10);
+      if (h3 >= 1 && h3 <= 7) h3 += 12; /* "at 2" in a working day means 14:00 */
+      return { h: h3, m: 0 };
+    }
+    return null;
+  }
+
+  function extractService(text) {
+    var t = text.toLowerCase();
+    var services = VoiceCore.config.services || [];
+    var hit = null;
+    services.forEach(function (s) {
+      if (hit) return;
+      var words = s.name.toLowerCase().split(/\s+/);
+      var matched = words.some(function (w) { return w.length > 3 && t.indexOf(w) !== -1; });
+      if (matched) hit = s;
+    });
+    return hit;
+  }
+
+  function extractName(text) {
+    var t = text.trim();
+    var m = t.match(/(?:my name is|i am|i'm|this is|erinnya lyange|jina langu ni)\s+([a-z' ]{2,40})/i);
+    if (m) return titleCase(m[1].trim());
+    /* A short bare reply to "may I have your name" is the name itself. */
+    if (/^[a-z' ]{2,40}$/i.test(t) && t.split(/\s+/).length <= 4) return titleCase(t);
+    return null;
+  }
+
+  function titleCase(s) {
+    return s.replace(/\w\S*/g, function (w) {
+      return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+    });
+  }
+
+  function startOfDay(d) {
+    var x = new Date(d.getTime());
+    x.setHours(0, 0, 0, 0);
+    return x;
+  }
+
+  /* ---------------------------------------------------------------------
+     5. Opening hours
+     --------------------------------------------------------------------- */
+  function hoursFor(date) {
+    var key = DAY_KEYS[date.getDay()];
+    return VoiceCore.config.hours[key] || null;
+  }
+
+  function isOpenAt(date, time) {
+    var h = hoursFor(date);
+    if (!h) return false;
+    var mins = time.h * 60 + time.m;
+    return mins >= h[0] * 60 && mins < h[1] * 60;
+  }
+
+  function nextOpenSlot(fromDate, time) {
+    var d = startOfDay(fromDate);
+    for (var i = 0; i < 14; i++) {
+      var h = hoursFor(d);
+      if (h) {
+        var candidate = time && i === 0 ? Math.max(time.h, h[0]) : h[0];
+        if (candidate < h[1]) return { date: new Date(d.getTime()), time: { h: candidate, m: 0 } };
+      }
+      d.setDate(d.getDate() + 1);
+    }
+    return null;
+  }
+
+  function formatHours() {
+    var cfg = VoiceCore.config.hours;
+    var parts = [];
+    DAY_KEYS.forEach(function (k, i) {
+      var h = cfg[k];
+      parts.push(DAY_NAMES[i].slice(0, 3) + ' ' + (h ? pad(h[0]) + ':00–' + pad(h[1]) + ':00' : 'closed'));
+    });
+    return parts.join(', ');
+  }
+
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+  function formatDate(d) {
+    return DAY_NAMES[d.getDay()] + ' ' + d.getDate() + ' ' +
+      ['January','February','March','April','May','June','July','August','September','October','November','December'][d.getMonth()];
+  }
+
+  function formatTime(t) { return pad(t.h) + ':' + pad(t.m); }
+
+  VoiceCore.format = { date: formatDate, time: formatTime, hours: formatHours };
+  VoiceCore.hours = { isOpenAt: isOpenAt, nextOpenSlot: nextOpenSlot, hoursFor: hoursFor };
+
+  /* ---------------------------------------------------------------------
+     6. Storage — conversations, bookings, leads
+     --------------------------------------------------------------------- */
+  var KEY = 'voicecore.store.v1';
+  var listeners = [];
+
+  function blank() {
+    return { conversations: [], bookings: [], leads: [], updated: Date.now() };
+  }
+
+  function read() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (!raw) return blank();
+      var parsed = JSON.parse(raw);
+      return parsed && parsed.conversations ? parsed : blank();
+    } catch (e) {
+      return blank();
+    }
+  }
+
+  function write(data) {
+    data.updated = Date.now();
+    try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) { /* private mode */ }
+    listeners.forEach(function (fn) { try { fn(data); } catch (e) {} });
+    return data;
+  }
+
+  var Store = {
+    all: read,
+    reset: function () { return write(blank()); },
+    onChange: function (fn) { listeners.push(fn); return function () {
+      listeners = listeners.filter(function (f) { return f !== fn; });
+    }; },
+
+    /* One memory across phone, WhatsApp and web chat: a conversation is keyed
+       by contact where we have one, and only falls back to session id. */
+    openConversation: function (channel, sessionId, contact) {
+      var data = read();
+      var found = null;
+      if (contact) {
+        found = data.conversations.filter(function (c) {
+          return c.contact === contact && Date.now() - c.updated < 1000 * 60 * 60 * 24 * 30;
+        }).pop();
+      }
+      if (!found) {
+        found = data.conversations.filter(function (c) { return c.sessionId === sessionId; }).pop();
+      }
+      if (!found) {
+        found = {
+          id: 'c' + Date.now() + Math.random().toString(36).slice(2, 6),
+          sessionId: sessionId,
+          channel: channel,
+          channels: [channel],
+          contact: contact || null,
+          name: null,
+          tag: 'question',
+          urgent: false,
+          messages: [],
+          started: Date.now(),
+          updated: Date.now(),
+          handedOff: false
+        };
+        data.conversations.push(found);
+        write(data);
+      } else if (found.channels.indexOf(channel) === -1) {
+        found.channels.push(channel);
+        found.channel = channel;
+        write(data);
+      }
+      return found.id;
+    },
+
+    append: function (conversationId, message) {
+      var data = read();
+      data.conversations.forEach(function (c) {
+        if (c.id !== conversationId) return;
+        c.messages.push(message);
+        c.updated = Date.now();
+      });
+      return write(data);
+    },
+
+    /* Tags only ever escalate. A customer who books and then asks a price is
+       still a booking, not a lead; a complaint outranks everything. */
+    tagRank: { question: 0, lead: 1, booking: 2, complaint: 3 },
+
+    patchConversation: function (conversationId, patch) {
+      var data = read();
+      var rank = Store.tagRank;
+      data.conversations.forEach(function (c) {
+        if (c.id !== conversationId) return;
+        Object.keys(patch).forEach(function (k) {
+          if (k === 'tag') {
+            var next = rank[patch.tag] == null ? 0 : rank[patch.tag];
+            var curr = rank[c.tag] == null ? 0 : rank[c.tag];
+            if (next <= curr) return;
+          }
+          if (patch[k] === null || patch[k] === undefined) return;
+          c[k] = patch[k];
+        });
+        c.updated = Date.now();
+      });
+      return write(data);
+    },
+
+    get: function (conversationId) {
+      return read().conversations.filter(function (c) { return c.id === conversationId; })[0] || null;
+    },
+
+    addBooking: function (booking) {
+      var data = read();
+      booking.id = 'b' + Date.now() + Math.random().toString(36).slice(2, 5);
+      booking.created = Date.now();
+      data.bookings.push(booking);
+      return write(data);
+    },
+
+    addLead: function (lead) {
+      var data = read();
+      lead.id = 'l' + Date.now() + Math.random().toString(36).slice(2, 5);
+      lead.created = Date.now();
+      data.leads.push(lead);
+      return write(data);
+    }
+  };
+
+  VoiceCore.store = Store;
+
+  /* ---------------------------------------------------------------------
+     7. Brain — one turn of conversation
+     --------------------------------------------------------------------- */
+  function Session(channel, sessionId, contact) {
+    this.channel = channel;
+    this.sessionId = sessionId || 's' + Math.random().toString(36).slice(2, 10);
+    this.lang = 'en';
+    this.slots = { service: null, date: null, time: null, name: null, phone: contact || null };
+    this.flow = null;          /* 'booking' while collecting slots */
+    this.conversationId = Store.openConversation(channel, this.sessionId, contact || null);
+    this.turns = 0;
+  }
+
+  Session.prototype.say = function (text, meta) {
+    Store.append(this.conversationId, {
+      role: 'agent', text: text, at: Date.now(), meta: meta || null
+    });
+    return text;
+  };
+
+  Session.prototype.hear = function (text) {
+    Store.append(this.conversationId, { role: 'customer', text: text, at: Date.now() });
+  };
+
+  Session.prototype.greeting = function () {
+    var t = LANG[this.lang];
+    var open = this.isOpenNow();
+    var text = t.greet(VoiceCore.config);
+    if (!open) {
+      text += ' ' + (this.lang === 'en'
+        ? 'We are closed right now, but I can take a booking or a message. ' + VoiceCore.config.afterHoursPromise
+        : t.closed);
+    }
+    return this.say(text);
+  };
+
+  Session.prototype.isOpenNow = function () {
+    var now = new Date();
+    return isOpenAt(now, { h: now.getHours(), m: now.getMinutes() });
+  };
+
+  Session.prototype.nextMissingSlot = function () {
+    if (!this.slots.service) return 'service';
+    if (!this.slots.date) return 'date';
+    if (!this.slots.time) return 'time';
+    if (!this.slots.name) return 'name';
+    if (!this.slots.phone) return 'phone';
+    return null;
+  };
+
+  Session.prototype.absorb = function (text) {
+    var s = this.slots;
+    var svc = extractService(text); if (svc) s.service = svc;
+    var day = extractDay(text); if (day) s.date = day;
+    var time = extractTime(text); if (time) s.time = time;
+    var phone = extractPhone(text); if (phone) s.phone = phone;
+    if (!s.name && this.flow === 'booking' && this.awaiting === 'name') {
+      var nm = extractName(text); if (nm) s.name = nm;
+    } else if (!s.name) {
+      var nm2 = text.match(/(?:my name is|i am|i'm|this is)\s+([a-z' ]{2,40})/i);
+      if (nm2) s.name = titleCase(nm2[1].trim());
+    }
+  };
+
+  Session.prototype.askFor = function (slot) {
+    var t = LANG[this.lang];
+    this.awaiting = slot;
+    if (slot === 'service') {
+      var names = (VoiceCore.config.services || []).map(function (s) { return s.name; });
+      return this.say(t.askService + ' ' + t.servicesIntro + names.join(', ') + '.',
+        { quick: names });
+    }
+    if (slot === 'date') return this.say(t.askDay, { quick: ['Today', 'Tomorrow', 'This week'] });
+    if (slot === 'time') return this.say(t.askTime, { quick: ['09:00', '11:00', '14:00', '16:00'] });
+    if (slot === 'name') return this.say(t.askName);
+    if (slot === 'phone') return this.say(t.askPhone);
+    return this.say(t.unknown);
+  };
+
+  Session.prototype.completeBooking = function () {
+    var t = LANG[this.lang];
+    var s = this.slots;
+    var cfg = VoiceCore.config;
+
+    if (!isOpenAt(s.date, s.time)) {
+      var next = nextOpenSlot(s.date, s.time);
+      if (next) {
+        s.date = next.date;
+        s.time = next.time;
+        var msg = t.closed + t.offer + formatDate(s.date) + ' at ' + formatTime(s.time) + '.';
+        this.awaiting = 'confirm';
+        this.flow = 'confirm';
+        return this.say(msg, { quick: ['Yes, book it', 'Another time'] });
+      }
+    }
+
+    Store.addBooking({
+      conversationId: this.conversationId,
+      name: s.name,
+      phone: s.phone,
+      service: s.service ? s.service.name : 'Consultation',
+      minutes: s.service ? s.service.minutes : 30,
+      price: s.service ? s.service.price : null,
+      when: s.date.getTime() + (s.time.h * 60 + s.time.m) * 60000,
+      channel: this.channel
+    });
+    Store.patchConversation(this.conversationId, {
+      tag: 'booking', name: s.name, contact: s.phone
+    });
+
+    this.flow = null;
+    this.awaiting = null;
+
+    var line = t.confirmed + (s.service ? s.service.name : 'Appointment') + ' — ' +
+      formatDate(s.date) + ' at ' + formatTime(s.time) +
+      (s.name ? ', for ' + s.name : '') + '. ' + t.summarySent;
+    if (s.service && s.service.price) line += ' (' + s.service.price + ')';
+    var reset = this.slots;
+    this.slots = { service: null, date: null, time: null, name: reset.name, phone: reset.phone };
+    return this.say(line, { booking: true });
+  };
+
+  Session.prototype.reply = function (text) {
+    this.turns++;
+    this.hear(text);
+    this.lang = detectLanguage(text, this.lang);
+    var t = LANG[this.lang];
+    var intent = detectIntent(text);
+    this.absorb(text);
+
+    /* Mid-flow: confirming a moved slot */
+    if (this.flow === 'confirm') {
+      if (intent.name === 'affirm') { this.flow = 'booking'; return this.completeBooking(); }
+      if (intent.name === 'deny') {
+        this.flow = 'booking';
+        this.slots.date = null; this.slots.time = null;
+        return this.askFor('date');
+      }
+    }
+
+    /* Escalation always wins */
+    if (intent.name === 'complaint') {
+      Store.patchConversation(this.conversationId, { tag: 'complaint', urgent: true });
+      return this.say(t.complaint + ' ' + t.handoff + VoiceCore.config.handoffNumber + '.' + t.handoffCtx,
+        { urgent: true });
+    }
+    if (intent.name === 'human') {
+      Store.patchConversation(this.conversationId, { handedOff: true });
+      return this.say(t.handoff + VoiceCore.config.handoffNumber + '.' + t.handoffCtx, { handoff: true });
+    }
+
+    /* Booking flow */
+    if (intent.name === 'booking' || this.flow === 'booking') {
+      this.flow = 'booking';
+      Store.patchConversation(this.conversationId, { tag: 'booking' });
+      var missing = this.nextMissingSlot();
+      if (missing) return this.askFor(missing);
+      return this.completeBooking();
+    }
+
+    /* Informational answers, straight from the config — never invented */
+    if (intent.name === 'price') {
+      var lines = (VoiceCore.config.services || []).map(function (s) {
+        return s.name + ' ' + (s.price || 'on request');
+      });
+      Store.patchConversation(this.conversationId, { tag: 'lead' });
+      return this.say(t.priceIntro + lines.join('; ') + '.', { quick: ['Book one', 'Your hours?'] });
+    }
+    if (intent.name === 'hours') {
+      return this.say(t.hoursIntro + formatHours() + '.', { quick: ['Book a time'] });
+    }
+    if (intent.name === 'location') {
+      return this.say(t.locationIntro + VoiceCore.config.location + '.', { quick: ['Book a time'] });
+    }
+    if (intent.name === 'services') {
+      var names = (VoiceCore.config.services || []).map(function (s) { return s.name; });
+      return this.say(t.servicesIntro + names.join(', ') + '.', { quick: names.slice(0, 3) });
+    }
+    if (intent.name === 'greeting') return this.greeting();
+    if (intent.name === 'thanks') return this.say(t.thanks);
+    if (intent.name === 'bye') {
+      return this.say(this.lang === 'en'
+        ? 'Thank you for calling ' + VoiceCore.config.business + '. Goodbye.'
+        : t.bye);
+    }
+
+    /* Unknown: capture the lead rather than lose it, then hand off honestly. */
+    Store.patchConversation(this.conversationId, { tag: 'lead' });
+    if (this.slots.phone || this.slots.name) {
+      Store.addLead({
+        conversationId: this.conversationId,
+        name: this.slots.name, phone: this.slots.phone,
+        note: text, channel: this.channel
+      });
+    }
+    return this.say(t.unknown, { handoff: true });
+  };
+
+  VoiceCore.Session = Session;
+  VoiceCore.detectIntent = detectIntent;
+  VoiceCore.detectLanguage = detectLanguage;
+
+  /* ---------------------------------------------------------------------
+     8. Voice of the Customer brief — the monthly one-pager, generated
+     --------------------------------------------------------------------- */
+  VoiceCore.voiceOfCustomer = function () {
+    var data = Store.all();
+    var convs = data.conversations;
+    var byTag = { booking: 0, lead: 0, complaint: 0, question: 0 };
+    convs.forEach(function (c) { byTag[c.tag] = (byTag[c.tag] || 0) + 1; });
+
+    var afterHours = convs.filter(function (c) {
+      var d = new Date(c.started);
+      return !isOpenAt(d, { h: d.getHours(), m: d.getMinutes() });
+    }).length;
+
+    var handoffs = convs.filter(function (c) { return c.handedOff; }).length;
+    var urgent = convs.filter(function (c) { return c.urgent; });
+
+    /* Themes: what customers actually asked about, counted from real turns. */
+    var themes = {};
+    convs.forEach(function (c) {
+      c.messages.filter(function (m) { return m.role === 'customer'; }).forEach(function (m) {
+        var i = detectIntent(m.text);
+        if (i.name !== 'unknown' && i.name !== 'affirm' && i.name !== 'deny' && i.name !== 'greeting') {
+          themes[i.name] = (themes[i.name] || 0) + 1;
+        }
+      });
+    });
+    var ranked = Object.keys(themes).map(function (k) { return { theme: k, count: themes[k] }; })
+      .sort(function (a, b) { return b.count - a.count; });
+
+    var missed = convs.filter(function (c) {
+      return c.tag === 'lead' && !data.bookings.some(function (b) { return b.conversationId === c.id; });
+    }).length;
+
+    return {
+      conversations: convs.length,
+      bookings: data.bookings.length,
+      leads: data.leads.length,
+      byTag: byTag,
+      afterHours: afterHours,
+      afterHoursShare: convs.length ? Math.round(afterHours / convs.length * 100) : 0,
+      handoffs: handoffs,
+      urgent: urgent,
+      themes: ranked,
+      missedOpportunities: missed,
+      generated: Date.now()
+    };
+  };
+
+  /* ---------------------------------------------------------------------
+     9. Config persistence — the dashboard writes it, every page reads it
+     --------------------------------------------------------------------- */
+  var CFG_KEY = 'voicecore.config.v1';
+
+  VoiceCore.saveConfig = function () {
+    try { localStorage.setItem(CFG_KEY, JSON.stringify(VoiceCore.config)); } catch (e) {}
+    return VoiceCore.config;
+  };
+
+  VoiceCore.loadConfig = function () {
+    try {
+      var raw = localStorage.getItem(CFG_KEY);
+      if (raw) {
+        var saved = JSON.parse(raw);
+        Object.keys(VoiceCore.defaultConfig).forEach(function (k) {
+          if (saved[k] !== undefined) VoiceCore.config[k] = saved[k];
+        });
+      }
+    } catch (e) {}
+    return VoiceCore.config;
+  };
+
+  VoiceCore.loadConfig();
+
+  global.VoiceCore = VoiceCore;
+})(window);
+</script>
+<script>/* =========================================================================
+   VoiceCore — embeddable reception widget
+   Blessed Digital Solutions
+
+   One script tag on any client site:
+     <script src="/app/voicecore/engine.js"><\/script>
+     <script src="/app/voicecore/widget.js" data-business="Nakawa Dental"><\/script>
+
+   Styles are injected here so the widget carries no CSS dependency and
+   cannot be broken by the host page's stylesheet.
+   ========================================================================= */
+(function (global) {
+  'use strict';
+
+  if (!global.VoiceCore) {
+    console.error('VoiceCore widget: engine.js must load first.');
+    return;
+  }
+
+  var VC = global.VoiceCore;
+  var CSS = [
+    '.vc-root{--vc-navy:#08122a;--vc-navy-2:#0b1b3a;--vc-gold:#c9a227;--vc-gold-2:#dcbb4e;',
+    '--vc-gold-3:#ecd48b;--vc-ink:#f2f5fb;--vc-slate:#93a2bb;--vc-line:rgba(255,255,255,.13);',
+    "font-family:'Inter',-apple-system,'Segoe UI',system-ui,sans-serif;position:fixed;right:20px;bottom:20px;z-index:2147483000;}",
+    '.vc-root *{box-sizing:border-box;margin:0;}',
+    '.vc-launch{display:flex;align-items:center;gap:.6rem;border:0;cursor:pointer;padding:.8rem 1.25rem;',
+    'border-radius:999px;background:linear-gradient(140deg,var(--vc-gold-2),#a8811a);color:var(--vc-navy);',
+    "font-family:'Jost','Segoe UI',sans-serif;font-weight:600;font-size:.95rem;letter-spacing:.01em;",
+    'box-shadow:0 12px 30px -10px rgba(201,162,39,.85);transition:transform .2s ease,box-shadow .2s ease;}',
+    '.vc-launch:hover{transform:translateY(-2px);box-shadow:0 18px 36px -12px rgba(201,162,39,1);}',
+    '.vc-launch svg{width:19px;height:19px;}',
+    '.vc-dot{width:8px;height:8px;border-radius:50%;background:#1f9d55;box-shadow:0 0 0 3px rgba(31,157,85,.28);}',
+    '.vc-dot.vc-off{background:#c9a227;box-shadow:0 0 0 3px rgba(201,162,39,.25);}',
+    '.vc-panel{width:min(94vw,392px);height:min(78vh,620px);background:var(--vc-navy);border:1px solid var(--vc-line);',
+    'border-radius:18px;overflow:hidden;display:none;flex-direction:column;color:var(--vc-ink);',
+    'box-shadow:0 40px 90px -30px rgba(0,0,0,.85);}',
+    '.vc-root[data-open="1"] .vc-panel{display:flex;}',
+    '.vc-root[data-open="1"] .vc-launch{display:none;}',
+    '.vc-head{padding:.9rem 1rem;border-bottom:1px solid var(--vc-line);display:flex;align-items:center;gap:.75rem;',
+    'background:linear-gradient(140deg,var(--vc-navy-2),var(--vc-navy));}',
+    '.vc-av{width:40px;height:40px;border-radius:11px;flex:none;display:grid;place-items:center;',
+    'background:linear-gradient(150deg,var(--vc-gold-2),#a8811a);color:var(--vc-navy);',
+    "font-family:'Jost',sans-serif;font-weight:600;font-size:1.05rem;}",
+    ".vc-who{flex:1;min-width:0;line-height:1.25;}",
+    ".vc-who b{font-family:'Jost',sans-serif;font-weight:500;font-size:1rem;display:block;}",
+    '.vc-who span{font-size:.74rem;color:var(--vc-slate);display:flex;align-items:center;gap:.4rem;letter-spacing:.04em;}',
+    '.vc-x{background:none;border:0;color:var(--vc-slate);cursor:pointer;font-size:1.5rem;line-height:1;padding:.2rem .4rem;border-radius:6px;}',
+    '.vc-x:hover{color:#fff;background:rgba(255,255,255,.08);}',
+    '.vc-chan{display:flex;gap:0;border-bottom:1px solid var(--vc-line);background:rgba(255,255,255,.02);}',
+    '.vc-chan button{flex:1;background:none;border:0;border-bottom:2px solid transparent;cursor:pointer;',
+    "padding:.55rem .3rem;color:var(--vc-slate);font-family:'Jost',sans-serif;font-size:.76rem;",
+    'letter-spacing:.12em;text-transform:uppercase;}',
+    '.vc-chan button[aria-pressed="true"]{color:var(--vc-gold-3);border-bottom-color:var(--vc-gold);}',
+    '.vc-log{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:.7rem;scroll-behavior:smooth;}',
+    '.vc-msg{max-width:86%;padding:.7rem .9rem;border-radius:14px;font-size:.93rem;line-height:1.55;white-space:pre-wrap;}',
+    '.vc-msg.vc-agent{align-self:flex-start;background:rgba(255,255,255,.06);border:1px solid var(--vc-line);border-bottom-left-radius:5px;}',
+    '.vc-msg.vc-cust{align-self:flex-end;background:linear-gradient(150deg,var(--vc-gold-2),#a8811a);color:var(--vc-navy);',
+    'font-weight:500;border-bottom-right-radius:5px;}',
+    '.vc-msg.vc-sys{align-self:center;background:none;border:1px dashed var(--vc-line);color:var(--vc-slate);',
+    'font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .8rem;border-radius:999px;}',
+    '.vc-msg.vc-urgent{border-color:rgba(201,162,39,.55);box-shadow:0 0 0 1px rgba(201,162,39,.25) inset;}',
+    '.vc-quick{display:flex;flex-wrap:wrap;gap:.4rem;padding:0 1rem .6rem;}',
+    '.vc-quick button{background:rgba(255,255,255,.05);border:1px solid var(--vc-line);color:var(--vc-ink);',
+    'border-radius:999px;padding:.42rem .85rem;font-size:.82rem;cursor:pointer;transition:border-color .2s,background .2s;}',
+    '.vc-quick button:hover{border-color:var(--vc-gold);background:rgba(201,162,39,.14);}',
+    '.vc-typing{align-self:flex-start;display:flex;gap:4px;padding:.75rem .95rem;background:rgba(255,255,255,.06);',
+    'border:1px solid var(--vc-line);border-radius:14px;border-bottom-left-radius:5px;}',
+    '.vc-typing i{width:6px;height:6px;border-radius:50%;background:var(--vc-slate);animation:vcb 1.1s infinite;}',
+    '.vc-typing i:nth-child(2){animation-delay:.16s;}.vc-typing i:nth-child(3){animation-delay:.32s;}',
+    '@keyframes vcb{0%,60%,100%{opacity:.25;transform:translateY(0);}30%{opacity:1;transform:translateY(-3px);}}',
+    '.vc-foot{border-top:1px solid var(--vc-line);padding:.7rem;display:flex;gap:.5rem;align-items:flex-end;',
+    'background:rgba(255,255,255,.02);}',
+    '.vc-foot textarea{flex:1;resize:none;background:rgba(255,255,255,.06);border:1px solid var(--vc-line);',
+    'border-radius:12px;color:var(--vc-ink);padding:.6rem .8rem;font-size:.92rem;line-height:1.45;max-height:96px;',
+    "font-family:inherit;}",
+    '.vc-foot textarea::placeholder{color:#6d7d99;}',
+    '.vc-foot textarea:focus{outline:none;border-color:var(--vc-gold);}',
+    '.vc-btn{width:40px;height:40px;flex:none;border-radius:11px;border:1px solid var(--vc-line);cursor:pointer;',
+    'background:rgba(255,255,255,.06);color:var(--vc-ink);display:grid;place-items:center;transition:all .2s;}',
+    '.vc-btn:hover{border-color:var(--vc-gold);color:var(--vc-gold-3);}',
+    '.vc-btn svg{width:18px;height:18px;}',
+    '.vc-btn.vc-send{background:linear-gradient(140deg,var(--vc-gold-2),#a8811a);color:var(--vc-navy);border-color:transparent;}',
+    '.vc-btn.vc-live{background:#b3261e;color:#fff;border-color:transparent;animation:vcp 1.2s infinite;}',
+    '@keyframes vcp{0%,100%{box-shadow:0 0 0 0 rgba(179,38,30,.6);}50%{box-shadow:0 0 0 7px rgba(179,38,30,0);}}',
+    '.vc-note{padding:0 1rem .7rem;font-size:.7rem;color:#6d7d99;letter-spacing:.06em;text-align:center;}',
+    '@media (prefers-reduced-motion:reduce){.vc-root *{animation:none!important;transition:none!important;}}'
+  ].join('');
+
+  var ICON = {
+    phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 3h3.2l1.6 4-2 1.4a12 12 0 0 0 5.2 5.2l1.4-2 4 1.6v3.2A2.6 2.6 0 0 1 17.4 19 14.4 14.4 0 0 1 5 6.6 2.6 2.6 0 0 1 6.6 3Z"/></svg>',
+    mic: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
+    send: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>'
+  };
+
+  function el(tag, cls, html) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (html != null) n.innerHTML = html;
+    return n;
+  }
+
+  function Widget(opts) {
+    opts = opts || {};
+    this.channel = 'web';
+    this.speak = opts.speak !== false;
+    this.session = null;
+    this.build();
+    if (opts.open) this.open();
+  }
+
+  Widget.prototype.build = function () {
+    var self = this;
+    var cfg = VC.config;
+
+    var style = el('style');
+    style.textContent = CSS;
+    document.head.appendChild(style);
+
+    var root = el('div', 'vc-root');
+    root.setAttribute('data-open', '0');
+
+    /* Launcher */
+    var launch = el('button', 'vc-launch');
+    launch.type = 'button';
+    launch.innerHTML = ICON.phone + '<span>Talk to ' + esc(cfg.persona) + '</span>';
+    launch.setAttribute('aria-label', 'Open reception chat');
+    launch.addEventListener('click', function () { self.open(); });
+
+    /* Panel */
+    var panel = el('div', 'vc-panel');
+    panel.setAttribute('role', 'dialog');
+    panel.setAttribute('aria-label', cfg.persona + ' — reception');
+
+    var open = self.isOpenNow();
+    var head = el('div', 'vc-head');
+    head.appendChild(el('div', 'vc-av', esc(cfg.persona.charAt(0))));
+    var who = el('div', 'vc-who');
+    who.innerHTML = '<b>' + esc(cfg.persona) + '</b><span><i class="vc-dot' + (open ? '' : ' vc-off') +
+      '"></i>' + (open ? 'Answering now' : 'After hours — still answering') + '</span>';
+    head.appendChild(who);
+    var close = el('button', 'vc-x', '&times;');
+    close.type = 'button';
+    close.setAttribute('aria-label', 'Close');
+    close.addEventListener('click', function () { self.close(); });
+    head.appendChild(close);
+
+    /* Channel switcher — proves one memory across all three */
+    var chan = el('div', 'vc-chan');
+    ['web', 'whatsapp', 'phone'].forEach(function (c) {
+      var b = el('button', null, c === 'web' ? 'Web chat' : c === 'whatsapp' ? 'WhatsApp' : 'Phone');
+      b.type = 'button';
+      b.setAttribute('aria-pressed', c === 'web' ? 'true' : 'false');
+      b.addEventListener('click', function () { self.switchChannel(c); });
+      chan.appendChild(b);
+    });
+
+    var log = el('div', 'vc-log');
+    log.setAttribute('role', 'log');
+    log.setAttribute('aria-live', 'polite');
+
+    var quick = el('div', 'vc-quick');
+
+    var foot = el('div', 'vc-foot');
+    var ta = el('textarea');
+    ta.rows = 1;
+    ta.placeholder = 'Type, or tap the mic to speak…';
+    ta.setAttribute('aria-label', 'Your message');
+    ta.addEventListener('input', function () {
+      ta.style.height = 'auto';
+      ta.style.height = Math.min(ta.scrollHeight, 96) + 'px';
+    });
+    ta.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); self.submit(); }
+    });
+    var mic = el('button', 'vc-btn vc-mic', ICON.mic);
+    mic.type = 'button';
+    mic.setAttribute('aria-label', 'Speak');
+    mic.addEventListener('click', function () { self.toggleMic(); });
+    var send = el('button', 'vc-btn vc-send', ICON.send);
+    send.type = 'button';
+    send.setAttribute('aria-label', 'Send');
+    send.addEventListener('click', function () { self.submit(); });
+    foot.appendChild(ta); foot.appendChild(mic); foot.appendChild(send);
+
+    var note = el('div', 'vc-note', 'VoiceCore by Blessed Digital Solutions');
+
+    panel.appendChild(head); panel.appendChild(chan); panel.appendChild(log);
+    panel.appendChild(quick); panel.appendChild(foot); panel.appendChild(note);
+    root.appendChild(panel); root.appendChild(launch);
+    document.body.appendChild(root);
+
+    this.root = root; this.log = log; this.quick = quick; this.ta = ta; this.mic = mic;
+    this.headWho = who;
+
+    if (!('speechSynthesis' in window)) this.speak = false;
+    this.setupRecognition();
+  };
+
+  Widget.prototype.isOpenNow = function () {
+    var now = new Date();
+    return VC.hours.isOpenAt(now, { h: now.getHours(), m: now.getMinutes() });
+  };
+
+  Widget.prototype.open = function () {
+    this.root.setAttribute('data-open', '1');
+    if (!this.session) {
+      this.session = new VC.Session(this.channel);
+      this.agent(this.session.greeting());
+      this.renderQuick(['Book an appointment', 'What are your prices?', 'Are you open now?']);
+    }
+    this.ta.focus();
+  };
+
+  Widget.prototype.close = function () {
+    this.root.setAttribute('data-open', '0');
+    this.stopMic();
+  };
+
+  Widget.prototype.switchChannel = function (c) {
+    if (c === this.channel) return;
+    this.channel = c;
+    var btns = this.root.querySelectorAll('.vc-chan button');
+    ['web', 'whatsapp', 'phone'].forEach(function (name, i) {
+      btns[i].setAttribute('aria-pressed', name === c ? 'true' : 'false');
+    });
+    var label = c === 'web' ? 'web chat' : c === 'whatsapp' ? 'WhatsApp' : 'phone';
+    this.system('Continued on ' + label + ' — same conversation');
+    if (this.session) {
+      this.session.channel = c;
+      VC.store.openConversation(c, this.session.sessionId, this.session.slots.phone);
+    }
+  };
+
+  Widget.prototype.bubble = function (cls, text) {
+    var b = el('div', 'vc-msg ' + cls);
+    b.textContent = text;
+    this.log.appendChild(b);
+    this.log.scrollTop = this.log.scrollHeight;
+    return b;
+  };
+
+  Widget.prototype.agent = function (text, meta) {
+    var b = this.bubble('vc-agent', text);
+    if (meta && meta.urgent) b.classList.add('vc-urgent');
+    this.say(text);
+    return b;
+  };
+
+  Widget.prototype.system = function (text) { this.bubble('vc-sys', text); };
+
+  Widget.prototype.renderQuick = function (items) {
+    var self = this;
+    this.quick.innerHTML = '';
+    (items || []).forEach(function (label) {
+      var b = el('button', null, esc(label));
+      b.type = 'button';
+      b.addEventListener('click', function () { self.send(label); });
+      self.quick.appendChild(b);
+    });
+  };
+
+  Widget.prototype.submit = function () {
+    var text = this.ta.value.trim();
+    if (!text) return;
+    this.ta.value = '';
+    this.ta.style.height = 'auto';
+    this.send(text);
+  };
+
+  Widget.prototype.send = function (text) {
+    var self = this;
+    if (!this.session) this.open();
+    this.bubble('vc-cust', text);
+    this.renderQuick([]);
+
+    var typing = el('div', 'vc-typing', '<i></i><i></i><i></i>');
+    this.log.appendChild(typing);
+    this.log.scrollTop = this.log.scrollHeight;
+
+    var delay = Math.min(1100, 320 + text.length * 12);
+    setTimeout(function () {
+      typing.remove();
+      var before = VC.store.get(self.session.conversationId);
+      var reply = self.session.reply(text);
+      var after = VC.store.get(self.session.conversationId);
+      var last = after.messages[after.messages.length - 1];
+      var meta = last && last.meta ? last.meta : null;
+      self.agent(reply, meta);
+      self.renderQuick(meta && meta.quick ? meta.quick : []);
+      if (meta && meta.booking) self.system('Booking written to the dashboard');
+      if (before && after && before.tag !== after.tag) {
+        self.system('Tagged: ' + after.tag);
+      }
+    }, delay);
+  };
+
+  /* ---- Voice: speech synthesis out ---- */
+  Widget.prototype.say = function (text) {
+    if (!this.speak || !('speechSynthesis' in window)) return;
+    try {
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      var lang = this.session ? VC.languages[this.session.lang] : null;
+      u.lang = lang ? lang.speech : 'en-GB';
+      u.rate = 1.02;
+      u.pitch = 1.05;
+      window.speechSynthesis.speak(u);
+    } catch (e) { /* voice is a bonus, never a blocker */ }
+  };
+
+  /* ---- Voice: speech recognition in ---- */
+  Widget.prototype.setupRecognition = function () {
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) { this.mic.title = 'Voice input is not supported in this browser'; return; }
+    var self = this;
+    var rec = new SR();
+    rec.continuous = false;
+    rec.interimResults = true;
+    rec.lang = 'en-GB';
+    rec.addEventListener('result', function (e) {
+      var text = '';
+      for (var i = e.resultIndex; i < e.results.length; i++) text += e.results[i][0].transcript;
+      self.ta.value = text;
+      if (e.results[e.results.length - 1].isFinal) {
+        self.stopMic();
+        self.submit();
+      }
+    });
+    rec.addEventListener('end', function () { self.stopMic(); });
+    rec.addEventListener('error', function () { self.stopMic(); });
+    this.rec = rec;
+  };
+
+  Widget.prototype.toggleMic = function () {
+    if (!this.rec) {
+      this.system('Voice input needs Chrome or Edge — typing works everywhere');
+      return;
+    }
+    if (this.listening) { this.stopMic(); return; }
+    try {
+      if (this.session) this.rec.lang = VC.languages[this.session.lang].speech;
+      this.rec.start();
+      this.listening = true;
+      this.mic.classList.add('vc-live');
+      this.ta.placeholder = 'Listening…';
+    } catch (e) { this.stopMic(); }
+  };
+
+  Widget.prototype.stopMic = function () {
+    if (!this.listening) return;
+    this.listening = false;
+    this.mic.classList.remove('vc-live');
+    this.ta.placeholder = 'Type, or tap the mic to speak…';
+    try { this.rec.stop(); } catch (e) {}
+  };
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  VC.Widget = Widget;
+
+  /* Auto-mount from the script tag's data attributes */
+  var tag = null;
+  if (tag && tag.dataset.autostart !== 'false') {
+    var patch = {};
+    if (tag.dataset.business) patch.business = tag.dataset.business;
+    if (tag.dataset.persona) patch.persona = tag.dataset.persona;
+    if (tag.dataset.phone) patch.handoffNumber = patch.phone = tag.dataset.phone;
+    if (Object.keys(patch).length) VC.configure(patch);
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function () { VC.widget = new Widget(); });
+    } else {
+      VC.widget = new Widget();
+    }
+  }
+})(window);
+</script>
+<script>
+(function () {
+  'use strict';
+  var VC = window.VoiceCore;
+  var $ = function (s) { return document.querySelector(s); };
+  var cfg = VC.config;
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+    });
+  }
+
+  /* The demo site reads the same config the dashboard edits, so a client
+     sees their own name here the moment the profile is saved. */
+  $('#bizLogo').textContent = cfg.business;
+  $('#footBiz').textContent = cfg.business;
+  $('#footLoc').textContent = cfg.location;
+  $('#footPhone').textContent = cfg.handoffNumber;
+  $('#navPhone').textContent = cfg.handoffNumber;
+  $('#navPhone').href = 'tel:' + cfg.handoffNumber.replace(/\s/g, '');
+  $('#yr').textContent = new Date().getFullYear();
+  document.querySelector('.logo i').textContent = cfg.business.charAt(0);
+  $('#personaCard').innerHTML = '<i>' + esc(cfg.persona.charAt(0)) + '</i><b>' + esc(cfg.persona) +
+    '</b><span>Reception · VoiceCore</span>';
+
+  var DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var KEYS = ['sun','mon','tue','wed','thu','fri','sat'];
+  $('#hoursList').innerHTML = KEYS.map(function (k, i) {
+    var h = cfg.hours[k];
+    return '<li><span>' + DAYS[i] + '</span><span' + (h ? '' : ' class="closed"') + '>' +
+      (h ? pad(h[0]) + ':00 – ' + pad(h[1]) + ':00' : 'Closed') + '</span></li>';
+  }).join('');
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+  var now = new Date();
+  var open = VC.hours.isOpenAt(now, { h: now.getHours(), m: now.getMinutes() });
+  $('#nowDot').className = open ? '' : 'off';
+  $('#nowText').textContent = open
+    ? 'Open now — and ' + cfg.persona + ' answers after hours too'
+    : 'Closed now — but ' + cfg.persona + ' is still answering';
+
+  $('#svcGrid').innerHTML = cfg.services.map(function (s) {
+    return '<div class="svc"><b>' + esc(s.name) + '</b>' +
+      '<span class="price">' + esc(s.price || 'On request') + '</span>' +
+      '<span>About ' + esc(s.minutes) + ' minutes</span></div>';
+  }).join('');
+
+  /* Mount the widget */
+  var widget = new VC.Widget();
+
+  $('#bookNow').addEventListener('click', function () {
+    widget.open();
+    setTimeout(function () { widget.send('I would like to book an appointment'); }, 320);
+  });
+
+  var PROMPTS = [
+    'I want to book a cleaning tomorrow at 2pm',
+    'How much is a filling?',
+    'Are you open on Sunday?',
+    'Where are you located?',
+    'Habari, nataka kuweka miadi',
+    'Oli otya, njagala okulagaana',
+    'I waited two hours yesterday, this is unacceptable',
+    'Let me speak to a real person'
+  ];
+  $('#tryList').innerHTML = PROMPTS.map(function (p) {
+    return '<button type="button">' + esc(p) + '</button>';
+  }).join('');
+  Array.prototype.forEach.call($('#tryList').children, function (b) {
+    b.addEventListener('click', function () {
+      widget.open();
+      setTimeout(function () { widget.send(b.textContent); }, 300);
+    });
+  });
+})();
+</script>
+<script>
+(function () {
+  'use strict';
+  var VC = window.VoiceCore;
+  var $ = function (s) { return document.querySelector(s); };
+  var $$ = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+    });
+  }
+  function ago(ts) {
+    var s = Math.floor((Date.now() - ts) / 1000);
+    if (s < 60) return 'just now';
+    if (s < 3600) return Math.floor(s / 60) + ' min ago';
+    if (s < 86400) return Math.floor(s / 3600) + ' h ago';
+    return Math.floor(s / 86400) + ' d ago';
+  }
+  function toast(msg) {
+    var t = $('#toast');
+    t.textContent = msg;
+    t.setAttribute('data-show', '1');
+    clearTimeout(t._t);
+    t._t = setTimeout(function () { t.setAttribute('data-show', '0'); }, 2600);
+  }
+
+  /* ---- Tabs ---- */
+  $$('.tabs button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      $$('.tabs button').forEach(function (x) { x.setAttribute('aria-selected', 'false'); });
+      b.setAttribute('aria-selected', 'true');
+      $$('.panel').forEach(function (p) {
+        p.setAttribute('data-active', p.dataset.panel === b.dataset.tab ? '1' : '0');
+      });
+      render();
+    });
+  });
+
+  /* ---- Header status ---- */
+  function renderStatus() {
+    var now = new Date();
+    var open = VC.hours.isOpenAt(now, { h: now.getHours(), m: now.getMinutes() });
+    $('#bizName').textContent = VC.config.business;
+    $('#statusDot').className = 'dot' + (open ? '' : ' off');
+    $('#statusText').textContent = open
+      ? VC.config.persona + ' is answering now'
+      : 'After hours — ' + VC.config.persona + ' still answering';
+  }
+
+  /* ---- Live feed ---- */
+  function renderFeed() {
+    var data = VC.store.all();
+    var convs = data.conversations.slice().sort(function (a, b) { return b.updated - a.updated; });
+    var voc = VC.voiceOfCustomer();
+
+    $('#kpis').innerHTML = [
+      ['Conversations', voc.conversations],
+      ['Bookings made', voc.bookings],
+      ['Leads captured', voc.leads],
+      ['After hours', voc.afterHoursShare + '%'],
+      ['Handed to a human', voc.handoffs]
+    ].map(function (k) {
+      return '<div class="kpi"><b>' + esc(k[1]) + '</b><span>' + esc(k[0]) + '</span></div>';
+    }).join('');
+
+    $('#feedCount').textContent = convs.length + ' total';
+
+    if (!convs.length) {
+      $('#feed').innerHTML = '<div class="empty">No conversations yet.<br>Open the client demo and talk to ' +
+        esc(VC.config.persona) + ', or load a sample day.</div>';
+    } else {
+      $('#feed').innerHTML = convs.map(function (c) {
+        var lastCustomer = c.messages.filter(function (m) { return m.role === 'customer'; }).pop();
+        var last = lastCustomer || c.messages[c.messages.length - 1];
+        var name = c.name || c.contact || (c.channel === 'phone' ? 'Caller' : 'Visitor');
+        var thread = c.messages.map(function (m) {
+          return '<div class="turn ' + m.role + '"><small>' +
+            (m.role === 'agent' ? esc(VC.config.persona) : 'Customer') + '</small>' + esc(m.text) + '</div>';
+        }).join('');
+        return '<article class="conv" data-open="0">' +
+          '<div class="conv-top">' +
+            '<span class="conv-who">' + esc(name) + '</span>' +
+            '<span class="tag ' + esc(c.tag) + '">' + esc(c.tag) + '</span>' +
+            (c.urgent ? '<span class="tag complaint">urgent</span>' : '') +
+            (c.handedOff ? '<span class="chan-pill">handed off</span>' : '') +
+            c.channels.map(function (ch) { return '<span class="chan-pill">' + esc(ch) + '</span>'; }).join('') +
+            '<span class="conv-meta">' + esc(ago(c.updated)) + '</span>' +
+          '</div>' +
+          '<p class="conv-last">' + esc(last ? last.text : '') + '</p>' +
+          '<div class="conv-thread">' + thread + '</div>' +
+        '</article>';
+      }).join('');
+      $$('.conv').forEach(function (n) {
+        n.addEventListener('click', function () {
+          n.setAttribute('data-open', n.getAttribute('data-open') === '1' ? '0' : '1');
+        });
+      });
+    }
+
+    var urgent = convs.filter(function (c) { return c.urgent || c.handedOff; });
+    $('#urgent').innerHTML = urgent.length ? urgent.map(function (c) {
+      var last = c.messages.filter(function (m) { return m.role === 'customer'; }).pop();
+      return '<div class="row"><b>' + esc(c.name || c.contact || 'Caller') + '</b>' +
+        '<span>' + esc(last ? last.text : '') + '</span>' +
+        '<span class="when">' + esc(ago(c.updated)) + '</span></div>';
+    }).join('') : '<div class="empty">Nothing waiting on you.</div>';
+
+    var upcoming = data.bookings.slice().sort(function (a, b) { return a.when - b.when; }).slice(0, 6);
+    $('#nextBookings').innerHTML = upcoming.length ? upcoming.map(bookingRow).join('')
+      : '<div class="empty">No bookings yet.</div>';
+  }
+
+  function bookingRow(b) {
+    var d = new Date(b.when);
+    return '<div class="row"><b>' + esc(b.name || 'Unnamed') + '</b>' +
+      '<span>' + esc(b.service) + (b.price ? ' · ' + esc(b.price) : '') + '</span>' +
+      '<span class="when">' + esc(VC.format.date(d) + ' at ' + VC.format.time({ h: d.getHours(), m: d.getMinutes() })) +
+      ' · ' + esc(b.phone || 'no number') + '</span></div>';
+  }
+
+  function renderBookings() {
+    var data = VC.store.all();
+    var bs = data.bookings.slice().sort(function (a, b) { return a.when - b.when; });
+    $('#bookCount').textContent = bs.length + ' total';
+    $('#allBookings').innerHTML = bs.length ? bs.map(bookingRow).join('')
+      : '<div class="empty">No bookings yet.</div>';
+    $('#leadCount').textContent = data.leads.length + ' total';
+    $('#allLeads').innerHTML = data.leads.length ? data.leads.map(function (l) {
+      return '<div class="row"><b>' + esc(l.name || l.phone || 'Unknown') + '</b>' +
+        '<span>' + esc(l.note) + '</span>' +
+        '<span class="when">' + esc(l.channel) + ' · ' + esc(ago(l.created)) + '</span></div>';
+    }).join('') : '<div class="empty">No leads captured yet.</div>';
+  }
+
+  /* ---- Voice of the Customer ---- */
+  var THEME_LABEL = {
+    booking: 'Wanting to book', price: 'Asking about price', hours: 'Asking about opening hours',
+    location: 'Asking where you are', services: 'Asking what you offer', complaint: 'Complaints',
+    human: 'Asking for a human', thanks: 'Thanks', bye: 'Sign-offs'
+  };
+
+  function renderBrief() {
+    var v = VC.voiceOfCustomer();
+    var now = new Date();
+    var month = ['January','February','March','April','May','June','July','August','September','October','November','December'][now.getMonth()];
+
+    var themes = v.themes.length ? v.themes.map(function (t) {
+      return '<li><span>' + esc(THEME_LABEL[t.theme] || t.theme) + '</span><b>' + t.count + '</b></li>';
+    }).join('') : '<li><span>No conversations yet</span><b>0</b></li>';
+
+    var complaints = v.urgent.length ? v.urgent.map(function (c) {
+      var m = c.messages.filter(function (x) { return x.role === 'customer'; })[0];
+      return '<li><span>' + esc(m ? m.text : '') + '</span><b>' + esc(c.name || 'anon') + '</b></li>';
+    }).join('') : '<li><span>No complaints this period — worth saying out loud.</span><b>0</b></li>';
+
+    var missedLine = v.missedOpportunities > 0
+      ? v.missedOpportunities + ' conversation' + (v.missedOpportunities === 1 ? '' : 's') +
+        ' showed buying intent but did not end in a booking. Those are the calls worth returning first.'
+      : 'Every conversation with buying intent ended in a booking or a hand-off. Nothing was dropped.';
+
+    var afterHoursLine = v.afterHours > 0
+      ? v.afterHours + ' of ' + v.conversations + ' conversations (' + v.afterHoursShare +
+        '%) arrived outside opening hours. Before VoiceCore, those rang out.'
+      : 'All conversations arrived inside opening hours this period.';
+
+    $('#briefDoc').innerHTML =
+      '<div class="brief-head">' +
+        '<div><p class="brief-eyebrow">Voice of the Customer</p>' +
+        '<h2>' + esc(VC.config.business) + '</h2></div>' +
+        '<div style="text-align:right;"><p class="brief-eyebrow">' + esc(month + ' ' + now.getFullYear()) + '</p>' +
+        '<p style="font-size:.85rem;color:#6a7387;">Prepared by ' + esc(VC.config.persona) + ' · VoiceCore</p></div>' +
+      '</div>' +
+      '<div class="brief-grid">' +
+        '<div><b>' + v.conversations + '</b><span>Conversations</span></div>' +
+        '<div><b>' + v.bookings + '</b><span>Bookings</span></div>' +
+        '<div><b>' + v.leads + '</b><span>Leads</span></div>' +
+        '<div><b>' + v.afterHoursShare + '%</b><span>After hours</span></div>' +
+        '<div><b>' + v.handoffs + '</b><span>To a human</span></div>' +
+      '</div>' +
+      '<h4>What customers actually asked about</h4><ul>' + themes + '</ul>' +
+      '<h4>Complaints and urgent flags</h4><ul>' + complaints + '</ul>' +
+      '<h4>Missed opportunities</h4><p>' + esc(missedLine) + '</p>' +
+      '<h4>Out of hours</h4><p>' + esc(afterHoursLine) + '</p>' +
+      '<div class="brief-foot">Blessed Digital Solutions &nbsp;|&nbsp; VoiceCore &nbsp;|&nbsp; ' +
+        esc(VC.config.business) + '</div>';
+  }
+
+  /* ---- Setup ---- */
+  function renderSetup() {
+    $('#fBiz').value = VC.config.business;
+    $('#fPersona').value = VC.config.persona;
+    $('#fPhone').value = VC.config.handoffNumber;
+    $('#fLoc').value = VC.config.location;
+    $('#fPromise').value = VC.config.afterHoursPromise;
+    renderServices();
+    $('#embedCode').textContent =
+      '<script src="' + 'https://your-domain.com' + '/app/voicecore/engine.js"><\/script>\n' +
+      '<script src="' + 'https://your-domain.com' + '/app/voicecore/widget.js"\n' +
+      '        data-business="' + VC.config.business + '"\n' +
+      '        data-persona="' + VC.config.persona + '"\n' +
+      '        data-phone="' + VC.config.handoffNumber + '"><\/script>';
+  }
+
+  function renderServices() {
+    $('#svcList').innerHTML = VC.config.services.map(function (s, i) {
+      return '<div class="svc-row" data-i="' + i + '">' +
+        '<input type="text" value="' + esc(s.name) + '" data-k="name" aria-label="Service name">' +
+        '<input type="number" value="' + esc(s.minutes) + '" data-k="minutes" aria-label="Minutes">' +
+        '<input type="text" value="' + esc(s.price || '') + '" data-k="price" aria-label="Price">' +
+        '<button class="svc-del" type="button" aria-label="Remove">&times;</button></div>';
+    }).join('');
+    $$('#svcList .svc-row').forEach(function (row) {
+      var i = parseInt(row.dataset.i, 10);
+      row.querySelectorAll('input').forEach(function (inp) {
+        inp.addEventListener('input', function () {
+          var k = inp.dataset.k;
+          VC.config.services[i][k] = k === 'minutes' ? parseInt(inp.value, 10) || 30 : inp.value;
+        });
+      });
+      row.querySelector('.svc-del').addEventListener('click', function () {
+        VC.config.services.splice(i, 1);
+        renderServices();
+      });
+    });
+  }
+
+  $('#addSvc').addEventListener('click', function () {
+    VC.config.services.push({ name: 'New service', minutes: 30, price: 'UGX 0' });
+    renderServices();
+  });
+
+  $('#saveCfg').addEventListener('click', function () {
+    VC.config.business = $('#fBiz').value.trim() || VC.config.business;
+    VC.config.persona = $('#fPersona').value.trim() || VC.config.persona;
+    VC.config.handoffNumber = VC.config.phone = $('#fPhone').value.trim();
+    VC.config.location = $('#fLoc').value.trim();
+    VC.config.afterHoursPromise = $('#fPromise').value.trim();
+    VC.saveConfig();
+    renderStatus(); renderSetup();
+    toast('Profile saved — the widget picks it up immediately');
+  });
+
+  $('#resetCfg').addEventListener('click', function () {
+    VC.config = JSON.parse(JSON.stringify(VC.defaultConfig));
+    VC.saveConfig();
+    renderStatus(); renderSetup();
+    toast('Reset to the sample profile');
+  });
+
+  $('#copyEmbed').addEventListener('click', function () {
+    var text = $('#embedCode').textContent;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(function () { toast('Embed code copied'); },
+        function () { toast('Select the code and copy manually'); });
+    } else { toast('Select the code and copy manually'); }
+  });
+
+  $('#clearBtn').addEventListener('click', function () {
+    if (!confirm('Delete every conversation, booking and lead on this browser?')) return;
+    VC.store.reset();
+    render();
+    toast('All data cleared');
+  });
+
+  /* ---- Sample day: a realistic set of conversations for a pitch ---- */
+  $('#seedBtn').addEventListener('click', function () {
+    var scripts = [
+      { ch: 'phone',    lines: ['Hello, can I book an appointment?', 'Teeth cleaning', 'tomorrow', '10am', 'Grace Namutebi', '0772456789'] },
+      { ch: 'whatsapp', lines: ['how much is a filling?', 'ok book me a filling on friday at 2pm', 'Daniel Okello', '0700334455'] },
+      { ch: 'web',      lines: ['are you open on sunday?'] },
+      { ch: 'phone',    lines: ['I waited two hours yesterday, the service was terrible'] },
+      { ch: 'whatsapp', lines: ['Habari, nataka kuweka miadi', 'Consultation', 'kesho', '11am', 'Amina Hassan', '0781223344'] },
+      { ch: 'web',      lines: ['where are you located?', 'thanks'] },
+      { ch: 'phone',    lines: ['let me speak to a real person'] },
+      { ch: 'web',      lines: ['Oli otya, njagala okulagaana', 'Extraction', 'monday', '9am', 'Joseph Ssekandi', '0755667788'] }
+    ];
+    scripts.forEach(function (s) {
+      var sess = new VC.Session(s.ch);
+      sess.greeting();
+      s.lines.forEach(function (l) { sess.reply(l); });
+    });
+    render();
+    toast('Sample day loaded — ' + scripts.length + ' conversations');
+  });
+
+  /* ---- Render everything ---- */
+  function render() {
+    renderStatus();
+    renderFeed();
+    renderBookings();
+    renderBrief();
+    renderSetup();
+  }
+
+  VC.store.onChange(function () {
+    renderFeed(); renderBookings(); renderBrief();
+  });
+
+  render();
+  setInterval(renderFeed, 30000);
+})();
+</script>
+<script>
+(function () {
+  document.querySelectorAll('a[href="#owner"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      document.getElementById('owner').scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+  document.querySelectorAll('a[href="#top"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+})();
+</script>
+</body></html>

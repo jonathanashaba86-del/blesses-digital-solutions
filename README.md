@@ -78,6 +78,17 @@ before a client demo.
         data-phone="+256 700 123 456"></script>
 ```
 
+**One file to email a client**
+
+```bash
+python3 tools/build_standalone.py
+# -> dist/voicecore-standalone.html  (~92 KB, no external files)
+```
+
+The client site and the owner's dashboard on one page, with everything inlined.
+Works offline, from a USB stick, or as an email attachment — useful when the
+meeting room's wifi is not.
+
 **Deliberate limits, so nobody is misled in a sales meeting**
 
 - Answers are deterministic, not generative: the receptionist quotes prices, hours
@@ -111,7 +122,10 @@ too, while booking, pricing and hours stay deterministic and defensible.
 │   ├── js/bds.js           # nav, scroll reveal, enquiry form — progressive enhancement
 │   └── img/logo.svg        # brand mark, also used as favicon
 ├── app/voicecore/          # the working AI receptionist (engine, widget, dashboard, demo)
-├── tools/build.py          # renders every HTML page from the JSON content
+├── dist/                   # generated: the single-file VoiceCore demo
+├── tools/
+│   ├── build.py            # renders every HTML page from the JSON content
+│   └── build_standalone.py # bundles the VoiceCore app into one HTML file
 └── netlify.toml            # headers, caching, vanity redirects (/voicecore etc.)
 ```
 
