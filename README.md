@@ -1,332 +1,197 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blessed Digital Solutions</title>
+# Blessed Digital Solutions
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+Company website, plus **RetailCore** — a complete, ready-to-sell shop and supermarket
+website with a full back office.
 
-body{
-    font-family:'Segoe UI',sans-serif;
-    line-height:1.6;
-    background:#f5f7fa;
-    color:#333;
-}
+Everything here is static HTML, CSS and vanilla JavaScript. There is no build step to
+deploy, no framework to keep up with, and no dependency that can break on someone
+else's schedule. Open `index.html` in a browser and it works.
 
-header{
-    background:linear-gradient(135deg,#0f172a,#1e3a8a);
-    color:white;
-    text-align:center;
-    padding:120px 20px;
-}
+---
 
-header h1{
-    font-size:3rem;
-    margin-bottom:15px;
-}
+## What is in here
 
-header p{
-    font-size:1.2rem;
-    margin-bottom:30px;
-}
+| Path | What it is |
+|---|---|
+| `index.html` | Blessed Digital Solutions company site — services, process, pricing, enquiry form |
+| `assets/css/site.css` | Styles for the company site |
+| `shop/` | **RetailCore** — the shop product we sell to clients |
+| `tools/` | The image generator and catalogue build step |
 
-.btn{
-    display:inline-block;
-    background:#2563eb;
-    color:white;
-    text-decoration:none;
-    padding:12px 30px;
-    border-radius:8px;
-    transition:0.3s;
-}
+### The shop (`shop/`)
 
-.btn:hover{
-    background:#1d4ed8;
-}
+| Page | What a visitor does there |
+|---|---|
+| `index.html` | Home — aisles, this week's cuts, best sellers, delivery zones |
+| `shop.html` | Full catalogue with aisle filters, sort, search and stock counts |
+| `product.html?p=<slug>` | One product: shelf price, unit price, stock, best-before |
+| `deals.html` | Every reduced line, plus everything close to date |
+| `cart.html` | Basket with quantities, delivery zone and a free-delivery meter |
+| `checkout.html` | Three steps — contact, delivery, payment — then confirmation |
+| `order.html?ref=<ref>` | Live order tracking from picking to the rider |
+| `account.html` | Past orders, saved details, loyalty points |
+| `delivery.html` | Zones, fees, minimums and the FAQ |
+| `about.html`, `contact.html`, `404.html` | The rest of the site |
+| `admin/index.html` | **Back office** — ten screens, see below |
 
-nav{
-    background:#111827;
-    text-align:center;
-    padding:15px;
-    position:sticky;
-    top:0;
-    z-index:100;
-}
+### The back office (`shop/admin/`)
 
-nav a{
-    color:white;
-    text-decoration:none;
-    margin:0 15px;
-    font-weight:600;
-}
+Ten screens, grouped the way a shop actually thinks:
 
-nav a:hover{
-    color:#60a5fa;
-}
+- **Trading** — Today (live KPIs, sales chart, alerts, order queue), Orders (pick →
+  weigh → confirm → dispatch, with substitutions and out-of-stock handling), Till
+  (a working counter POS with keypad, tender and change)
+- **Stock** — Inventory (stock at cost, reorder levels, expiry watch, per-line margin),
+  Purchasing (supplier-grouped draft purchase orders)
+- **People** — Customers (spend, order counts, lifetime value), Staff (rota, tills,
+  a role permission matrix)
+- **Admin** — Reports (top lines, thinnest margins, payment mix, operations), EFRIS
+  (URA fiscal invoice queue with retry), Settings
 
-section{
-    max-width:1100px;
-    margin:auto;
-    padding:80px 20px;
-}
+An order placed on the storefront in the same browser appears in the back office
+order queue. That is the fastest way to show a client how the two halves connect.
 
-h2{
-    text-align:center;
-    margin-bottom:40px;
-    color:#1e3a8a;
-}
+---
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:25px;
-}
+## Making it a different shop
 
-.card{
-    background:white;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
-    transition:0.3s;
-}
+Almost everything a client wants changed lives in **one file**.
 
-.card:hover{
-    transform:translateY(-8px);
-}
+### 1. `shop/assets/js/config.js`
 
-.card h3{
-    margin-bottom:10px;
-}
+Name, tagline, phone, WhatsApp, email, address, opening hours, currency, VAT rate,
+free-delivery threshold, weight tolerance, cut-off time, delivery zones, payment
+methods, promises, reviews and the FAQ.
 
-.about{
-    text-align:center;
-    font-size:1.1rem;
-}
+```js
+window.SHOP = {
+  name:      "Kira Superstore",
+  currency:  "UGX",
+  freeOver:  150000,
+  theme:     "superstore",   // or "market"
+  zones:     [ /* fee, minimum basket and window per zone */ ],
+  payments:  [ /* turn a method off and it leaves checkout */ ]
+};
+```
 
-.testimonial{
-    text-align:center;
-}
+### 2. Themes
 
-form{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-}
+Two ship in the box, set with `SHOP.theme`:
 
-input, textarea{
-    padding:12px;
-    border:1px solid #ccc;
-    border-radius:8px;
-    font-size:16px;
-}
+- `superstore` — cobalt and flash yellow, big-format supermarket
+- `market` — crimson and warm paper, neighbourhood grocer
 
-button{
-    background:#2563eb;
-    color:white;
-    border:none;
-    padding:14px;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:16px;
-}
+Both are defined as CSS custom properties at the top of `shop/assets/css/store.css`.
+A third theme is about fifteen lines of colour tokens.
 
-button:hover{
-    background:#1d4ed8;
-}
+### 3. Products
 
-footer{
-    background:#111827;
-    color:white;
-    text-align:center;
-    padding:30px;
-}
+The catalogue is generated. Edit `tools/catalog.py`, then:
 
-.social a{
-    color:white;
-    text-decoration:none;
-    margin:0 10px;
-}
+```bash
+python3 tools/build.py
+```
 
-.social a:hover{
-    color:#60a5fa;
-}
+That one command writes **both** the product artwork and `shop/assets/js/data.js`,
+so the pictures and the prices are produced from the same source and cannot drift
+apart. A row looks like this:
 
-@media(max-width:768px){
-    header h1{
-        font-size:2.2rem;
-    }
+```python
+("Tomatoes", "Fresh produce", "kg", 5500, 3800, 8, 47, "#C4453C", "produce.tomato", None,
+ "Ripe salad tomatoes, hand sorted.", {"was": 6500, "expiry": "+2", "tags": ["deal"]}),
+# name, aisle, unit, price, cost, stock, sold, tint, art, pack size, description, extras
+```
 
-    nav a{
-        display:block;
-        margin:10px 0;
-    }
-}
-</style>
-</head>
+The `art` field is either a named drawing (`produce.tomato`) or one of ten generic
+packaging archetypes, which is how a new SKU gets a clean tile without anyone
+drawing anything:
 
-<body>
+`pack` · `carton` · `tall` · `bottle` · `jar` · `can` · `tube` · `poly` · `tray` · `bar`
 
-<header>
-    <h1>Blessed Digital Solutions</h1>
-    <p>Professional Web Development • Digital Marketing • Brand Growth</p>
-    <a href="#contact" class="btn">Get Started</a>
-</header>
+```python
+("Salt 1kg", "Pantry", "pack", 2000, 1300, 82, 29, "#CFD8E2",
+ "pack:SEA SALT|iodised 1 kg|#2F5A8A", 1000, "Iodised table salt.", {}),
+```
 
-<nav>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#testimonials">Testimonials</a>
-    <a href="#contact">Contact</a>
-</nav>
+### 4. Real photographs
 
-<section id="about">
-    <h2>About Us</h2>
-    <div class="about">
-        <p>
-            Blessed Digital Solutions helps businesses establish a strong online
-            presence through professional website development, digital marketing,
-            branding, and content creation. We focus on delivering modern digital
-            solutions that drive growth and increase visibility.
-        </p>
-    </div>
-</section>
+Every product record carries an `img` path. To use a photograph instead of the
+generated artwork, drop a 4:3 image into `shop/assets/img/products/` with the same
+slug (`tomatoes.jpg`) and point the record at it. Mixing photographs and generated
+tiles looks fine because the generated ones share one lighting and background recipe.
 
-<section id="services">
-    <h2>Our Services</h2>
+---
 
-    <div class="grid">
-        <div class="card">
-            <h3>Web Development</h3>
-            <p>Responsive business websites, portfolios, landing pages and e-commerce solutions.</p>
-        </div>
+## The image system
 
-        <div class="card">
-            <h3>Digital Marketing</h3>
-            <p>Social media marketing, SEO optimization and online advertising.</p>
-        </div>
+There are no third-party image URLs anywhere in this project. Every picture — 73
+products, 8 aisle banners, hero art, the delivery rider, the shopfront, the logo and
+the payment marks — is an SVG generated by `tools/` and served from this repository.
+Nothing can 404 because someone else's CDN changed, the whole set is about 750 KB,
+and it stays sharp on any screen.
 
-        <div class="card">
-            <h3>Graphic Design</h3>
-            <p>Professional logos, posters, company profiles and branding materials.</p>
-        </div>
+| File | What it does |
+|---|---|
+| `tools/svgkit.py` | Primitives — spheres, packs, cylinders, leaves, labels, shadows |
+| `tools/draw_produce.py` | Fresh produce |
+| `tools/draw_fresh.py` | Butchery, fish, dairy, bakery |
+| `tools/draw_packaged.py` | Pantry, drinks, household, plus the generic archetypes |
+| `tools/draw_scenes.py` | Hero, rider, shopfront, showcase, devices, logo, payment marks |
+| `tools/catalog.py` | The catalogue itself — the single source of truth |
+| `tools/build.py` | Writes every image and `data.js` |
 
-        <div class="card">
-            <h3>Content Creation</h3>
-            <p>Creative content for TikTok, YouTube, Facebook and Instagram.</p>
-        </div>
-    </div>
-</section>
+Regenerate everything:
 
-<section id="skills">
-    <h2>Skills</h2>
+```bash
+python3 tools/build.py
+```
 
-    <div class="grid">
-        <div class="card">
-            <h3>HTML & CSS</h3>
-            <p>Modern responsive website design.</p>
-        </div>
+To preview the artwork as a contact sheet while editing it, `pip install cairosvg`
+and use `tools/preview.py`.
 
-        <div class="card">
-            <h3>JavaScript</h3>
-            <p>Interactive user experiences and functionality.</p>
-        </div>
+---
 
-        <div class="card">
-            <h3>SEO</h3>
-            <p>Search engine optimization and website ranking.</p>
-        </div>
+## Running it locally
 
-        <div class="card">
-            <h3>Digital Marketing</h3>
-            <p>Audience growth and lead generation strategies.</p>
-        </div>
-    </div>
-</section>
+No build, no server required — but a local server avoids browser file:// restrictions:
 
-<section id="projects">
-    <h2>Featured Projects</h2>
+```bash
+python3 -m http.server 8000
+# then open http://localhost:8000/
+```
 
-    <div class="grid">
-        <div class="card">
-            <h3>Corporate Website</h3>
-            <p>Developed a professional website for a local business to improve online visibility.</p>
-        </div>
+## Deploying
 
-        <div class="card">
-            <h3>Marketing Campaign</h3>
-            <p>Created a social media campaign that increased engagement and brand awareness.</p>
-        </div>
+Upload the whole folder to any static host — Netlify, Vercel, GitHub Pages, cPanel,
+or plain shared hosting. There is nothing to compile and no runtime to install.
 
-        <div class="card">
-            <h3>Brand Identity Package</h3>
-            <p>Designed logos, banners and marketing materials for a startup company.</p>
-        </div>
-    </div>
-</section>
+---
 
-<section id="testimonials">
-    <h2>Client Testimonials</h2>
+## Before you hand a site to a client
 
-    <div class="grid">
-        <div class="card testimonial">
-            <p>
-                "Excellent website design and outstanding support throughout the project."
-            </p>
-            <strong>- Client A</strong>
-        </div>
+- [ ] Replace the placeholder phone, WhatsApp and email in `shop/assets/js/config.js`
+      **and** in `index.html` (search for `256700000000` and `hello@blesseddigital.ug`)
+- [ ] Set the real trading name, address and opening hours
+- [ ] Load the client's real catalogue in `tools/catalog.py` and rebuild
+- [ ] Set delivery zones, fees and minimum baskets to the client's actual rounds
+- [ ] Connect real payment gateways — checkout currently simulates the mobile money
+      prompt so the flow can be demonstrated end to end
+- [ ] Point EFRIS at the client's URA credentials
+- [ ] Decide whether to keep the "Built by Blessed Digital Solutions" credit in the
+      shop footer (`shop/assets/js/store.js`, in `footer()`)
 
-        <div class="card testimonial">
-            <p>
-                "Our social media engagement improved significantly after working with Blessed Digital Solutions."
-            </p>
-            <strong>- Client B</strong>
-        </div>
+## What is demonstration behaviour
 
-        <div class="card testimonial">
-            <p>
-                "Professional, reliable and highly recommended."
-            </p>
-            <strong>- Client C</strong>
-        </div>
-    </div>
-</section>
+Honest about what is real and what is staged, so nobody is surprised in a client
+meeting:
 
-<section id="contact">
-    <h2>Contact Us</h2>
-
-    <form>
-        <input type="text" placeholder="Your Name" required>
-
-        <input type="email" placeholder="Your Email" required>
-
-        <textarea rows="5" placeholder="Your Message"></textarea>
-
-        <button type="submit">Send Message</button>
-    </form>
-</section>
-
-<footer>
-    <h3>Blessed Digital Solutions</h3>
-
-    <div class="social">
-        <a href="#">Facebook</a>
-        <a href="#">LinkedIn</a>
-        <a href="#">GitHub</a>
-        <a href="#">Instagram</a>
-    </div>
-
-    <p style="margin-top:15px;">
-        © 2026 Blessed Digital Solutions. All Rights Reserved.
-    </p>
-</footer>
-
-</body>
-</html>
+- **Real:** the whole catalogue, basket maths, unit pricing, weighed-line estimates
+  and settlement, delivery fees and minimums, free-delivery thresholds, VAT, search,
+  filters, sorting, order references, order tracking, the basket persisting across
+  pages and refreshes, and every back-office calculation shown on screen.
+- **Simulated:** payment authorisation (the mobile money prompt resolves after a
+  short delay), SMS notifications, the EFRIS submission to URA, and Excel exports.
+  Each is a single integration point, wired to a real provider during a build.
+- **Seeded:** the back office ships with six demo orders, suppliers, staff and
+  customers so the screens are not empty in a demo. Storefront orders placed in the
+  same browser are added to that queue live.

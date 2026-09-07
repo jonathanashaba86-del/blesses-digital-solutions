@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shop all aisles — Kira Superstore</title>
+<meta name="description" content="Browse every aisle: fresh produce, butchery and fish, dairy, bakery, pantry, drinks, household and baby care.">
+<meta name="theme-color" content="#0A1A2F">
+<meta property="og:title" content="Shop all aisles — Kira Superstore">
+<meta property="og:description" content="Browse every aisle: fresh produce, butchery and fish, dairy, bakery, pantry, drinks, household and baby care.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/img/brand/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/store.css">
+</head>
+<body data-page="shop">
+<a class="skip" href="#main">Skip to content</a>
+<div id="siteHeader"></div>
+<main id="main">
+<div class="wrap">
+    <div class="sec-hd" style="padding-top:26px;margin-bottom:8px">
+      <div><div class="eyebrow">The shop floor</div>
+        <h1 class="sec-t">Today at the shop</h1>
+        <p class="sec-s">Stock counts update as the shelves move. Anything showing low is close to selling out
+          for the day.</p></div>
+    </div>
+    <div class="toolbar">
+      <div class="chips" id="chips"></div>
+    </div>
+    <div class="toolbar" style="border:0;padding-top:0">
+      <div class="chips" id="filters"></div>
+      <label class="sr" for="sort">Sort by</label>
+      <select class="sel" id="sort">
+        <option value="popular">Best selling</option>
+        <option value="deals">Biggest cuts</option>
+        <option value="price-asc">Price, low to high</option>
+        <option value="price-desc">Price, high to low</option>
+        <option value="name">Name, A to Z</option>
+      </select>
+      <span class="count" id="count"></span>
+    </div>
+    <div id="results"></div>
+  </div>
+</main>
+<div id="siteFooter"></div>
+<div id="siteOverlays"></div>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/pages.js"></script>
+<script src="assets/js/store.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RetailCore OS — Back office</title>
+<meta name="description" content="Back office for the shop: orders, till, inventory, purchasing, customers, staff, reports and EFRIS.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/img/brand/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <img src="../assets/img/brand/logo.svg" alt="" width="34" height="34">
+      <div><div class="brand-n" id="tenantName">Shop</div>
+        <div class="brand-s" id="tenantSub">RetailCore OS</div></div>
+    </div>
+    <nav class="nav" id="nav" aria-label="Back office sections"></nav>
+    <div class="side-foot">SHIFT · MANAGER · A. NAKATO</div>
+  </aside>
+
+  <div class="main">
+    <header class="top">
+      <div>
+        <h1 id="vTitle">Today</h1>
+        <div class="top-sub" id="vSub"></div>
+      </div>
+      <div class="top-r">
+        <a class="chip" href="../index.html">← Storefront</a>
+        <span class="chip" id="branchChip">Branch</span>
+        <span class="chip" id="clock"></span>
+      </div>
+    </header>
+    <div class="view" id="view"></div>
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="detail" id="detail" role="dialog" aria-label="Order detail">
+  <div class="d-hd">
+    <div><h2 id="dRef">—</h2><div class="top-sub" id="dCust"></div></div>
+    <button class="x" id="dX" aria-label="Close">✕</button>
+  </div>
+  <div class="d-bd" id="dBody"></div>
+  <div class="d-ft" id="dFoot"></div>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/admin.js"></script>
+</body>
+</html>

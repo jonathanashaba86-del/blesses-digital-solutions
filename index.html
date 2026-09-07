@@ -1,332 +1,487 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blessed Digital Solutions</title>
-
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    font-family:'Segoe UI',sans-serif;
-    line-height:1.6;
-    background:#f5f7fa;
-    color:#333;
-}
-
-header{
-    background:linear-gradient(135deg,#0f172a,#1e3a8a);
-    color:white;
-    text-align:center;
-    padding:120px 20px;
-}
-
-header h1{
-    font-size:3rem;
-    margin-bottom:15px;
-}
-
-header p{
-    font-size:1.2rem;
-    margin-bottom:30px;
-}
-
-.btn{
-    display:inline-block;
-    background:#2563eb;
-    color:white;
-    text-decoration:none;
-    padding:12px 30px;
-    border-radius:8px;
-    transition:0.3s;
-}
-
-.btn:hover{
-    background:#1d4ed8;
-}
-
-nav{
-    background:#111827;
-    text-align:center;
-    padding:15px;
-    position:sticky;
-    top:0;
-    z-index:100;
-}
-
-nav a{
-    color:white;
-    text-decoration:none;
-    margin:0 15px;
-    font-weight:600;
-}
-
-nav a:hover{
-    color:#60a5fa;
-}
-
-section{
-    max-width:1100px;
-    margin:auto;
-    padding:80px 20px;
-}
-
-h2{
-    text-align:center;
-    margin-bottom:40px;
-    color:#1e3a8a;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:25px;
-}
-
-.card{
-    background:white;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
-    transition:0.3s;
-}
-
-.card:hover{
-    transform:translateY(-8px);
-}
-
-.card h3{
-    margin-bottom:10px;
-}
-
-.about{
-    text-align:center;
-    font-size:1.1rem;
-}
-
-.testimonial{
-    text-align:center;
-}
-
-form{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-}
-
-input, textarea{
-    padding:12px;
-    border:1px solid #ccc;
-    border-radius:8px;
-    font-size:16px;
-}
-
-button{
-    background:#2563eb;
-    color:white;
-    border:none;
-    padding:14px;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:16px;
-}
-
-button:hover{
-    background:#1d4ed8;
-}
-
-footer{
-    background:#111827;
-    color:white;
-    text-align:center;
-    padding:30px;
-}
-
-.social a{
-    color:white;
-    text-decoration:none;
-    margin:0 10px;
-}
-
-.social a:hover{
-    color:#60a5fa;
-}
-
-@media(max-width:768px){
-    header h1{
-        font-size:2.2rem;
-    }
-
-    nav a{
-        display:block;
-        margin:10px 0;
-    }
-}
-</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Blessed Digital Solutions — Websites and online shops for Ugandan business</title>
+<meta name="description" content="We build shop and supermarket websites that take real orders, plus the back office to run them. Web development, e-commerce, branding and digital marketing from Kampala.">
+<meta name="theme-color" content="#0A1A2F">
+<meta property="og:title" content="Blessed Digital Solutions — Websites that take orders">
+<meta property="og:description" content="Complete shop and supermarket websites with online ordering, mobile money, delivery zones and a full back office. Built in Kampala.">
+<meta property="og:type" content="website">
+<link rel="icon" href="shop/assets/img/brand/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
 </head>
-
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
-<header>
-    <h1>Blessed Digital Solutions</h1>
-    <p>Professional Web Development • Digital Marketing • Brand Growth</p>
-    <a href="#contact" class="btn">Get Started</a>
-</header>
+<div class="strip"><div class="wrap strip-in">
+  <span>KAMPALA, UGANDA · BUILDING SINCE 2019</span>
+  <span>FREE 20-MINUTE CONSULTATION · <b>WHATSAPP US TODAY</b></span>
+</div></div>
 
-<nav>
-    <a href="#about">About</a>
+<header class="hdr"><div class="wrap hdr-in">
+  <a href="#" class="mark" aria-label="Blessed Digital Solutions home">
+    <img src="shop/assets/img/brand/logo.svg" alt="" width="38" height="38">
+    <span><span class="mark-n">Blessed<em>Digital</em></span>
+      <span class="mark-s" style="display:block">Solutions · Kampala</span></span>
+  </a>
+  <nav class="nav" aria-label="Main">
+    <a href="#work">Our work</a>
     <a href="#services">Services</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#testimonials">Testimonials</a>
-    <a href="#contact">Contact</a>
-</nav>
+    <a href="#process">How we work</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">Questions</a>
+  </nav>
+  <div class="hdr-cta">
+    <a class="btn b-ghost b-sm" href="shop/index.html">See the live demo</a>
+    <a class="btn b-accent b-sm" href="#contact">Start a project</a>
+  </div>
+</div></header>
 
-<section id="about">
-    <h2>About Us</h2>
-    <div class="about">
-        <p>
-            Blessed Digital Solutions helps businesses establish a strong online
-            presence through professional website development, digital marketing,
-            branding, and content creation. We focus on delivering modern digital
-            solutions that drive growth and increase visibility.
-        </p>
+<main id="main">
+
+  <!-- ============================================ hero -->
+  <section class="hero">
+    <div class="wrap hero-in">
+      <div>
+        <span class="kicker">Web development · E-commerce · Branding</span>
+        <h1>Websites that <em>take orders.</em></h1>
+        <p class="hero-p">Most business websites are a brochure nobody reads. We build the other kind — a shop
+          your customers actually buy from, with mobile money, delivery zones, stock counts and a back office
+          your staff can run on their own.</p>
+        <div class="hero-cta">
+          <a class="btn b-flash" href="#work">See a shop we built</a>
+          <a class="btn b-line" href="#contact">Get a quote</a>
+        </div>
+        <div class="trust">
+          <span>Live in 3 weeks</span>
+          <span>Mobile money ready</span>
+          <span>You own the code</span>
+        </div>
+      </div>
+      <div><img src="shop/assets/img/scenes/showcase.svg" alt="A supermarket storefront we built, shown in a browser"
+                width="1200" height="780" style="border-radius:12px"></div>
     </div>
-</section>
+  </section>
 
-<section id="services">
-    <h2>Our Services</h2>
+  <!-- ============================================ stats -->
+  <section class="sec tight" style="padding-top:0">
+    <div class="wrap"><div class="stats" style="margin-top:-34px;position:relative;z-index:5;background:var(--line)">
+      <div class="stat"><div class="stat-v">40+</div><div class="stat-k">Projects delivered for Ugandan business</div></div>
+      <div class="stat"><div class="stat-v">3 wks</div><div class="stat-k">Typical time from brief to live site</div></div>
+      <div class="stat"><div class="stat-v">5</div><div class="stat-k">People on the team, all reachable</div></div>
+      <div class="stat"><div class="stat-v">100%</div><div class="stat-k">Of clients own their code and content</div></div>
+    </div></div>
+  </section>
 
-    <div class="grid">
-        <div class="card">
-            <h3>Web Development</h3>
-            <p>Responsive business websites, portfolios, landing pages and e-commerce solutions.</p>
+  <!-- ============================================ flagship work -->
+  <section class="sec dark" id="work">
+    <div class="wrap">
+      <div class="sec-hd"><div>
+        <div class="eyebrow">Flagship product</div>
+        <h2 class="sec-t">RetailCore — a complete shop website</h2>
+        <p class="sec-s">This is not a mockup. It is a working supermarket site with 73 products across eight
+          aisles, a real basket, three-step checkout, order tracking, and a back office with a till, inventory,
+          purchasing and URA fiscal receipting. Open it and place an order.</p>
+      </div></div>
+
+      <div class="show">
+        <img src="shop/assets/img/scenes/devices.svg" alt="The shop running on a laptop and a phone"
+             width="900" height="700">
+        <div>
+          <div class="show-list">
+            <div class="show-item"><span class="tick">✓</span><div><b>A shopper can actually buy</b>
+              <span>Browse by aisle, search 73 lines, adjust quantities, see a running basket, choose a delivery
+                zone and pay. The basket survives a refresh.</span></div></div>
+            <div class="show-item"><span class="tick">✓</span><div><b>Priced the way a shop really prices</b>
+              <span>Shelf-edge labels with unit-price comparison, and weighed lines charged as an estimate then
+                settled at the scale — the thing every grocery gets wrong online.</span></div></div>
+            <div class="show-item"><span class="tick">✓</span><div><b>Mobile money, card and cash</b>
+              <span>MTN MoMo, Airtel Money, Visa and Mastercard, or cash to the rider. Checkout adapts to
+                whichever the customer picks.</span></div></div>
+            <div class="show-item"><span class="tick">✓</span><div><b>A back office staff can run</b>
+              <span>Ten screens: today's trading, the order queue with picking and weighing, a counter till,
+                inventory, purchase orders, customers, staff rota, reports, EFRIS and settings.</span></div></div>
+            <div class="show-item"><span class="tick">✓</span><div><b>Rebrand it in one file</b>
+              <span>Name, colours, currency, delivery zones, fees and payment methods all live in one config
+                file. Two visual themes ship with it.</span></div></div>
+          </div>
+          <div class="hero-cta">
+            <a class="btn b-flash" href="shop/index.html">Open the storefront</a>
+            <a class="btn b-line" href="shop/admin/index.html">Open the back office</a>
+          </div>
         </div>
-
-        <div class="card">
-            <h3>Digital Marketing</h3>
-            <p>Social media marketing, SEO optimization and online advertising.</p>
-        </div>
-
-        <div class="card">
-            <h3>Graphic Design</h3>
-            <p>Professional logos, posters, company profiles and branding materials.</p>
-        </div>
-
-        <div class="card">
-            <h3>Content Creation</h3>
-            <p>Creative content for TikTok, YouTube, Facebook and Instagram.</p>
-        </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<section id="skills">
-    <h2>Skills</h2>
-
-    <div class="grid">
-        <div class="card">
-            <h3>HTML & CSS</h3>
-            <p>Modern responsive website design.</p>
-        </div>
-
-        <div class="card">
-            <h3>JavaScript</h3>
-            <p>Interactive user experiences and functionality.</p>
-        </div>
-
-        <div class="card">
-            <h3>SEO</h3>
-            <p>Search engine optimization and website ranking.</p>
-        </div>
-
-        <div class="card">
-            <h3>Digital Marketing</h3>
-            <p>Audience growth and lead generation strategies.</p>
-        </div>
+  <!-- ============================================ services -->
+  <section class="sec" id="services">
+    <div class="wrap">
+      <div class="sec-hd"><div>
+        <div class="eyebrow">What we do</div>
+        <h2 class="sec-t">Five things, done properly</h2>
+        <p class="sec-s">We would rather be genuinely good at a short list than average at everything.</p>
+      </div></div>
+      <div class="cards c3">
+        <div class="card"><div class="num">01</div><h3>Shop &amp; supermarket sites</h3>
+          <p>Online ordering built for how shops here actually trade — mobile money, delivery zones, weighed
+            goods, substitutions and fiscal receipts.</p>
+          <ul><li>Product catalogue and stock counts</li><li>Basket, checkout and order tracking</li>
+            <li>Back office for your staff</li><li>WhatsApp ordering as a fallback</li></ul></div>
+        <div class="card"><div class="num">02</div><h3>Business websites</h3>
+          <p>Fast, clear sites for companies that need to be found and believed. Written and built to convert
+            a visitor into an enquiry.</p>
+          <ul><li>Copywriting included, not an extra</li><li>Google Business and maps set up</li>
+            <li>Contact forms that reach your phone</li><li>Loads well on a slow connection</li></ul></div>
+        <div class="card"><div class="num">03</div><h3>Brand identity</h3>
+          <p>Logo, colours, type and the templates your team uses every day, so everything you publish looks
+            like it came from one company.</p>
+          <ul><li>Logo and full colour system</li><li>Business cards and signage artwork</li>
+            <li>Social media templates</li><li>Company profile document</li></ul></div>
+        <div class="card"><div class="num">04</div><h3>Digital marketing</h3>
+          <p>Getting the right people to the site, then proving what worked. No vanity numbers.</p>
+          <ul><li>Search visibility and local SEO</li><li>Facebook, Instagram and TikTok</li>
+            <li>Paid campaigns with a stated budget</li><li>Monthly report you can actually read</li></ul></div>
+        <div class="card"><div class="num">05</div><h3>Systems &amp; support</h3>
+          <p>The unglamorous part that keeps a business running. We answer the phone.</p>
+          <ul><li>Hosting, domains and email</li><li>Backups and security updates</li>
+            <li>Staff training on your own system</li><li>Same-day response on support</li></ul></div>
+        <div class="card" style="background:var(--accent);border-color:var(--accent)">
+          <div class="num" style="color:rgba(255,255,255,.75)">TALK TO US</div>
+          <h3 style="color:#fff">Not sure which you need?</h3>
+          <p style="color:#D5DDFF">Tell us what the business does and what is not working. We will tell you
+            honestly whether we can help, and what it would cost.</p>
+          <a class="btn b-flash" href="#contact" style="margin-top:20px">Book a free consultation</a></div>
+      </div>
     </div>
-</section>
+  </section>
 
-<section id="projects">
-    <h2>Featured Projects</h2>
-
-    <div class="grid">
-        <div class="card">
-            <h3>Corporate Website</h3>
-            <p>Developed a professional website for a local business to improve online visibility.</p>
-        </div>
-
-        <div class="card">
-            <h3>Marketing Campaign</h3>
-            <p>Created a social media campaign that increased engagement and brand awareness.</p>
-        </div>
-
-        <div class="card">
-            <h3>Brand Identity Package</h3>
-            <p>Designed logos, banners and marketing materials for a startup company.</p>
-        </div>
+  <!-- ============================================ process -->
+  <section class="sec panel" id="process">
+    <div class="wrap">
+      <div class="sec-hd"><div>
+        <div class="eyebrow">How we work</div>
+        <h2 class="sec-t">Four weeks, four stages</h2>
+        <p class="sec-s">You see something real every week. Nothing disappears into a black box for a month.</p>
+      </div></div>
+      <div class="steps">
+        <div class="step"><div class="step-n">WEEK 01</div><h4>We listen</h4>
+          <p>We sit with you and your staff, learn how the business actually runs, and write down what the
+            site has to do. You approve that before anyone opens a laptop.</p></div>
+        <div class="step"><div class="step-n">WEEK 02</div><h4>You see the design</h4>
+          <p>A real design of your actual pages with your own products in them — not a template with someone
+            else's photos. We change it until you are happy.</p></div>
+        <div class="step"><div class="step-n">WEEK 03</div><h4>We build it</h4>
+          <p>The site goes up on a private link you can open on your phone and show anyone. You test it as
+            we go and tell us what to fix.</p></div>
+        <div class="step"><div class="step-n">WEEK 04</div><h4>We hand it over</h4>
+          <p>We train your team on the back office, connect your domain and payments, and go live. Then we
+            stay on support — we do not disappear the day you pay.</p></div>
+      </div>
     </div>
-</section>
+  </section>
 
-<section id="testimonials">
-    <h2>Client Testimonials</h2>
-
-    <div class="grid">
-        <div class="card testimonial">
-            <p>
-                "Excellent website design and outstanding support throughout the project."
-            </p>
-            <strong>- Client A</strong>
+  <!-- ============================================ pricing -->
+  <section class="sec" id="pricing">
+    <div class="wrap">
+      <div class="sec-hd"><div>
+        <div class="eyebrow">Pricing</div>
+        <h2 class="sec-t">Clear prices, no surprises</h2>
+        <p class="sec-s">Half to begin, half on going live. Prices in Ugandan shillings and fixed in writing
+          before we start — if the work grows, we agree it with you first.</p>
+      </div></div>
+      <div class="plans">
+        <div class="plan">
+          <h3>Starter</h3>
+          <p class="plan-for">For a business that needs to be findable and credible</p>
+          <div class="plan-p">1,800,000<small> UGX</small></div>
+          <p class="plan-note">One-off · about 2 weeks</p>
+          <ul>
+            <li>Up to 5 pages, written for you</li>
+            <li>Mobile-first, fast on any network</li>
+            <li>Contact form and WhatsApp button</li>
+            <li>Google Business profile set up</li>
+            <li>1 year hosting and domain included</li>
+            <li class="no">Online ordering</li>
+            <li class="no">Back office</li>
+          </ul>
+          <a class="btn b-ghost b-block" href="#contact">Enquire about Starter</a>
         </div>
-
-        <div class="card testimonial">
-            <p>
-                "Our social media engagement improved significantly after working with Blessed Digital Solutions."
-            </p>
-            <strong>- Client B</strong>
+        <div class="plan best">
+          <span class="plan-tag">Most shops choose this</span>
+          <h3>Shop</h3>
+          <p class="plan-for">For a shop or supermarket that wants to sell online</p>
+          <div class="plan-p">4,500,000<small> UGX</small></div>
+          <p class="plan-note">One-off · about 4 weeks</p>
+          <ul>
+            <li>Everything in Starter</li>
+            <li>Full catalogue, your products and photos</li>
+            <li>Basket, checkout and order tracking</li>
+            <li>MTN MoMo, Airtel Money, card and cash</li>
+            <li>Delivery zones, fees and minimums</li>
+            <li>Back office: orders, till, inventory, reports</li>
+            <li>Staff training and 3 months support</li>
+          </ul>
+          <a class="btn b-accent b-block" href="#contact">Enquire about Shop</a>
         </div>
-
-        <div class="card testimonial">
-            <p>
-                "Professional, reliable and highly recommended."
-            </p>
-            <strong>- Client C</strong>
+        <div class="plan">
+          <h3>Growth</h3>
+          <p class="plan-for">For a brand that wants customers coming in every month</p>
+          <div class="plan-p">950,000<small> UGX / month</small></div>
+          <p class="plan-note">Rolling · cancel with 30 days notice</p>
+          <ul>
+            <li>Everything in Shop, maintained</li>
+            <li>Social media content, 12 posts a month</li>
+            <li>Paid campaigns managed for you</li>
+            <li>Search visibility work, ongoing</li>
+            <li>New products and offers loaded weekly</li>
+            <li>Monthly performance report and call</li>
+            <li>Priority same-day support</li>
+          </ul>
+          <a class="btn b-ghost b-block" href="#contact">Enquire about Growth</a>
         </div>
+      </div>
+      <p class="sec-s" style="margin-top:22px">Prices are a guide for a typical project. Multi-branch chains,
+        stock system integrations and custom work are quoted after the first conversation.</p>
     </div>
-</section>
+  </section>
 
-<section id="contact">
-    <h2>Contact Us</h2>
-
-    <form>
-        <input type="text" placeholder="Your Name" required>
-
-        <input type="email" placeholder="Your Email" required>
-
-        <textarea rows="5" placeholder="Your Message"></textarea>
-
-        <button type="submit">Send Message</button>
-    </form>
-</section>
-
-<footer>
-    <h3>Blessed Digital Solutions</h3>
-
-    <div class="social">
-        <a href="#">Facebook</a>
-        <a href="#">LinkedIn</a>
-        <a href="#">GitHub</a>
-        <a href="#">Instagram</a>
+  <!-- ============================================ why us -->
+  <section class="sec dark">
+    <div class="wrap">
+      <div class="sec-hd"><div>
+        <div class="eyebrow">Why us</div>
+        <h2 class="sec-t">What you get that you would not elsewhere</h2>
+      </div></div>
+      <div class="cards c4">
+        <div class="card"><h3>You own everything</h3>
+          <p>The code, the domain, the content and the accounts are yours from day one. No hostage situation
+            if you ever want to move.</p></div>
+        <div class="card"><h3>Built for here</h3>
+          <p>Mobile money first, delivery by landmark, weighed goods, fiscal receipts and pages that load on a
+            weak connection. Not a foreign template bent to fit.</p></div>
+        <div class="card"><h3>Real people answer</h3>
+          <p>Five of us, all in Kampala, all reachable on WhatsApp during business hours. You will know the
+            person who built your site.</p></div>
+        <div class="card"><h3>Training, not a handover</h3>
+          <p>We sit with your staff until they can add a product, change a price and process an order without
+            calling us.</p></div>
+      </div>
     </div>
+  </section>
 
-    <p style="margin-top:15px;">
-        © 2026 Blessed Digital Solutions. All Rights Reserved.
-    </p>
-</footer>
+  <!-- ============================================ testimonials -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-hd"><div>
+        <div class="eyebrow">Clients</div>
+        <h2 class="sec-t">What people say</h2>
+      </div></div>
+      <div class="cards c3">
+        <div class="card review"><div class="stars">★★★★★</div>
+          <p>“We were taking orders on WhatsApp and losing half of them. The site took over the ordering and
+            our staff stopped writing lists on paper. Takings are up and nobody argues about weights any more.”</p>
+          <div class="review-w">Retail client</div><div class="review-z">Supermarket · Kampala</div></div>
+        <div class="card review"><div class="stars">★★★★★</div>
+          <p>“They asked more questions about how our business runs than about the website. That is why the
+            thing they built actually fits how we work.”</p>
+          <div class="review-w">Services client</div><div class="review-z">Professional services · Entebbe</div></div>
+        <div class="card review"><div class="stars">★★★★☆</div>
+          <p>“Delivered on the date they promised, trained our two cashiers, and still answer when we call
+            months later. That last part is rarer than it should be.”</p>
+          <div class="review-w">Retail client</div><div class="review-z">Hardware &amp; household · Wakiso</div></div>
+      </div>
+    </div>
+  </section>
 
+  <!-- ============================================ faq -->
+  <section class="sec panel" id="faq">
+    <div class="wrap">
+      <div class="sec-hd"><div>
+        <div class="eyebrow">Questions</div>
+        <h2 class="sec-t">Before you call us</h2>
+      </div></div>
+      <div class="acc">
+        <details open><summary>How long does a shop website take?</summary>
+          <div class="acc-b">About four weeks from the day we agree the brief, assuming we get your product
+            list and photos in the first week. A simpler business website is about two weeks. The thing that
+            slows projects down is almost always waiting on content, so we help you gather it.</div></details>
+        <details><summary>Can customers pay with MTN MoMo and Airtel Money?</summary>
+          <div class="acc-b">Yes, and most do. We connect your own merchant account so money lands in your
+            account, not ours. Card payments and cash on delivery work alongside it. The customer picks at
+            checkout and the site handles each one differently.</div></details>
+        <details><summary>Who owns the website when it is finished?</summary>
+          <div class="acc-b">You do — completely. The domain is registered in your name, the code is yours,
+            and we hand over every account and password. If you ever want another developer to take over, they
+            can, and we will help them get started.</div></details>
+        <details><summary>Can our own staff update products and prices?</summary>
+          <div class="acc-b">That is the point of the back office. Adding a product, changing a price, marking
+            something out of stock or processing an order are all done by your staff without touching code. We
+            train your team before going live and stay on call afterwards.</div></details>
+        <details><summary>What if we already have a website?</summary>
+          <div class="acc-b">We will look at it honestly and tell you whether it is worth improving or worth
+            replacing. Sometimes the answer is that you need better photos and a working contact form, not a
+            new site. We would rather tell you that than sell you something.</div></details>
+        <details><summary>What does it cost to keep running?</summary>
+          <div class="acc-b">Hosting, domain and email for a shop site run about 600,000 UGX a year. The first
+            year is included in the build price. Support beyond the included period is either pay-as-you-need
+            or the monthly Growth plan.</div></details>
+        <details><summary>Do you work with businesses outside Kampala?</summary>
+          <div class="acc-b">Yes. Most of the work happens over calls and WhatsApp anyway. For shops we prefer
+            to visit once at the start to see how the place actually runs — that visit is worth more than a
+            week of emails.</div></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ contact -->
+  <section class="sec" id="contact">
+    <div class="wrap">
+      <div class="sec-hd"><div>
+        <div class="eyebrow">Get started</div>
+        <h2 class="sec-t">Tell us what you need</h2>
+        <p class="sec-s">Send this and we reply within one working day with honest advice on what the project
+          would involve — whether or not you hire us.</p>
+      </div></div>
+      <div class="split">
+        <form id="quoteForm" novalidate>
+          <div class="fields2">
+            <div class="f"><label for="qName">Your name</label>
+              <input id="qName" name="name" required placeholder="Your name"></div>
+            <div class="f"><label for="qBiz">Business name</label>
+              <input id="qBiz" name="business" placeholder="What the business is called"></div>
+          </div>
+          <div class="fields2">
+            <div class="f"><label for="qPhone">Phone or WhatsApp</label>
+              <input id="qPhone" name="phone" required inputmode="tel" placeholder="07xx xxx xxx"></div>
+            <div class="f"><label for="qEmail">Email</label>
+              <input id="qEmail" name="email" type="email" placeholder="you@business.com"></div>
+          </div>
+          <div class="fields2">
+            <div class="f"><label for="qWhat">What do you need</label>
+              <select id="qWhat" name="need">
+                <option>A shop or supermarket website</option>
+                <option>A business website</option>
+                <option>Branding and logo</option>
+                <option>Digital marketing</option>
+                <option>Fixing or improving what we have</option>
+                <option>Not sure yet — advise us</option>
+              </select></div>
+            <div class="f"><label for="qBudget">Rough budget</label>
+              <select id="qBudget" name="budget">
+                <option>Under 2,000,000 UGX</option>
+                <option>2,000,000 – 5,000,000 UGX</option>
+                <option>Over 5,000,000 UGX</option>
+                <option>Monthly retainer</option>
+                <option>I would like advice on this</option>
+              </select></div>
+          </div>
+          <div class="f"><label for="qMsg">Tell us about the business</label>
+            <textarea id="qMsg" name="message" required
+              placeholder="What the business does, what is not working now, and what you want customers to be able to do."></textarea></div>
+          <button class="btn b-accent b-block" type="submit">Send enquiry</button>
+          <p style="font-size:12.5px;color:var(--muted);margin-top:12px">We reply within one working day. Your
+            details are used to answer this enquiry and nothing else.</p>
+        </form>
+
+        <aside>
+          <div class="card" style="padding:26px 24px">
+            <h3>Reach us directly</h3>
+            <div class="spec"><span>WhatsApp</span><span>+256 700 000 000</span></div>
+            <div class="spec"><span>Phone</span><span>+256 700 000 000</span></div>
+            <div class="spec"><span>Email</span><span>hello@blesseddigital.ug</span></div>
+            <div class="spec"><span>Where</span><span>Kampala, Uganda</span></div>
+            <div class="spec"><span>Hours</span><span>Mon–Sat, 8am – 6pm</span></div>
+            <a class="btn b-accent b-block" href="https://wa.me/256700000000" style="margin-top:18px">
+              Message us on WhatsApp</a>
+            <a class="btn b-ghost b-block" href="shop/index.html" style="margin-top:9px">See the live demo</a>
+          </div>
+          <div class="card" style="margin-top:16px;padding:26px 24px">
+            <h3>Prefer to see it first?</h3>
+            <p>Open the demo shop, add something to the basket and place an order. Then open the back office
+              and watch that same order appear in the queue.</p>
+            <a class="btn b-ghost b-block" href="shop/admin/index.html" style="margin-top:16px">Open the back office</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="ft"><div class="wrap">
+  <div class="ftg">
+    <div>
+      <p class="ftm">Blessed Digital Solutions</p>
+      <p class="ftb">We build websites and online shops for Ugandan businesses — the kind that take real
+        orders, run on mobile money, and can be managed by your own staff.</p>
+      <p style="font-family:var(--mono);font-size:11.5px;color:#68809A;margin:0">
+        Kampala, Uganda<br>+256 700 000 000 · hello@blesseddigital.ug</p>
+    </div>
+    <div><h5>Services</h5><ul>
+      <li><a href="#services">Shop &amp; supermarket sites</a></li>
+      <li><a href="#services">Business websites</a></li>
+      <li><a href="#services">Brand identity</a></li>
+      <li><a href="#services">Digital marketing</a></li>
+      <li><a href="#services">Systems &amp; support</a></li></ul></div>
+    <div><h5>Company</h5><ul>
+      <li><a href="#work">Our work</a></li>
+      <li><a href="#process">How we work</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#faq">Questions</a></li>
+      <li><a href="#contact">Contact</a></li></ul></div>
+    <div><h5>Live demo</h5><ul>
+      <li><a href="shop/index.html">Shop storefront</a></li>
+      <li><a href="shop/shop.html">Full catalogue</a></li>
+      <li><a href="shop/admin/index.html">Back office</a></li>
+      <li><a href="shop/delivery.html">Delivery &amp; FAQ</a></li></ul></div>
+  </div>
+  <div class="ftbar">
+    <span>© <span id="yr">2026</span> BLESSED DIGITAL SOLUTIONS · KAMPALA, UGANDA</span>
+    <span>BUILT AND MAINTAINED IN HOUSE</span>
+  </div>
+</div></footer>
+
+<a class="wa" href="https://wa.me/256700000000" aria-label="Message us on WhatsApp" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm5.5 14.1c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.7-4.4-3.9-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2 1.3 2.3 1.4.3.1.5.1.6-.1l.9-1c.2-.2.4-.2.6-.1l1.8.9c.2.1.4.2.5.3 0 .1 0 .7-.3 1.5Z"/></svg>
+</a>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* Small enough to live inline: year stamp and the enquiry form. */
+document.getElementById("yr").textContent = new Date().getFullYear();
+
+function toast(msg) {
+  var t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("on");
+  clearTimeout(t._h);
+  t._h = setTimeout(function () { t.classList.remove("on"); }, 4200);
+}
+
+document.getElementById("quoteForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var f = e.target;
+  if (!f.checkValidity()) { f.reportValidity(); return; }
+  /* No server on a static host. We hand the enquiry to WhatsApp, which is where
+     these conversations actually happen — and nothing is lost if email fails. */
+  var d = new FormData(f);
+  var msg = "New enquiry from the website\n\n" +
+    "Name: " + (d.get("name") || "") + "\n" +
+    "Business: " + (d.get("business") || "—") + "\n" +
+    "Phone: " + (d.get("phone") || "") + "\n" +
+    "Email: " + (d.get("email") || "—") + "\n" +
+    "Needs: " + (d.get("need") || "") + "\n" +
+    "Budget: " + (d.get("budget") || "") + "\n\n" +
+    (d.get("message") || "");
+  window.open("https://wa.me/256700000000?text=" + encodeURIComponent(msg), "_blank", "noopener");
+  toast("Thank you — your enquiry is ready to send on WhatsApp. We reply within one working day.");
+  f.reset();
+});
+</script>
 </body>
 </html>

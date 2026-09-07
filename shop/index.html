@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kira Superstore — Everything on your list, delivered</title>
+<meta name="description" content="A full weekly shop delivered across Kampala. Eight aisles at shelf prices, weighed lines priced at the scale, MTN MoMo and Airtel Money accepted. Order by 2pm for delivery today.">
+<meta name="theme-color" content="#0A1A2F">
+<meta property="og:title" content="Kira Superstore — Everything on your list, delivered">
+<meta property="og:description" content="A full weekly shop delivered across Kampala. Eight aisles at shelf prices, weighed lines priced at the scale, MTN MoMo and Airtel Money accepted. Order by 2pm for delivery today.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/img/brand/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/store.css">
+</head>
+<body data-page="index">
+<a class="skip" href="#main">Skip to content</a>
+<div id="siteHeader"></div>
+<main id="main">
+<section class="hero">
+    <div class="wrap hero-in">
+      <div>
+        <span class="kicker" id="heroKicker">This week</span>
+        <h1>The whole list. <em>One delivery.</em></h1>
+        <p class="hero-p">Eight aisles online at the same prices you would pay at the shelf. Fill the basket once,
+          pay by mobile money, and a rider brings the lot before dinner.</p>
+        <div class="hero-cta">
+          <a class="btn b-flash" href="shop.html">Shop the aisles</a>
+          <a class="btn b-line" href="deals.html">See this week's cuts</a>
+        </div>
+        <div class="stats" id="heroStats"></div>
+      </div>
+      <div class="hero-art">
+        <img src="assets/img/scenes/hero.svg" alt="A paper bag filled with the week's shopping" width="1200" height="820">
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-hd">
+        <div><div class="eyebrow">Departments</div>
+          <h2 class="sec-t">Walk the aisles</h2>
+          <p class="sec-s">Every department in the shop is online, with the same stock the shelves carry.
+            Counts update as the shelves move.</p></div>
+        <a class="btn b-ghost b-sm" href="shop.html">See everything</a>
+      </div>
+      <div class="aisle-cards" id="aisleCards"></div>
+    </div>
+  </section>
+
+  <section class="sec tight">
+    <div class="wrap">
+      <div class="sec-hd">
+        <div><div class="eyebrow" id="dealCount">Reduced this week</div>
+          <h2 class="sec-t">This week's cuts</h2>
+          <p class="sec-s">Lines we bought well, passed straight on. The yellow flash shows what comes off.</p></div>
+        <a class="btn b-ghost b-sm" href="deals.html">All offers</a>
+      </div>
+      <div id="dealGrid"></div>
+    </div>
+  </section>
+
+  <section class="sec tight">
+    <div class="wrap">
+      <div class="sec-hd">
+        <div><div class="eyebrow">Best sellers</div>
+          <h2 class="sec-t">What Kampala is buying</h2>
+          <p class="sec-s">The lines that move fastest off this shop floor, this week.</p></div>
+        <a class="btn b-ghost b-sm" href="shop.html">Shop all</a>
+      </div>
+      <div id="topGrid"></div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap"><div class="band-in" id="promiseBand"></div></div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-hd"><div><div class="eyebrow">How it works</div>
+        <h2 class="sec-t">How an order runs</h2>
+        <p class="sec-s">You get a text at every stage. If something is out of stock the picker calls you before
+          substituting anything.</p></div></div>
+      <div class="steps">
+        <div class="step"><div class="step-n">STEP 01</div><h4>You order</h4>
+          <p>Fill the basket, choose your zone, pay by mobile money, card, or cash at the door.</p></div>
+        <div class="step"><div class="step-n">STEP 02</div><h4>We pick</h4>
+          <p>A picker walks the aisles with your list. Weighed lines go on the scale and the price is set there.</p></div>
+        <div class="step"><div class="step-n">STEP 03</div><h4>We confirm</h4>
+          <p>You get the final weights and total by SMS. Approve, or swap anything you would rather not take.</p></div>
+        <div class="step"><div class="step-n">STEP 04</div><h4>The rider delivers</h4>
+          <p>Cold lines travel in a chilled box. The rider calls when he reaches your landmark.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec tight">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <div class="sec-hd"><div><div class="eyebrow">Delivery</div>
+            <h2 class="sec-t">Where we deliver</h2>
+            <p class="sec-s">Pick your zone to set the fee and the minimum basket. Free delivery on anything
+              over the threshold, everywhere we go.</p></div></div>
+          <div class="zones" id="zones"></div>
+        </div>
+        <aside>
+          <img src="assets/img/scenes/rider.svg" alt="A delivery rider with an insulated box"
+               width="800" height="600" style="border-radius:var(--r-lg);border:1.5px solid var(--line)">
+          <div class="card" style="margin-top:14px"><div class="card-bd">
+            <h3 style="font-size:17px">Order before the cut-off</h3>
+            <p style="font-size:13.5px;margin-top:8px">Anything placed before 2:00 PM goes out in the same
+              afternoon run. After that we pick first thing the next morning.</p>
+            <a class="btn b-accent b-block" href="shop.html" style="margin-top:14px">Start shopping</a>
+          </div></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec tight">
+    <div class="wrap">
+      <div class="sec-hd"><div><div class="eyebrow">Shoppers</div>
+        <h2 class="sec-t">What people say</h2></div></div>
+      <div class="cards c3" id="reviews"></div>
+    </div>
+  </section>
+</main>
+<div id="siteFooter"></div>
+<div id="siteOverlays"></div>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/pages.js"></script>
+<script src="assets/js/store.js"></script>
+</body>
+</html>
