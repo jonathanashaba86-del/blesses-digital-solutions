@@ -247,7 +247,7 @@ function card(p) {
   return '<article class="prod" data-slug="' + esc(p.slug) + '">' +
     '<a class="tile' + (out ? " sold" : "") + '" href="product.html?p=' + esc(p.slug) + '">' + flag +
       '<span class="tag-stock ' + st.cls + '">' + esc(st.txt) + '</span>' +
-      '<img src="' + esc(p.img) + '" alt="' + esc(p.n) + '" loading="lazy" width="800" height="600"></a>' +
+      '<img src="' + esc(productImage(p)) + '" alt="' + esc(p.n) + '" loading="lazy" width="800" height="600"></a>' +
     '<div class="pb"><h3 class="pn"><a href="product.html?p=' + esc(p.slug) + '">' + esc(p.n) + '</a></h3>' +
       '<p class="pd">' + esc(p.d) + '</p>' + shelfLabel(p) +
       '<div class="pf"><div class="dial">' +
@@ -301,7 +301,7 @@ function renderCart() {
 
 function cartLine(p, q) {
   return '<div class="line">' +
-    '<a class="ltile" href="product.html?p=' + esc(p.slug) + '"><img src="' + esc(p.img) + '" alt="" width="56" height="56" loading="lazy"></a>' +
+    '<a class="ltile" href="product.html?p=' + esc(p.slug) + '"><img src="' + esc(productImage(p)) + '" alt="" width="56" height="56" loading="lazy"></a>' +
     '<div><div class="ln">' + esc(p.n) + '</div><div class="lm">' +
       (weighed(p) ? q.toFixed(2) + " kg × " + num(p.price) + "/kg · <em>est.</em>"
                   : q + " × " + num(p.price)) + '</div></div>' +
@@ -493,17 +493,32 @@ function wireGlobal() {
 
 /* ---------------------------------------------------------------- boot */
 function aisleImage(slug) {
-  // photographs take over the moment they exist; until then the drawing stands in
-  return SHOP.photos ? "assets/img/photos/aisle-" + slug + ".jpg"
-                     : "assets/img/aisles/" + slug + ".svg";
+  var ph = window.AISLE_PHOTOS || {};
+  return ph[slug] || "assets/img/aisles/" + slug + ".svg";
+}
+
+function productImage(p) {
+  // its own photograph, else its department's photograph, else the drawing
+  var ph = window.PHOTOS || {}, ap = window.AISLE_PHOTOS || {}, of = window.PHOTO_AISLE_OF || {};
+  return ph[p.slug] || ap[of[p.slug]] || p.img;
+}
+
+function sceneImage(name, fallback) {
+  return (window.SCENE_PHOTOS || {})[name] || fallback;
+}
+
+function photoCredit(slug) {
+  var list = window.PHOTO_CREDITS || [];
+  for (var i = 0; i < list.length; i++) if (list[i].k === slug) return list[i];
+  return null;
 }
 
 function boot() {
   document.documentElement.setAttribute("data-theme", SHOP.theme || "superstore");
-  if (SHOP.photos) {
+  if (window.PHOTOS) {
     document.documentElement.setAttribute("data-photos", "on");
-    document.documentElement.style.setProperty(
-      "--hero-photo", 'url("assets/img/photos/hero.jpg")');
+    var hero = sceneImage("hero", null);
+    if (hero) document.documentElement.style.setProperty("--hero-photo", 'url("' + hero + '")');
   }
   load();
   var page = document.body.dataset.page || "index";
@@ -533,7 +548,8 @@ window.RC = {
   S: S, SHOP: SHOP, CATALOG: CATALOG, AISLES: AISLES,
   $: $, $$: $$, byId: byId, esc: esc, money: money, num: num,
   weighed: weighed, product: product, productById: productById, aisleOf: aisleOf,
-  aisleImage: aisleImage,
+  aisleImage: aisleImage, productImage: productImage,
+  sceneImage: sceneImage, photoCredit: photoCredit,
   card: card, shelfLabel: shelfLabel, stockLabel: stockLabel, qtyLabel: qtyLabel,
   comparePrice: comparePrice, lineTotal: lineTotal, subtotal: subtotal, fee: fee,
   total: total, vat: vat, savings: savings, items: items, unitCount: unitCount,

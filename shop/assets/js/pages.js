@@ -75,6 +75,8 @@ function promiseBand() {
 /* ---------------------------------------------------------------- home */
 function home() {
   init();
+  var rider = R.sceneImage('rider', null);
+  if (rider) R.$$('img[src*="scenes/rider"]').forEach(function (im) { im.src = rider; });
   var deals = R.CATALOG.filter(function (p) { return p.was && p.stock > 0; });
   var top = sortItems(R.CATALOG.filter(function (p) { return p.stock > 0; }), "popular").slice(0, 12);
 
@@ -233,7 +235,10 @@ function productPage() {
     var inCart = R.S.cart[p.slug] != null;
     host.innerHTML = '<div class="pv" data-slug="' + R.esc(p.slug) + '">' +
       '<div class="pv-media"><div class="main">' +
-        '<img src="' + R.esc(p.img) + '" alt="' + R.esc(p.n) + '" width="800" height="600"></div></div>' +
+        '<img src="' + R.esc(R.productImage(p)) + '" alt="' + R.esc(p.n) + '" width="800" height="600"></div>' +
+        (R.photoCredit(p.slug) ? '<p class="note" style="margin-top:8px">Photograph by <a href="' +
+          R.esc(R.photoCredit(p.slug).at) + '" target="_blank" rel="noopener" style="text-decoration:underline">' +
+          R.esc(R.photoCredit(p.slug).by) + '</a> on Unsplash</p>' : "") + '</div>' +
       '<div><div class="eyebrow">Aisle ' + a.n + ' · ' + R.esc(p.c) + '</div>' +
         '<h1>' + R.esc(p.n) + '</h1>' +
         '<p class="pv-d">' + R.esc(p.d) + ' ' +
@@ -321,7 +326,7 @@ function cart() {
   function fullLine(p, q) {
     return '<div class="line" data-slug="' + R.esc(p.slug) + '">' +
       '<a class="ltile" href="product.html?p=' + R.esc(p.slug) + '">' +
-        '<img src="' + R.esc(p.img) + '" alt="" width="56" height="56" loading="lazy"></a>' +
+        '<img src="' + R.esc(R.productImage(p)) + '" alt="" width="56" height="56" loading="lazy"></a>' +
       '<div><div class="ln"><a href="product.html?p=' + R.esc(p.slug) + '">' + R.esc(p.n) + '</a></div>' +
         '<div class="lm">' + (R.weighed(p) ? R.num(p.price) + "/kg · <em>est.</em>" : R.num(p.price) + " each") + '</div>' +
         '<div class="dial" style="max-width:150px;margin-top:9px">' +
