@@ -160,7 +160,8 @@ def build_company(imgs, shop_url=None, admin_url=None):
     page = read(ROOT, "index.html")
     inner = re.search(r"<body>(.*?)</body>", page, re.S).group(1)
     inner = re.sub(r'<link rel="stylesheet"[^>]*>', "", inner)
-    inner = inline_images(inner, imgs)
+    # Strip the shop/ prefix first: inlining would otherwise match the tail of
+    # "shop/assets/img/..." and leave a stray "shop/" in front of the data URI.
     inner = inner.replace('src="shop/assets/img/', 'src="assets/img/')
     inner = inline_images(inner, imgs)
     if shop_url:

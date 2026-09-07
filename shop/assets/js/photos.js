@@ -2,13 +2,23 @@
    Every URL here came back from the Unsplash API — none is hand-written. */
 window.PHOTOS = {
  "avocado": "https://images.unsplash.com/photo-1519162808019-7de1683fa2ad?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
+ "baked-beans-400g": "https://images.unsplash.com/photo-1738618140037-09e11c8e644a?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
+ "bath-soap-3-pack": "https://images.unsplash.com/photo-1546552768-9e3a94b38a59?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "beef-choice-cut": "https://images.unsplash.com/photo-1723893905879-0e309c2a8e06?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
+ "beef-mince": "https://images.unsplash.com/photo-1787424220565-d8bd8df7bc78?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "beef-sausages": "https://images.unsplash.com/photo-1688895061981-4f7b10d4e4da?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
+ "bleach-1l": "https://images.unsplash.com/photo-1563453392212-326f5e854473?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
+ "body-lotion-400ml": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "brown-loaf": "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "butter-250g": "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "cabbage": "https://images.unsplash.com/photo-1652860213441-6622f9fec77f?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
+ "candles-6-pack": "https://images.unsplash.com/photo-1568412135975-3da921a7335d?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "carrots": "https://images.unsplash.com/photo-1633380110125-f6e685676160?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
+ "chapati-5-pack": "https://images.unsplash.com/photo-1601387434127-20979856e76e?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
+ "charcoal-sack": "https://images.unsplash.com/photo-1767633411248-e8ca80a8fbd4?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "cheddar-200g": "https://images.unsplash.com/photo-1683314573422-649a3c6ad784?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
+ "cooking-oil-3l": "https://images.unsplash.com/photo-1638324396229-632af05042dd?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
+ "curry-powder-100g": "https://images.unsplash.com/photo-1517646458010-ea6bd9f4a75f?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "dodo-greens": "https://images.unsplash.com/photo-1741515042603-70545daeb0c4?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "drinking-water-5l": "https://images.unsplash.com/photo-1536939459926-301728717817?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "dry-beans": "https://images.unsplash.com/photo-1788629531235-fe89db622984?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
@@ -19,10 +29,15 @@ window.PHOTOS = {
  "green-pepper": "https://images.unsplash.com/photo-1622376242797-538aa64a9d38?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "honey-500g": "https://images.unsplash.com/photo-1613548058193-1cd24c1bebcf?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "irish-potatoes": "https://images.unsplash.com/photo-1518977676601-b53f82aba655?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
+ "long-life-milk-1l": "https://images.unsplash.com/photo-1553301803-768cd4a59b9c?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
+ "mandazi-6-pack": "https://images.unsplash.com/photo-1767324672458-7dec3a2acffa?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "mango-juice-1l": "https://images.unsplash.com/photo-1640213505284-21352ee0d76b?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "mangoes": "https://images.unsplash.com/photo-1635716279493-d1e30afc25a0?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
+ "margarine-500g": "https://images.unsplash.com/photo-1574748572745-51eed3c12619?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
+ "matches-10-boxes": "https://images.unsplash.com/photo-1629573007697-99c6bd69362b?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "matooke": "https://images.unsplash.com/photo-1668968554885-c08ad72c2133?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "mukene": "https://images.unsplash.com/photo-1649405087405-6ed3bfbaee3b?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
+ "nakati": "https://images.unsplash.com/photo-1598278242809-6c21ee17aef1?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "nile-perch-fillet": "https://images.unsplash.com/photo-1633244092661-4519a1ffc67e?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "oranges": "https://images.unsplash.com/photo-1609424572698-04d9d2e04954?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "passion-fruit": "https://images.unsplash.com/photo-1604495772376-9657f0035eb5?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
@@ -36,10 +51,12 @@ window.PHOTOS = {
  "spaghetti-500g": "https://images.unsplash.com/photo-1587287720536-ce7b84c23d35?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "sugar-2kg": "https://images.unsplash.com/photo-1758738880333-287af488b5c8?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "sweet-bananas": "https://images.unsplash.com/photo-1640958900081-7b069dd23e9c?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
+ "sweet-buns-6-pack": "https://images.unsplash.com/photo-1608198093002-ad4e005484ec?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "sweet-potatoes": "https://images.unsplash.com/photo-1730815048561-45df6f7f331d?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "tea-leaves-250g": "https://images.unsplash.com/photo-1433891248364-3ce993ff0e92?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "tilapia-whole": "https://images.unsplash.com/photo-1665401015549-712c0dc5ef85?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "tissue-10-rolls": "https://images.unsplash.com/photo-1631524254770-03abe3f42a0d?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
+ "tomato-paste-400g": "https://images.unsplash.com/photo-1472476443507-c7a5948772fc?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "tomatoes": "https://images.unsplash.com/photo-1524593166156-312f362cada0?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "ugandan-coffee-250g": "https://images.unsplash.com/photo-1524350876685-274059332603?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
  "watermelon": "https://images.unsplash.com/photo-1563114773-84221bd62daa?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=800&h=600",
@@ -49,6 +66,7 @@ window.PHOTOS = {
 };
 
 window.AISLE_PHOTOS = {
+ "baby-personal": "https://images.unsplash.com/photo-1718490953028-021d352b14fd?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=1200&h=900",
  "bakery": "https://images.unsplash.com/photo-1568254183919-78a4f43a2877?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=1200&h=900",
  "butchery-fish": "https://images.unsplash.com/photo-1589372545389-bb4d9d138bdb?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=1200&h=900",
  "dairy-eggs": "https://images.unsplash.com/photo-1506617420156-8e4536971650?ixlib=rb-4.1.0&fm=jpg&q=80&fit=crop&crop=entropy&w=1200&h=900",
@@ -141,6 +159,12 @@ window.PHOTO_AISLE_OF = {
 
 window.PHOTO_CREDITS = [
  {
+  "k": "aisle-baby-personal",
+  "by": "Ela De Pure",
+  "at": "https://unsplash.com/@eladepure",
+  "src": "https://unsplash.com/photos/BKlMCsx6Lmc"
+ },
+ {
   "k": "aisle-bakery",
   "by": "Yeh Xintong",
   "at": "https://unsplash.com/@blsnki",
@@ -189,16 +213,46 @@ window.PHOTO_CREDITS = [
   "src": "https://unsplash.com/photos/EMX1eJ1BcgU"
  },
  {
+  "k": "baked-beans-400g",
+  "by": "Jacob McGowin",
+  "at": "https://unsplash.com/@bamaham93",
+  "src": "https://unsplash.com/photos/514ttExZr1U"
+ },
+ {
+  "k": "bath-soap-3-pack",
+  "by": "Heather Ford",
+  "at": "https://unsplash.com/@the_modern_life_mrs",
+  "src": "https://unsplash.com/photos/FbrDS0jY_Hw"
+ },
+ {
   "k": "beef-choice-cut",
   "by": "David Foodphototasty",
   "at": "https://unsplash.com/@phototastyfood",
   "src": "https://unsplash.com/photos/U5lLwx17rWs"
  },
  {
+  "k": "beef-mince",
+  "by": "Le Tia",
+  "at": "https://unsplash.com/@basinati",
+  "src": "https://unsplash.com/photos/6F9ctzGZicM"
+ },
+ {
   "k": "beef-sausages",
   "by": "Danielle Suijkerbuijk",
   "at": "https://unsplash.com/@vandaantje",
   "src": "https://unsplash.com/photos/NWo2mDYnfjY"
+ },
+ {
+  "k": "bleach-1l",
+  "by": "JESHOOTS.COM",
+  "at": "https://unsplash.com/@jeshoots",
+  "src": "https://unsplash.com/photos/__ZMnefoI3k"
+ },
+ {
+  "k": "body-lotion-400ml",
+  "by": "Camille Brodard",
+  "at": "https://unsplash.com/@kmile_ch",
+  "src": "https://unsplash.com/photos/VxAwTeiqDao"
  },
  {
   "k": "brown-loaf",
@@ -219,16 +273,46 @@ window.PHOTO_CREDITS = [
   "src": "https://unsplash.com/photos/gofXEm3c_Ho"
  },
  {
+  "k": "candles-6-pack",
+  "by": "Jarrod Reed",
+  "at": "https://unsplash.com/@jarrodreed",
+  "src": "https://unsplash.com/photos/rjIDhjdKCCI"
+ },
+ {
   "k": "carrots",
   "by": "Nick Fewings",
   "at": "https://unsplash.com/@jannerboy62",
   "src": "https://unsplash.com/photos/IZq1FV87qpM"
  },
  {
+  "k": "chapati-5-pack",
+  "by": "Usman Yousaf",
+  "at": "https://unsplash.com/@usmanyousaf",
+  "src": "https://unsplash.com/photos/gqpACgnOGBQ"
+ },
+ {
+  "k": "charcoal-sack",
+  "by": "Oriol Farré",
+  "at": "https://unsplash.com/@oriolfb",
+  "src": "https://unsplash.com/photos/7_M1MgVMuqU"
+ },
+ {
   "k": "cheddar-200g",
   "by": "David Foodphototasty",
   "at": "https://unsplash.com/@phototastyfood",
   "src": "https://unsplash.com/photos/JJcT6VJWDlg"
+ },
+ {
+  "k": "cooking-oil-3l",
+  "by": "Addilyn Ragsdill",
+  "at": "https://unsplash.com/@clockwork_lemon",
+  "src": "https://unsplash.com/photos/47Pg5Eswnnk"
+ },
+ {
+  "k": "curry-powder-100g",
+  "by": "Andra Ion",
+  "at": "https://unsplash.com/@amiion",
+  "src": "https://unsplash.com/photos/qsPHXC4T2cY"
  },
  {
   "k": "dodo-greens",
@@ -297,6 +381,18 @@ window.PHOTO_CREDITS = [
   "src": "https://unsplash.com/photos/B0s3Xndk6tw"
  },
  {
+  "k": "long-life-milk-1l",
+  "by": "Shannon VanDenHeuvel",
+  "at": "https://unsplash.com/@shannonnicolevandy",
+  "src": "https://unsplash.com/photos/SS9HHBWyuwA"
+ },
+ {
+  "k": "mandazi-6-pack",
+  "by": "You Le",
+  "at": "https://unsplash.com/@le_y0u",
+  "src": "https://unsplash.com/photos/m2WS1is8IWM"
+ },
+ {
   "k": "mango-juice-1l",
   "by": "Piero Nigro",
   "at": "https://unsplash.com/@pieronigro",
@@ -309,6 +405,18 @@ window.PHOTO_CREDITS = [
   "src": "https://unsplash.com/photos/vxtBBfMTMZ0"
  },
  {
+  "k": "margarine-500g",
+  "by": "Igor Lifar",
+  "at": "https://unsplash.com/@egggstore",
+  "src": "https://unsplash.com/photos/aXNRlm1H5ks"
+ },
+ {
+  "k": "matches-10-boxes",
+  "by": "Georg Eiermann",
+  "at": "https://unsplash.com/@georgeiermann",
+  "src": "https://unsplash.com/photos/wH38-ekMWi0"
+ },
+ {
   "k": "matooke",
   "by": "Ries Bosch",
   "at": "https://unsplash.com/@ries_bosch",
@@ -319,6 +427,12 @@ window.PHOTO_CREDITS = [
   "by": "Martins Cardoso",
   "at": "https://unsplash.com/@martinscardoso_unsplash",
   "src": "https://unsplash.com/photos/wP8BxVVVSas"
+ },
+ {
+  "k": "nakati",
+  "by": "Elly Brian",
+  "at": "https://unsplash.com/@ellybrian",
+  "src": "https://unsplash.com/photos/At_XGKqg9Sk"
  },
  {
   "k": "nile-perch-fillet",
@@ -405,6 +519,12 @@ window.PHOTO_CREDITS = [
   "src": "https://unsplash.com/photos/1jyRHJPkpz8"
  },
  {
+  "k": "sweet-buns-6-pack",
+  "by": "mohamed hassouna",
+  "at": "https://unsplash.com/@mhassouna931",
+  "src": "https://unsplash.com/photos/N4gtuEZ5gWc"
+ },
+ {
   "k": "sweet-potatoes",
   "by": "Glen Hayoge",
   "at": "https://unsplash.com/@glenhayoge",
@@ -427,6 +547,12 @@ window.PHOTO_CREDITS = [
   "by": "Colourblind Kevin",
   "at": "https://unsplash.com/@colourblindkevin",
   "src": "https://unsplash.com/photos/jEMcrcWSf3M"
+ },
+ {
+  "k": "tomato-paste-400g",
+  "by": "Dennis Klein",
+  "at": "https://unsplash.com/@klein3",
+  "src": "https://unsplash.com/photos/FzB_512zvP0"
  },
  {
   "k": "tomatoes",
