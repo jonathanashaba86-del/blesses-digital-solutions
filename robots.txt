@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /leads/
 
 Sitemap: https://jonathanashaba86-del.github.io/blesses-digital-solutions/sitemap.xml
