@@ -1,0 +1,23 @@
+{
+  "name": "Camara Tech — gadgets in Uganda",
+  "short_name": "Camara Tech",
+  "description": "New and used phones, laptops and smart accessories in Uganda, or order anything from Dubai and watch it the whole way home.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#061428",
+  "theme_color": "#061428",
+  "lang": "en-UG",
+  "categories": ["shopping", "business"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Dubai cost calculator", "url": "./index.html#/sourcing" },
+    { "name": "Trade in a device", "url": "./index.html#/trade-in" },
+    { "name": "Track an order", "url": "./index.html#/track" }
+  ]
+}
