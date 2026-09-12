@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found — Blessed Digital Solutions</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0A0C12">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230A0C12'/%3E%3Cpath d='M9 23V9h6.2c2.6 0 4.2 1.3 4.2 3.4 0 1.5-.8 2.6-2.2 3.1 1.8.4 2.9 1.6 2.9 3.4 0 2.5-1.9 4.1-5 4.1H9Z' fill='%233DE0C8'/%3E%3Ccircle cx='24' cy='11' r='2.4' fill='%23F0B429'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#0A0C12; --bg2:#10131C; --panel:#151926; --line:#252B3D; --line2:#333A50;
+  --ink:#F2F4F9; --body:#B4BCD0; --muted:#7C869E; --faint:#525B73;
+  --sig:#3DE0C8; --gold:#F0B429; --violet:#8B7CF6;
+  --grad:linear-gradient(102deg,#3DE0C8 0%,#8B7CF6 52%,#F0B429 100%);
+  --h:'Space Grotesk',system-ui,sans-serif; --u:'Inter',system-ui,sans-serif; --m:'JetBrains Mono',ui-monospace,monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--body);font-family:var(--u);font-weight:300;line-height:1.6;
+  min-height:100vh;display:grid;place-items:center;padding:28px 20px;-webkit-font-smoothing:antialiased;
+  position:relative;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(760px 500px at 74% -6%,rgba(61,224,200,.11),transparent 62%),
+    radial-gradient(640px 440px at 8% 16%,rgba(139,124,246,.10),transparent 60%);
+}
+.wrap{position:relative;z-index:1;width:min(620px,100%);text-align:center}
+a{color:inherit;text-decoration:none}
+.mark{display:inline-flex;align-items:center;gap:10px;font-family:var(--h);font-weight:600;color:var(--ink);font-size:15px;margin-bottom:38px}
+.mark i{width:10px;height:10px;border-radius:3px;background:var(--grad);background-size:280% 100%;animation:shift 6s linear infinite}
+@keyframes shift{to{background-position:280% 0}}
+.mark small{display:block;font-family:var(--m);font-size:9px;letter-spacing:.2em;color:var(--faint);text-transform:uppercase;margin-top:2px;text-align:left}
+.code{font-family:var(--h);font-weight:700;font-size:clamp(76px,17vw,132px);letter-spacing:-.05em;line-height:.9;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+h1{font-family:var(--h);color:var(--ink);font-weight:600;font-size:clamp(21px,3.4vw,28px);letter-spacing:-.02em;margin:22px 0 14px}
+p{font-size:15.5px;max-width:46ch;margin:0 auto}
+.cta{display:flex;flex-wrap:wrap;gap:11px;justify-content:center;margin-top:34px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:10px;font-family:var(--h);
+  font-weight:500;font-size:14.5px;background:var(--sig);color:#06231F;border:1px solid var(--sig);transition:transform .2s,box-shadow .25s,background .2s}
+.btn:hover{background:#5CEBD6;transform:translateY(-2px);box-shadow:0 10px 26px rgba(61,224,200,.24)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line2)}
+.btn.ghost:hover{background:var(--panel);border-color:var(--sig);color:var(--sig);box-shadow:none}
+.where{margin-top:40px;padding-top:26px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:center}
+.where a{font-size:13.5px;color:var(--muted);transition:color .2s}
+.where a:hover{color:var(--sig)}
+.path{font-family:var(--m);font-size:12px;color:var(--faint);margin-top:26px;word-break:break-all}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="mark" href="./">
+    <i aria-hidden="true"></i>
+    <span>Blessed Digital Solutions<small>Kampala · Uganda</small></span>
+  </a>
+
+  <div class="code">404</div>
+  <h1>That page has moved on.</h1>
+  <p>The link is broken or the page no longer exists. Everything we publish is one click away below — or message us and we will find it for you.</p>
+
+  <div class="cta">
+    <a class="btn" href="./">Back to the studio</a>
+    <a class="btn ghost" href="https://wa.me/256777691011" target="_blank" rel="noopener">Ask us on WhatsApp</a>
+  </div>
+
+  <div class="where">
+    <a href="./#services">Services</a>
+    <a href="./#work">Work</a>
+    <a href="./#pricing">Pricing</a>
+    <a href="./mannie/">MANNIE store</a>
+    <a href="./#brief">Start a project</a>
+  </div>
+
+  <div class="path" id="path"></div>
+</div>
+
+<script>
+(function(){
+  var p = document.getElementById('path');
+  try{ p.textContent = 'You asked for: ' + window.location.pathname; }catch(e){}
+})();
+</script>
+</body>
+</html>
