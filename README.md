@@ -10,6 +10,7 @@ monthly platform fee:
 | `index.html` | **The agency front door** — services, work, pricing and the enquiry form | The public |
 | `mannie/` | **MANNIE** — the flagship client storefront, 57 products that turn 360° | The public |
 | `leads/` | **The Lead Desk** — where enquiries land, get scored and get chased | The studio, internal |
+| `nyumba/` | **Nyumba Furniture Co.** — contract-furniture storefront with a live Profit Desk | The public |
 
 Live at `https://jonathanashaba86-del.github.io/blesses-digital-solutions/`
 
@@ -163,3 +164,60 @@ link never changes.
 
 **Blessed Digital Solutions** — web development, digital marketing, branding and content.
 WhatsApp [+256 777 691011](https://wa.me/256777691011) · [jonathanashaba86@gmail.com](mailto:jonathanashaba86@gmail.com)
+
+---
+
+## 4 · Nyumba Furniture Co. — `nyumba/`
+
+A contract-furniture storefront built to be shown to a buyer who answers to a board. Photography-led,
+no illustrations, no placeholders — 38 pieces across eight rooms, each with real product imagery,
+full specification, volume breaks and a working quotation flow.
+
+### What makes it different from a catalogue
+
+Most furniture sites stop at "here is a sofa, here is a price". This one carries a **Profit Desk** —
+a live business-analytics layer that models the money behind the order:
+
+| Panel | What it answers |
+|---|---|
+| **Revenue & gross margin** | 12-month trading, margin overlaid, best and softest months called out |
+| **Profit mix** | Which rooms actually carry the annual profit pool, not just the turnover |
+| **The money cycle** | Cash conversion cycle — stock days + build days + collection days − supplier credit. Four sliders, live re-price, and what one week off the cycle is worth in cash |
+| **Margin lab** | Cost, sell, margin and monthly contribution per line, with a price-uplift slider that models demand elasticity at −1.4 |
+| **Deposit terms** | 90-day cash position for a single order: peak funding gap, the deposit that closes it |
+| **Dead-stock radar** | Days of cover per stocked line, cash standing still, and the clearing action |
+
+Every figure recomputes from the catalogue — change a price or a stock level in `P[]` and the whole
+desk moves with it. It ships with demo trading data; point it at a real sales file and it reads
+real lines.
+
+### The four lines that make it yours
+
+Near the top of the script block in `nyumba/index.html`:
+
+```js
+var CFG = {
+  wa    : '256777691011',          // WhatsApp, international format, no +
+  email : 'hello@nyumba.co.ug',
+  vat   : 0.18,                    // URA standard rate
+  breaks: [{q:50,d:.22},{q:25,d:.17},{q:10,d:.11},{q:5,d:.06}]   // volume bands
+};
+```
+
+### Photography
+
+All imagery is hot-linked from Unsplash at `images.unsplash.com`. If an image ever fails to load,
+it degrades to a branded gradient tile carrying the piece name — a client never sees a broken-image
+icon. Swap in your own product photography by editing the `ph:[...]` array on each item in `P[]`.
+
+> **Note:** the Unsplash photo IDs were taken from the Unsplash API, but the build environment
+> blocks outbound requests to `images.unsplash.com`, so the images could not be rendered during
+> testing. Open the page once on a normal connection and confirm they load before sending the link
+> to a client.
+
+### Tested
+
+Rendered headless at 1440px and 390px: no JavaScript errors, no horizontal overflow on mobile,
+light and dark themes both legible, and every interactive control exercised — filters, sort, search,
+product detail, quantity, quotation drawer, volume calculator, all six Profit Desk panels, and form
+validation through to the WhatsApp hand-off.
